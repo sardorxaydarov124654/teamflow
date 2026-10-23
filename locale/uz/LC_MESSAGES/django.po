@@ -1,0 +1,916 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: TeamFlow\n"
+"Language: uz\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Dashboard"
+msgstr "Boshqaruv paneli"
+
+msgid "Projects"
+msgstr "Loyihalar"
+
+msgid "Tasks"
+msgstr "Vazifalar"
+
+msgid "Team"
+msgstr "Jamoa"
+
+msgid "Notifications"
+msgstr "Bildirishnomalar"
+
+msgid "Billing"
+msgstr "To'lovlar"
+
+msgid "All companies"
+msgstr "Barcha kompaniyalar"
+
+msgid "Company settings"
+msgstr "Kompaniya sozlamalari"
+
+msgid "Sign out"
+msgstr "Chiqish"
+
+msgid "Language"
+msgstr "Til"
+
+msgid "Toggle dark mode"
+msgstr "Tungi rejimni yoqish/o'chirish"
+
+msgid "Updated"
+msgstr "Yangilangan"
+
+msgid "Active employees"
+msgstr "Faol xodimlar"
+
+msgid "Active projects"
+msgstr "Faol loyihalar"
+
+msgid "Completed projects"
+msgstr "Tugallangan loyihalar"
+
+msgid "Pending tasks"
+msgstr "Kutilayotgan vazifalar"
+
+msgid "Overdue tasks"
+msgstr "Muddati o'tgan vazifalar"
+
+msgid "Completed tasks"
+msgstr "Tugallangan vazifalar"
+
+msgid "Employee productivity"
+msgstr "Xodimlar samaradorligi"
+
+msgid "Employee"
+msgstr "Xodim"
+
+msgid "Assigned"
+msgstr "Topshirilgan"
+
+msgid "Completed"
+msgstr "Bajarilgan"
+
+msgid "No active employees yet."
+msgstr "Hozircha faol xodimlar yo'q."
+
+msgid "Platform Admin"
+msgstr "Platforma administratori"
+
+msgid "Manager"
+msgstr "Menejer"
+
+msgid ""
+"A focused toolset that replaces scattered spreadsheets and chat threads."
+msgstr ""
+"Tarqoq jadvallar va chat yozishmalari o'rnini bosadigan yagona vositalar "
+"to'plami."
+
+msgid "Accept invitation"
+msgstr "Taklifni qabul qilish"
+
+msgid "Access denied"
+msgstr "Kirish taqiqlangan"
+
+msgid "Account"
+msgstr "Hisob"
+
+msgid "Active"
+msgstr "Faol"
+
+msgid "Active members"
+msgstr "Faol a'zolar"
+
+msgid "Add comment"
+msgstr "Izoh qo'shish"
+
+msgid "Add new task"
+msgstr "Yangi vazifa qo'shish"
+
+msgid "Add one"
+msgstr "Qo'shish"
+
+msgid "Add projects, create tasks and assign them."
+msgstr "Loyihalar qo'shing, vazifalar yarating va tayinlang."
+
+msgid "Add task"
+msgstr "Vazifa qo'shish"
+
+msgid "All"
+msgstr "Hammasi"
+
+msgid "All priorities"
+msgstr "Barcha ustuvorliklar"
+
+msgid "All rights reserved."
+msgstr "Barcha huquqlar himoyalangan."
+
+msgid "All roles"
+msgstr "Barcha rollar"
+
+msgid "All statuses"
+msgstr "Barcha holatlar"
+
+msgid "Already have an account?"
+msgstr "Hisobingiz bormi?"
+
+msgid ""
+"Assign tasks, set priority and deadline, discuss in comments and track "
+"status."
+msgstr ""
+"Vazifalarni tayinlang, ustuvorlik va muddat belgilang, izohlarda muhokama "
+"qiling va holatini kuzating."
+
+msgid "Assigned tasks"
+msgstr "Tayinlangan vazifalar"
+
+msgid "Assignee"
+msgstr "Mas'ul"
+
+msgid "Back to home"
+msgstr "Bosh sahifaga qaytish"
+
+msgid "Back to team"
+msgstr "Jamoaga qaytish"
+
+msgid "Back to top"
+msgstr "Yuqoriga"
+
+msgid "Billing is simulated — you will not be charged."
+msgstr "To'lov simulyatsiya qilinadi — pul yechilmaydi."
+
+msgid "Block"
+msgstr "Bloklash"
+
+msgid "Blocked"
+msgstr "Bloklangan"
+
+msgid "Cached company statistics, workload per teammate and project progress."
+msgstr "Kompaniya statistikasi, xodimlar yuklamasi va loyiha jarayoni."
+
+msgid "Calendar"
+msgstr "Kalendar"
+
+msgid "Can block or unblock a company"
+msgstr "Kompaniyani bloklashi yoki blokdan chiqarishi mumkin"
+
+msgid "Cancel"
+msgstr "Bekor qilish"
+
+msgid "Cancel this invitation?"
+msgstr "Taklif bekor qilinsinmi?"
+
+msgid "Change password"
+msgstr "Parolni o'zgartirish"
+
+msgid "Change plan"
+msgstr "Tarifni o'zgartirish"
+
+msgid "Change the status of this company?"
+msgstr "Kompaniya holati o'zgartirilsinmi?"
+
+msgid "Choose"
+msgstr "Tanlash"
+
+msgid ""
+"Choose the plan that fits your team. Billing is simulated — no real charge."
+msgstr ""
+"Jamoangizga mos tarifni tanlang. To'lov simulyatsiya — haqiqiy pul "
+"yechilmaydi."
+
+msgid "Close"
+msgstr "Yopish"
+
+msgid "Comments"
+msgstr "Izohlar"
+
+msgid "Comments and gets notifications"
+msgstr "Izoh qoldiradi va bildirishnoma oladi"
+
+msgid "Company"
+msgstr "Kompaniya"
+
+msgid "Company profile"
+msgstr "Kompaniya profili"
+
+msgid "Confirm"
+msgstr "Tasdiqlash"
+
+msgid "Confirm plan"
+msgstr "Tarifni tasdiqlash"
+
+msgid "Create a project and your first task to get started."
+msgstr "Boshlash uchun loyiha va birinchi vazifangizni yarating."
+
+msgid "Create a workspace"
+msgstr "Ish maydoni yaratish"
+
+msgid "Create company"
+msgstr "Kompaniya yaratish"
+
+msgid "Create free workspace"
+msgstr "Bepul ish maydoni yaratish"
+
+msgid ""
+"Create projects with owners, dates and statuses and see progress at a "
+"glance."
+msgstr ""
+"Mas'ullar, sanalar va holatlar bilan loyihalar yarating, jarayonni bir "
+"qarashda ko'ring."
+
+msgid "Create workspace"
+msgstr "Ish maydoni yaratish"
+
+msgid "Create your company"
+msgstr "Kompaniyangizni yarating"
+
+msgid "Create your first project"
+msgstr "Birinchi loyihangizni yarating"
+
+msgid "Create your workspace"
+msgstr "Ish maydoningizni yarating"
+
+msgid "Create your workspace for free — it takes less than a minute."
+msgstr "Ish maydoningizni bepul yarating — bir daqiqadan kam vaqt oladi."
+
+msgid "Created"
+msgstr "Yaratilgan"
+
+msgid "Created by"
+msgstr "Yaratuvchi"
+
+msgid "Creates projects and tasks"
+msgstr "Loyiha va vazifalar yaratadi"
+
+msgid "Current"
+msgstr "Joriy"
+
+msgid "Current plan"
+msgstr "Joriy tarif"
+
+msgid "Day"
+msgstr "Kun"
+
+msgid "Deactivate"
+msgstr "Faolsizlantirish"
+
+msgid "Deactivate this member?"
+msgstr "Bu a'zo faolsizlantirilsinmi?"
+
+msgid "Deactivated"
+msgstr "Faolsiz"
+
+msgid "Deadline"
+msgstr "Muddat"
+
+msgid "Delete"
+msgstr "O'chirish"
+
+msgid "Delete project"
+msgstr "Loyihani o'chirish"
+
+msgid "Delete project?"
+msgstr "Loyiha o'chirilsinmi?"
+
+msgid "Delete task"
+msgstr "Vazifani o'chirish"
+
+msgid "Delete task?"
+msgstr "Vazifa o'chirilsinmi?"
+
+msgid "Description"
+msgstr "Tavsif"
+
+msgid "Details"
+msgstr "Tafsilotlar"
+
+msgid "Done"
+msgstr "Bajarilgan"
+
+msgid "Each company's data is strictly separated from every other company."
+msgstr "Har bir kompaniya ma'lumotlari boshqalardan qat'iy ajratilgan."
+
+msgid "Edit"
+msgstr "Tahrirlash"
+
+msgid "Edit project"
+msgstr "Loyihani tahrirlash"
+
+msgid "Edit task"
+msgstr "Vazifani tahrirlash"
+
+msgid "Email"
+msgstr "Email"
+
+msgid ""
+"Every company gets its own isolated space. Managers plan the work, employees"
+" deliver it, everyone stays in sync."
+msgstr ""
+"Har bir kompaniya o'z alohida maydoniga ega. Menejerlar rejalashtiradi, "
+"xodimlar bajaradi, hamma bir yo'nalishda."
+
+msgid "Everything your team needs"
+msgstr "Jamoangizga kerak bo'lgan hamma narsa"
+
+msgid "Features"
+msgstr "Imkoniyatlar"
+
+msgid "Filter"
+msgstr "Filtrlash"
+
+msgid "First name"
+msgstr "Ism"
+
+msgid "Follow the dashboard, calendar and reports."
+msgstr "Boshqaruv paneli, kalendar va hisobotlarni kuzating."
+
+msgid "Footer"
+msgstr "Pastki qism"
+
+msgid "Free plan available"
+msgstr "Bepul tarif mavjud"
+
+msgid "Generated"
+msgstr "Yaratilgan vaqt"
+
+msgid ""
+"Get instant alerts about assignments, comments, status changes and "
+"deadlines."
+msgstr ""
+"Tayinlovlar, izohlar, holat o'zgarishlari va muddatlar haqida zudlik bilan "
+"xabar oling."
+
+msgid "Get started"
+msgstr "Boshlash"
+
+msgid "Go back"
+msgstr "Orqaga"
+
+msgid "Home"
+msgstr "Bosh sahifa"
+
+msgid "How it works"
+msgstr "Qanday ishlaydi"
+
+msgid "In Progress"
+msgstr "Jarayonda"
+
+msgid "In progress"
+msgstr "Jarayonda"
+
+msgid "Invite a teammate"
+msgstr "Jamoadoshni taklif qiling"
+
+msgid "Invite link"
+msgstr "Taklif havolasi"
+
+msgid "Invite member"
+msgstr "A'zoni taklif qilish"
+
+msgid "Invite your team"
+msgstr "Jamoangizni taklif qiling"
+
+msgid "Invites and manages members"
+msgstr "A'zolarni taklif qiladi va boshqaradi"
+
+msgid "Join"
+msgstr "Qo'shilish"
+
+msgid "Join %(name)s"
+msgstr "%(name)s kompaniyasiga qo'shiling"
+
+msgid "Joined"
+msgstr "Qo'shilgan"
+
+msgid "Last name"
+msgstr "Familiya"
+
+msgid "Let's set up your workspace"
+msgstr "Ish maydoningizni sozlaymiz"
+
+msgid "Link copied"
+msgstr "Havola nusxalandi"
+
+msgid "Live notifications"
+msgstr "Jonli bildirishnomalar"
+
+msgid "Main navigation"
+msgstr "Asosiy navigatsiya"
+
+msgid "Manage"
+msgstr "Boshqarish"
+
+msgid "Manage subscription"
+msgstr "Obunani boshqarish"
+
+msgid "Manages the subscription"
+msgstr "Obunani boshqaradi"
+
+msgid "Manages the whole platform"
+msgstr "Butun platformani boshqaradi"
+
+msgid "Mark all as read"
+msgstr "Hammasini o'qilgan deb belgilash"
+
+msgid "Mark read"
+msgstr "O'qilgan deb belgilash"
+
+msgid "Member"
+msgstr "A'zo"
+
+msgid "Members"
+msgstr "A'zolar"
+
+msgid "Month"
+msgstr "Oy"
+
+msgid "Multi-tenant SaaS for teams"
+msgstr "Jamoalar uchun multi-tenant SaaS"
+
+msgid "Multi-tenant project and task management for teams that want clarity."
+msgstr ""
+"Aniqlikni istagan jamoalar uchun loyiha va vazifalarni boshqarish "
+"platformasi."
+
+msgid "My open tasks"
+msgstr "Ochiq vazifalarim"
+
+msgid "My profile"
+msgstr "Mening profilim"
+
+msgid "My subscription"
+msgstr "Mening obunam"
+
+msgid "My tasks"
+msgstr "Mening vazifalarim"
+
+msgid "Name A–Z"
+msgstr "Nomi A–Z"
+
+msgid "New notifications will appear here in real time."
+msgstr "Yangi bildirishnomalar shu yerda real vaqtda ko'rinadi."
+
+msgid "New project"
+msgstr "Yangi loyiha"
+
+msgid "New task"
+msgstr "Yangi vazifa"
+
+msgid "Newest first"
+msgstr "Avval yangilari"
+
+msgid "Next month"
+msgstr "Keyingi oy"
+
+msgid "No account yet?"
+msgstr "Hisobingiz yo'qmi?"
+
+msgid "No activity yet"
+msgstr "Hali faoliyat yo'q"
+
+msgid "No comments yet."
+msgstr "Hali izohlar yo'q."
+
+msgid "No companies yet."
+msgstr "Hali kompaniyalar yo'q."
+
+msgid "No company description yet."
+msgstr "Kompaniya tavsifi hali yo'q."
+
+msgid "No credit card"
+msgstr "Karta shart emas"
+
+msgid "No matches"
+msgstr "Hech narsa topilmadi"
+
+msgid "No members found."
+msgstr "A'zolar topilmadi."
+
+msgid "No projects yet"
+msgstr "Hali loyihalar yo'q"
+
+msgid "No projects yet."
+msgstr "Hali loyihalar yo'q."
+
+msgid "No tasks in this project yet."
+msgstr "Bu loyihada hali vazifalar yo'q."
+
+msgid "No tasks match these filters."
+msgstr "Filtrga mos vazifalar topilmadi."
+
+msgid "Nothing assigned to you. Enjoy!"
+msgstr "Sizga hech narsa tayinlanmagan. Dam oling!"
+
+msgid "One workspace for your projects, tasks and team."
+msgstr "Loyihalar, vazifalar va jamoa uchun yagona ish maydoni."
+
+msgid "Only managers can change the plan."
+msgstr "Tarifni faqat menejerlar o'zgartira oladi."
+
+msgid "Only mine"
+msgstr "Faqat meniki"
+
+msgid "Only my tasks"
+msgstr "Faqat mening vazifalarim"
+
+msgid "Only the company owner can edit these settings."
+msgstr "Bu sozlamalarni faqat kompaniya egasi o'zgartira oladi."
+
+msgid "Open"
+msgstr "Ochish"
+
+msgid "Open menu"
+msgstr "Menyuni ochish"
+
+msgid "Open tasks by priority"
+msgstr "Ochiq vazifalar ustuvorlik bo'yicha"
+
+msgid "Overdue"
+msgstr "Muddati o'tgan"
+
+msgid "Owner"
+msgstr "Egasi"
+
+msgid "Page not found"
+msgstr "Sahifa topilmadi"
+
+msgid "Password"
+msgstr "Parol"
+
+msgid "Pending invitations"
+msgstr "Kutilayotgan takliflar"
+
+msgid "People"
+msgstr "Odamlar"
+
+msgid "Plan"
+msgstr "Tarif"
+
+msgid "Plan projects."
+msgstr "Loyihalarni rejalashtiring."
+
+msgid "Plan the work"
+msgstr "Ishni rejalashtiring"
+
+msgid "Plans"
+msgstr "Tariflar"
+
+msgid "Plans & billing"
+msgstr "Tariflar va to'lov"
+
+msgid "Popular"
+msgstr "Ommabop"
+
+msgid "Previous month"
+msgstr "Oldingi oy"
+
+msgid "Price"
+msgstr "Narx"
+
+msgid "Pricing"
+msgstr "Narxlar"
+
+msgid "Print"
+msgstr "Chop etish"
+
+msgid "Priority"
+msgstr "Ustuvorlik"
+
+msgid "Product"
+msgstr "Mahsulot"
+
+msgid "Profile"
+msgstr "Profil"
+
+msgid "Progress"
+msgstr "Jarayon"
+
+msgid "Progress by project"
+msgstr "Loyihalar bo'yicha jarayon"
+
+msgid "Project"
+msgstr "Loyiha"
+
+msgid "Project progress overview"
+msgstr "Loyiha jarayoni sharhi"
+
+msgid "Project report"
+msgstr "Loyiha hisoboti"
+
+msgid "Projects group your tasks and deadlines."
+msgstr "Loyihalar vazifa va muddatlaringizni jamlaydi."
+
+msgid "Projects, tasks and deadlines in one place"
+msgstr "Loyihalar, vazifalar va muddatlar bir joyda"
+
+msgid "Ready to bring your team into one flow?"
+msgstr "Jamoangizni yagona oqimga keltirishga tayyormisiz?"
+
+msgid "Real-time notifications"
+msgstr "Real vaqt bildirishnomalari"
+
+msgid "Recent activity"
+msgstr "So'nggi faoliyat"
+
+msgid "Register with your email and company name."
+msgstr "Email va kompaniya nomi bilan ro'yxatdan o'ting."
+
+msgid "Reporting"
+msgstr "Hisobotlar"
+
+msgid "Reports & dashboard"
+msgstr "Hisobotlar va panel"
+
+msgid "Reset"
+msgstr "Tozalash"
+
+msgid "Resource allocation"
+msgstr "Resurslarni taqsimlash"
+
+msgid "Review"
+msgstr "Tekshiruv"
+
+msgid "Role"
+msgstr "Rol"
+
+msgid "Role & access"
+msgstr "Rol va ruxsat"
+
+msgid "Roles"
+msgstr "Rollar"
+
+msgid "Roles: Platform Admin, Manager, Employee"
+msgstr "Rollar: Platforma admini, Menejer, Xodim"
+
+msgid "Save"
+msgstr "Saqlash"
+
+msgid "Save changes"
+msgstr "O'zgarishlarni saqlash"
+
+msgid "Save status"
+msgstr "Holatni saqlash"
+
+msgid "Search"
+msgstr "Qidirish"
+
+msgid "Search people…"
+msgstr "Odamlarni qidirish…"
+
+msgid "Search projects, tasks, people…"
+msgstr "Loyiha, vazifa, odamlarni qidirish…"
+
+msgid "Search projects…"
+msgstr "Loyihalarni qidirish…"
+
+msgid "Search results"
+msgstr "Qidiruv natijalari"
+
+msgid "Search tasks…"
+msgstr "Vazifalarni qidirish…"
+
+msgid "See every deadline on a monthly calendar and never miss a due date."
+msgstr ""
+"Barcha muddatlarni oylik kalendarda ko'ring va hech birini o'tkazib "
+"yubormang."
+
+msgid "Sees all companies"
+msgstr "Barcha kompaniyalarni ko'radi"
+
+msgid "Sees company projects and tasks"
+msgstr "Kompaniya loyiha va vazifalarini ko'radi"
+
+msgid "Send invitation"
+msgstr "Taklif yuborish"
+
+msgid "Send invitation links to managers and employees."
+msgstr "Menejer va xodimlarga taklif havolalarini yuboring."
+
+msgid "Settings"
+msgstr "Sozlamalar"
+
+msgid "Ship work."
+msgstr "Ishni yetkazing."
+
+msgid "Show all tasks"
+msgstr "Barcha vazifalarni ko'rsatish"
+
+msgid "Sign in"
+msgstr "Kirish"
+
+msgid "Sign in to your workspace"
+msgstr "Ish maydoningizga kiring"
+
+msgid "Simple, transparent pricing"
+msgstr "Oddiy va shaffof narxlar"
+
+msgid "Simulated (no real charge)"
+msgstr "Simulyatsiya (pul yechilmaydi)"
+
+msgid "Start"
+msgstr "Boshlanish"
+
+msgid "Start free and upgrade when your team grows."
+msgstr "Bepul boshlang va jamoa o'sganda tarifni oshiring."
+
+msgid "Started"
+msgstr "Boshlangan"
+
+msgid "Status"
+msgstr "Holat"
+
+msgid "Stay in sync."
+msgstr "Hamfikr bo'ling."
+
+msgid "Switch to the %(name)s plan?"
+msgstr "%(name)s tarifiga o'tilsinmi?"
+
+msgid "Task deadlines by day"
+msgstr "Vazifa muddatlari kunlar bo'yicha"
+
+msgid "Tasks & comments"
+msgstr "Vazifalar va izohlar"
+
+msgid "Team & project management"
+msgstr "Jamoa va loyihalarni boshqarish"
+
+msgid "Team workload"
+msgstr "Jamoa yuklamasi"
+
+msgid ""
+"TeamFlow brings projects, tasks, deadlines and your whole team into one "
+"clear workspace — with isolated data for every company."
+msgstr ""
+"TeamFlow loyihalar, vazifalar, muddatlar va butun jamoani yagona maydonga "
+"jamlaydi — har bir kompaniya ma'lumotlari alohida."
+
+msgid "Tenant isolation"
+msgstr "Kompaniyalar izolyatsiyasi"
+
+msgid "The page you are looking for doesn't exist or was moved."
+msgstr "Siz izlagan sahifa mavjud emas yoki ko'chirilgan."
+
+msgid "The right access for everyone"
+msgstr "Har kimga mos ruxsat"
+
+msgid "They will receive a link to join your company."
+msgstr "Ular kompaniyangizga qo'shilish uchun havola oladi."
+
+msgid "Title"
+msgstr "Sarlavha"
+
+msgid "To do"
+msgstr "Qilinishi kerak"
+
+msgid "Today"
+msgstr "Bugun"
+
+msgid "Total task"
+msgstr "Jami vazifa"
+
+msgid "Track progress"
+msgstr "Jarayonni kuzating"
+
+msgid "Type something in the search box."
+msgstr "Qidiruv maydoniga biror narsa yozing."
+
+msgid "Unassigned"
+msgstr "Tayinlanmagan"
+
+msgid "Unblock"
+msgstr "Blokdan chiqarish"
+
+msgid "Unlimited members"
+msgstr "Cheksiz a'zolar"
+
+msgid "Unlimited projects"
+msgstr "Cheksiz loyihalar"
+
+msgid "Unread"
+msgstr "O'qilmagan"
+
+msgid "Up and running in minutes"
+msgstr "Bir necha daqiqada ishga tushiring"
+
+msgid "Up to %(n)s members"
+msgstr "%(n)s tagacha a'zo"
+
+msgid "Up to %(n)s projects"
+msgstr "%(n)s tagacha loyiha"
+
+msgid "Update password"
+msgstr "Parolni yangilash"
+
+msgid "Update status"
+msgstr "Holatni yangilash"
+
+msgid "Updates status of own tasks"
+msgstr "O'z vazifalari holatini yangilaydi"
+
+msgid "Upgrade plan"
+msgstr "Tarifni oshirish"
+
+msgid "Usage"
+msgstr "Foydalanish"
+
+msgid "View"
+msgstr "Ko'rish"
+
+msgid "View all"
+msgstr "Hammasini ko'rish"
+
+msgid "Week"
+msgstr "Hafta"
+
+msgid "Welcome back"
+msgstr "Qaytganingiz bilan"
+
+msgid "Welcome back, %(name)s!"
+msgstr "Xush kelibsiz, %(name)s!"
+
+msgid "Year"
+msgstr "Yil"
+
+msgid "Yes, delete"
+msgstr "Ha, o'chirish"
+
+msgid "You cannot change your own role or the company owner."
+msgstr "O'z rolingizni yoki kompaniya egasini o'zgartira olmaysiz."
+
+msgid "You don't have permission to open this page."
+msgstr "Bu sahifani ochishga ruxsatingiz yo'q."
+
+msgid "You need a company workspace to use projects and tasks."
+msgstr "Loyiha va vazifalardan foydalanish uchun kompaniya maydoni kerak."
+
+msgid "You will become the manager of a brand-new company."
+msgstr "Siz yangi kompaniyaning menejeri bo'lasiz."
+
+msgid "You're all caught up"
+msgstr "Hammasi ko'rib chiqilgan"
+
+msgid "ago"
+msgstr "oldin"
+
+msgid "members"
+msgstr "a'zo"
+
+msgid "month"
+msgstr "oy"
+
+msgid "more"
+msgstr "yana"
+
+msgid "overdue"
+msgstr "muddati o'tgan"
+
+msgid "plan"
+msgstr "tarif"
+
+msgid "projects"
+msgstr "ta loyiha"
+
+msgid "task"
+msgstr "vazifa"
+
+msgid "tasks"
+msgstr "ta vazifa"
+
+msgid "tenants on the platform"
+msgstr "platformadagi kompaniyalar"
+
+msgid "unread"
+msgstr "o'qilmagan"
+
+msgid "%(email)s was invited as %(role)s. Set your password to continue."
+msgstr ""
+"%(email)s %(role)s sifatida taklif qilindi. Davom etish uchun parol "
+"o'rnating."
+
+msgid "“%(name)s” and all of its tasks will be permanently deleted."
+msgstr "“%(name)s” va uning barcha vazifalari butunlay o'chiriladi."
+
+msgid "“%(name)s” and its comments will be permanently deleted."
+msgstr "“%(name)s” va uning izohlari butunlay o'chiriladi."

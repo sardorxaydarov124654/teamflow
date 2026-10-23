@@ -1,0 +1,907 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: TeamFlow\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Dashboard"
+msgstr "Панель управления"
+
+msgid "Projects"
+msgstr "Проекты"
+
+msgid "Tasks"
+msgstr "Задачи"
+
+msgid "Team"
+msgstr "Команда"
+
+msgid "Notifications"
+msgstr "Уведомления"
+
+msgid "Billing"
+msgstr "Биллинг"
+
+msgid "All companies"
+msgstr "Все компании"
+
+msgid "Company settings"
+msgstr "Настройки компании"
+
+msgid "Sign out"
+msgstr "Выйти"
+
+msgid "Language"
+msgstr "Язык"
+
+msgid "Toggle dark mode"
+msgstr "Переключить тёмный режим"
+
+msgid "Updated"
+msgstr "Обновлено"
+
+msgid "Active employees"
+msgstr "Активные сотрудники"
+
+msgid "Active projects"
+msgstr "Активные проекты"
+
+msgid "Completed projects"
+msgstr "Завершённые проекты"
+
+msgid "Pending tasks"
+msgstr "Задачи в ожидании"
+
+msgid "Overdue tasks"
+msgstr "Просроченные задачи"
+
+msgid "Completed tasks"
+msgstr "Завершённые задачи"
+
+msgid "Employee productivity"
+msgstr "Продуктивность сотрудников"
+
+msgid "Employee"
+msgstr "Сотрудник"
+
+msgid "Assigned"
+msgstr "Назначено"
+
+msgid "Completed"
+msgstr "Завершено"
+
+msgid "No active employees yet."
+msgstr "Активных сотрудников пока нет."
+
+msgid "Platform Admin"
+msgstr "Администратор платформы"
+
+msgid "Manager"
+msgstr "Менеджер"
+
+msgid ""
+"A focused toolset that replaces scattered spreadsheets and chat threads."
+msgstr "Единый набор инструментов вместо разрозненных таблиц и переписок."
+
+msgid "Accept invitation"
+msgstr "Принять приглашение"
+
+msgid "Access denied"
+msgstr "Доступ запрещён"
+
+msgid "Account"
+msgstr "Аккаунт"
+
+msgid "Active"
+msgstr "Активен"
+
+msgid "Active members"
+msgstr "Активные участники"
+
+msgid "Add comment"
+msgstr "Добавить комментарий"
+
+msgid "Add new task"
+msgstr "Добавить задачу"
+
+msgid "Add one"
+msgstr "Добавить"
+
+msgid "Add projects, create tasks and assign them."
+msgstr "Добавляйте проекты, создавайте и назначайте задачи."
+
+msgid "Add task"
+msgstr "Добавить задачу"
+
+msgid "All"
+msgstr "Все"
+
+msgid "All priorities"
+msgstr "Все приоритеты"
+
+msgid "All rights reserved."
+msgstr "Все права защищены."
+
+msgid "All roles"
+msgstr "Все роли"
+
+msgid "All statuses"
+msgstr "Все статусы"
+
+msgid "Already have an account?"
+msgstr "Уже есть аккаунт?"
+
+msgid ""
+"Assign tasks, set priority and deadline, discuss in comments and track "
+"status."
+msgstr ""
+"Назначайте задачи, задавайте приоритет и срок, обсуждайте в комментариях и "
+"следите за статусом."
+
+msgid "Assigned tasks"
+msgstr "Назначенные задачи"
+
+msgid "Assignee"
+msgstr "Исполнитель"
+
+msgid "Back to home"
+msgstr "На главную"
+
+msgid "Back to team"
+msgstr "Назад к команде"
+
+msgid "Back to top"
+msgstr "Наверх"
+
+msgid "Billing is simulated — you will not be charged."
+msgstr "Оплата имитируется — деньги не списываются."
+
+msgid "Block"
+msgstr "Заблокировать"
+
+msgid "Blocked"
+msgstr "Заблокирована"
+
+msgid "Cached company statistics, workload per teammate and project progress."
+msgstr "Статистика компании, загрузка сотрудников и прогресс проектов."
+
+msgid "Calendar"
+msgstr "Календарь"
+
+msgid "Can block or unblock a company"
+msgstr "Может блокировать и разблокировать компании"
+
+msgid "Cancel"
+msgstr "Отмена"
+
+msgid "Cancel this invitation?"
+msgstr "Отменить приглашение?"
+
+msgid "Change password"
+msgstr "Сменить пароль"
+
+msgid "Change plan"
+msgstr "Сменить тариф"
+
+msgid "Change the status of this company?"
+msgstr "Изменить статус этой компании?"
+
+msgid "Choose"
+msgstr "Выбрать"
+
+msgid ""
+"Choose the plan that fits your team. Billing is simulated — no real charge."
+msgstr ""
+"Выберите тариф для вашей команды. Оплата имитируется — реальных списаний "
+"нет."
+
+msgid "Close"
+msgstr "Закрыть"
+
+msgid "Comments"
+msgstr "Комментарии"
+
+msgid "Comments and gets notifications"
+msgstr "Комментирует и получает уведомления"
+
+msgid "Company"
+msgstr "Компания"
+
+msgid "Company profile"
+msgstr "Профиль компании"
+
+msgid "Confirm"
+msgstr "Подтвердить"
+
+msgid "Confirm plan"
+msgstr "Подтверждение тарифа"
+
+msgid "Create a project and your first task to get started."
+msgstr "Создайте проект и первую задачу, чтобы начать."
+
+msgid "Create a workspace"
+msgstr "Создать рабочее пространство"
+
+msgid "Create company"
+msgstr "Создать компанию"
+
+msgid "Create free workspace"
+msgstr "Создать бесплатное пространство"
+
+msgid ""
+"Create projects with owners, dates and statuses and see progress at a "
+"glance."
+msgstr ""
+"Создавайте проекты с ответственными, датами и статусами и видьте прогресс."
+
+msgid "Create workspace"
+msgstr "Создать пространство"
+
+msgid "Create your company"
+msgstr "Создайте свою компанию"
+
+msgid "Create your first project"
+msgstr "Создайте первый проект"
+
+msgid "Create your workspace"
+msgstr "Создайте рабочее пространство"
+
+msgid "Create your workspace for free — it takes less than a minute."
+msgstr "Создайте пространство бесплатно — это займёт меньше минуты."
+
+msgid "Created"
+msgstr "Создано"
+
+msgid "Created by"
+msgstr "Автор"
+
+msgid "Creates projects and tasks"
+msgstr "Создаёт проекты и задачи"
+
+msgid "Current"
+msgstr "Текущий"
+
+msgid "Current plan"
+msgstr "Текущий тариф"
+
+msgid "Day"
+msgstr "День"
+
+msgid "Deactivate"
+msgstr "Деактивировать"
+
+msgid "Deactivate this member?"
+msgstr "Деактивировать этого участника?"
+
+msgid "Deactivated"
+msgstr "Деактивирован"
+
+msgid "Deadline"
+msgstr "Срок"
+
+msgid "Delete"
+msgstr "Удалить"
+
+msgid "Delete project"
+msgstr "Удалить проект"
+
+msgid "Delete project?"
+msgstr "Удалить проект?"
+
+msgid "Delete task"
+msgstr "Удалить задачу"
+
+msgid "Delete task?"
+msgstr "Удалить задачу?"
+
+msgid "Description"
+msgstr "Описание"
+
+msgid "Details"
+msgstr "Детали"
+
+msgid "Done"
+msgstr "Готово"
+
+msgid "Each company's data is strictly separated from every other company."
+msgstr "Данные каждой компании строго изолированы от других."
+
+msgid "Edit"
+msgstr "Изменить"
+
+msgid "Edit project"
+msgstr "Редактировать проект"
+
+msgid "Edit task"
+msgstr "Редактировать задачу"
+
+msgid "Email"
+msgstr "Email"
+
+msgid ""
+"Every company gets its own isolated space. Managers plan the work, employees"
+" deliver it, everyone stays in sync."
+msgstr ""
+"У каждой компании своё изолированное пространство. Менеджеры планируют, "
+"сотрудники выполняют, все синхронизированы."
+
+msgid "Everything your team needs"
+msgstr "Всё, что нужно вашей команде"
+
+msgid "Features"
+msgstr "Возможности"
+
+msgid "Filter"
+msgstr "Фильтр"
+
+msgid "First name"
+msgstr "Имя"
+
+msgid "Follow the dashboard, calendar and reports."
+msgstr "Следите за дашбордом, календарём и отчётами."
+
+msgid "Footer"
+msgstr "Подвал"
+
+msgid "Free plan available"
+msgstr "Есть бесплатный тариф"
+
+msgid "Generated"
+msgstr "Сформировано"
+
+msgid ""
+"Get instant alerts about assignments, comments, status changes and "
+"deadlines."
+msgstr ""
+"Мгновенные уведомления о назначениях, комментариях, статусах и сроках."
+
+msgid "Get started"
+msgstr "Начать"
+
+msgid "Go back"
+msgstr "Назад"
+
+msgid "Home"
+msgstr "Главная"
+
+msgid "How it works"
+msgstr "Как это работает"
+
+msgid "In Progress"
+msgstr "В работе"
+
+msgid "In progress"
+msgstr "В работе"
+
+msgid "Invite a teammate"
+msgstr "Пригласить коллегу"
+
+msgid "Invite link"
+msgstr "Ссылка-приглашение"
+
+msgid "Invite member"
+msgstr "Пригласить участника"
+
+msgid "Invite your team"
+msgstr "Пригласите команду"
+
+msgid "Invites and manages members"
+msgstr "Приглашает и управляет участниками"
+
+msgid "Join"
+msgstr "Присоединиться к"
+
+msgid "Join %(name)s"
+msgstr "Присоединяйтесь к %(name)s"
+
+msgid "Joined"
+msgstr "Присоединился"
+
+msgid "Last name"
+msgstr "Фамилия"
+
+msgid "Let's set up your workspace"
+msgstr "Давайте настроим ваше пространство"
+
+msgid "Link copied"
+msgstr "Ссылка скопирована"
+
+msgid "Live notifications"
+msgstr "Уведомления в реальном времени"
+
+msgid "Main navigation"
+msgstr "Основная навигация"
+
+msgid "Manage"
+msgstr "Управлять"
+
+msgid "Manage subscription"
+msgstr "Управление подпиской"
+
+msgid "Manages the subscription"
+msgstr "Управляет подпиской"
+
+msgid "Manages the whole platform"
+msgstr "Управляет всей платформой"
+
+msgid "Mark all as read"
+msgstr "Прочитать все"
+
+msgid "Mark read"
+msgstr "Прочитано"
+
+msgid "Member"
+msgstr "Участник"
+
+msgid "Members"
+msgstr "Участники"
+
+msgid "Month"
+msgstr "Месяц"
+
+msgid "Multi-tenant SaaS for teams"
+msgstr "Multi-tenant SaaS для команд"
+
+msgid "Multi-tenant project and task management for teams that want clarity."
+msgstr "Управление проектами и задачами для команд, которым важна ясность."
+
+msgid "My open tasks"
+msgstr "Мои открытые задачи"
+
+msgid "My profile"
+msgstr "Мой профиль"
+
+msgid "My subscription"
+msgstr "Моя подписка"
+
+msgid "My tasks"
+msgstr "Мои задачи"
+
+msgid "Name A–Z"
+msgstr "Название А–Я"
+
+msgid "New notifications will appear here in real time."
+msgstr "Новые уведомления появятся здесь в реальном времени."
+
+msgid "New project"
+msgstr "Новый проект"
+
+msgid "New task"
+msgstr "Новая задача"
+
+msgid "Newest first"
+msgstr "Сначала новые"
+
+msgid "Next month"
+msgstr "Следующий месяц"
+
+msgid "No account yet?"
+msgstr "Нет аккаунта?"
+
+msgid "No activity yet"
+msgstr "Пока нет активности"
+
+msgid "No comments yet."
+msgstr "Комментариев пока нет."
+
+msgid "No companies yet."
+msgstr "Компаний пока нет."
+
+msgid "No company description yet."
+msgstr "Описания компании пока нет."
+
+msgid "No credit card"
+msgstr "Без банковской карты"
+
+msgid "No matches"
+msgstr "Ничего не найдено"
+
+msgid "No members found."
+msgstr "Участники не найдены."
+
+msgid "No projects yet"
+msgstr "Проектов пока нет"
+
+msgid "No projects yet."
+msgstr "Проектов пока нет."
+
+msgid "No tasks in this project yet."
+msgstr "В этом проекте пока нет задач."
+
+msgid "No tasks match these filters."
+msgstr "Нет задач, подходящих под фильтры."
+
+msgid "Nothing assigned to you. Enjoy!"
+msgstr "Вам ничего не назначено. Отдыхайте!"
+
+msgid "One workspace for your projects, tasks and team."
+msgstr "Единое пространство для проектов, задач и команды."
+
+msgid "Only managers can change the plan."
+msgstr "Тариф могут менять только менеджеры."
+
+msgid "Only mine"
+msgstr "Только мои"
+
+msgid "Only my tasks"
+msgstr "Только мои задачи"
+
+msgid "Only the company owner can edit these settings."
+msgstr "Эти настройки может менять только владелец компании."
+
+msgid "Open"
+msgstr "Открыть"
+
+msgid "Open menu"
+msgstr "Открыть меню"
+
+msgid "Open tasks by priority"
+msgstr "Открытые задачи по приоритету"
+
+msgid "Overdue"
+msgstr "Просрочено"
+
+msgid "Owner"
+msgstr "Владелец"
+
+msgid "Page not found"
+msgstr "Страница не найдена"
+
+msgid "Password"
+msgstr "Пароль"
+
+msgid "Pending invitations"
+msgstr "Ожидающие приглашения"
+
+msgid "People"
+msgstr "Люди"
+
+msgid "Plan"
+msgstr "Тариф"
+
+msgid "Plan projects."
+msgstr "Планируйте проекты."
+
+msgid "Plan the work"
+msgstr "Спланируйте работу"
+
+msgid "Plans"
+msgstr "Тарифы"
+
+msgid "Plans & billing"
+msgstr "Тарифы и оплата"
+
+msgid "Popular"
+msgstr "Популярный"
+
+msgid "Previous month"
+msgstr "Предыдущий месяц"
+
+msgid "Price"
+msgstr "Цена"
+
+msgid "Pricing"
+msgstr "Цены"
+
+msgid "Print"
+msgstr "Печать"
+
+msgid "Priority"
+msgstr "Приоритет"
+
+msgid "Product"
+msgstr "Продукт"
+
+msgid "Profile"
+msgstr "Профиль"
+
+msgid "Progress"
+msgstr "Прогресс"
+
+msgid "Progress by project"
+msgstr "Прогресс по проектам"
+
+msgid "Project"
+msgstr "Проект"
+
+msgid "Project progress overview"
+msgstr "Обзор прогресса проектов"
+
+msgid "Project report"
+msgstr "Отчёт по проектам"
+
+msgid "Projects group your tasks and deadlines."
+msgstr "Проекты объединяют ваши задачи и сроки."
+
+msgid "Projects, tasks and deadlines in one place"
+msgstr "Проекты, задачи и сроки в одном месте"
+
+msgid "Ready to bring your team into one flow?"
+msgstr "Готовы объединить команду в один поток?"
+
+msgid "Real-time notifications"
+msgstr "Уведомления в реальном времени"
+
+msgid "Recent activity"
+msgstr "Последняя активность"
+
+msgid "Register with your email and company name."
+msgstr "Зарегистрируйтесь по email и названию компании."
+
+msgid "Reporting"
+msgstr "Отчёты"
+
+msgid "Reports & dashboard"
+msgstr "Отчёты и дашборд"
+
+msgid "Reset"
+msgstr "Сбросить"
+
+msgid "Resource allocation"
+msgstr "Распределение ресурсов"
+
+msgid "Review"
+msgstr "Проверка"
+
+msgid "Role"
+msgstr "Роль"
+
+msgid "Role & access"
+msgstr "Роль и доступ"
+
+msgid "Roles"
+msgstr "Роли"
+
+msgid "Roles: Platform Admin, Manager, Employee"
+msgstr "Роли: админ платформы, менеджер, сотрудник"
+
+msgid "Save"
+msgstr "Сохранить"
+
+msgid "Save changes"
+msgstr "Сохранить изменения"
+
+msgid "Save status"
+msgstr "Сохранить статус"
+
+msgid "Search"
+msgstr "Поиск"
+
+msgid "Search people…"
+msgstr "Поиск людей…"
+
+msgid "Search projects, tasks, people…"
+msgstr "Поиск проектов, задач, людей…"
+
+msgid "Search projects…"
+msgstr "Поиск проектов…"
+
+msgid "Search results"
+msgstr "Результаты поиска"
+
+msgid "Search tasks…"
+msgstr "Поиск задач…"
+
+msgid "See every deadline on a monthly calendar and never miss a due date."
+msgstr "Все сроки на месячном календаре — ничего не пропустите."
+
+msgid "Sees all companies"
+msgstr "Видит все компании"
+
+msgid "Sees company projects and tasks"
+msgstr "Видит проекты и задачи компании"
+
+msgid "Send invitation"
+msgstr "Отправить приглашение"
+
+msgid "Send invitation links to managers and employees."
+msgstr "Отправьте ссылки-приглашения менеджерам и сотрудникам."
+
+msgid "Settings"
+msgstr "Настройки"
+
+msgid "Ship work."
+msgstr "Выполняйте работу."
+
+msgid "Show all tasks"
+msgstr "Показать все задачи"
+
+msgid "Sign in"
+msgstr "Войти"
+
+msgid "Sign in to your workspace"
+msgstr "Войдите в своё пространство"
+
+msgid "Simple, transparent pricing"
+msgstr "Простые и прозрачные цены"
+
+msgid "Simulated (no real charge)"
+msgstr "Имитация (без списаний)"
+
+msgid "Start"
+msgstr "Начало"
+
+msgid "Start free and upgrade when your team grows."
+msgstr "Начните бесплатно и повышайте тариф по мере роста команды."
+
+msgid "Started"
+msgstr "Начало"
+
+msgid "Status"
+msgstr "Статус"
+
+msgid "Stay in sync."
+msgstr "Оставайтесь на одной волне."
+
+msgid "Switch to the %(name)s plan?"
+msgstr "Перейти на тариф %(name)s?"
+
+msgid "Task deadlines by day"
+msgstr "Сроки задач по дням"
+
+msgid "Tasks & comments"
+msgstr "Задачи и комментарии"
+
+msgid "Team & project management"
+msgstr "Управление командой и проектами"
+
+msgid "Team workload"
+msgstr "Загрузка команды"
+
+msgid ""
+"TeamFlow brings projects, tasks, deadlines and your whole team into one "
+"clear workspace — with isolated data for every company."
+msgstr ""
+"TeamFlow объединяет проекты, задачи, сроки и всю команду в одном "
+"пространстве — с изолированными данными каждой компании."
+
+msgid "Tenant isolation"
+msgstr "Изоляция компаний"
+
+msgid "The page you are looking for doesn't exist or was moved."
+msgstr "Страница не существует или была перемещена."
+
+msgid "The right access for everyone"
+msgstr "Правильный доступ для каждого"
+
+msgid "They will receive a link to join your company."
+msgstr "Они получат ссылку для присоединения к компании."
+
+msgid "Title"
+msgstr "Название"
+
+msgid "To do"
+msgstr "К выполнению"
+
+msgid "Today"
+msgstr "Сегодня"
+
+msgid "Total task"
+msgstr "Всего задач"
+
+msgid "Track progress"
+msgstr "Следите за прогрессом"
+
+msgid "Type something in the search box."
+msgstr "Введите запрос в строку поиска."
+
+msgid "Unassigned"
+msgstr "Не назначено"
+
+msgid "Unblock"
+msgstr "Разблокировать"
+
+msgid "Unlimited members"
+msgstr "Неограниченно участников"
+
+msgid "Unlimited projects"
+msgstr "Неограниченно проектов"
+
+msgid "Unread"
+msgstr "Непрочитанные"
+
+msgid "Up and running in minutes"
+msgstr "Запуск за несколько минут"
+
+msgid "Up to %(n)s members"
+msgstr "До %(n)s участников"
+
+msgid "Up to %(n)s projects"
+msgstr "До %(n)s проектов"
+
+msgid "Update password"
+msgstr "Обновить пароль"
+
+msgid "Update status"
+msgstr "Обновить статус"
+
+msgid "Updates status of own tasks"
+msgstr "Обновляет статус своих задач"
+
+msgid "Upgrade plan"
+msgstr "Повысить тариф"
+
+msgid "Usage"
+msgstr "Использование"
+
+msgid "View"
+msgstr "Просмотр"
+
+msgid "View all"
+msgstr "Показать все"
+
+msgid "Week"
+msgstr "Неделя"
+
+msgid "Welcome back"
+msgstr "С возвращением"
+
+msgid "Welcome back, %(name)s!"
+msgstr "С возвращением, %(name)s!"
+
+msgid "Year"
+msgstr "Год"
+
+msgid "Yes, delete"
+msgstr "Да, удалить"
+
+msgid "You cannot change your own role or the company owner."
+msgstr "Нельзя менять свою роль или роль владельца компании."
+
+msgid "You don't have permission to open this page."
+msgstr "У вас нет доступа к этой странице."
+
+msgid "You need a company workspace to use projects and tasks."
+msgstr ""
+"Для работы с проектами и задачами нужно рабочее пространство компании."
+
+msgid "You will become the manager of a brand-new company."
+msgstr "Вы станете менеджером новой компании."
+
+msgid "You're all caught up"
+msgstr "Всё прочитано"
+
+msgid "ago"
+msgstr "назад"
+
+msgid "members"
+msgstr "участников"
+
+msgid "month"
+msgstr "месяц"
+
+msgid "more"
+msgstr "ещё"
+
+msgid "overdue"
+msgstr "просрочено"
+
+msgid "plan"
+msgstr "тариф"
+
+msgid "projects"
+msgstr "проектов"
+
+msgid "task"
+msgstr "задача"
+
+msgid "tasks"
+msgstr "задач"
+
+msgid "tenants on the platform"
+msgstr "компаний на платформе"
+
+msgid "unread"
+msgstr "непрочитанных"
+
+msgid "%(email)s was invited as %(role)s. Set your password to continue."
+msgstr "%(email)s приглашён как %(role)s. Задайте пароль, чтобы продолжить."
+
+msgid "“%(name)s” and all of its tasks will be permanently deleted."
+msgstr "«%(name)s» и все его задачи будут удалены навсегда."
+
+msgid "“%(name)s” and its comments will be permanently deleted."
+msgstr "«%(name)s» и его комментарии будут удалены навсегда."

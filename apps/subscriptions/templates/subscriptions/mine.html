@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "My subscription" %} — TeamFlow{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>{% translate "My subscription" %}</h1></div><a class="btn" href="{% url 'subscriptions:plans' %}">{% translate "Change plan" %}</a></div>
+<div class="grid grid-2">
+  <div class="card"><div class="card-head"><h2>{{ subscription.plan.name }}</h2><span class="badge st-done">{{ subscription.get_status_display }}</span></div>
+    <dl class="kv"><dt>{% translate "Company" %}</dt><dd>{{ company.name }}</dd><dt>{% translate "Price" %}</dt><dd>${{ subscription.plan.price_monthly|floatformat:"0" }}/{% translate "month" %}</dd><dt>{% translate "Started" %}</dt><dd>{{ subscription.started_at|date:"M j, Y" }}</dd><dt>{% translate "Billing" %}</dt><dd>{% translate "Simulated (no real charge)" %}</dd></dl></div>
+  <div class="card"><div class="card-head"><h2>{% translate "Usage" %}</h2></div>
+    <div class="usage-row"><span>{% translate "Members" %}</span><b>{{ member_count }} / {{ subscription.plan.max_users|default:"∞" }}</b></div>
+    {% if subscription.plan.max_users %}<div class="bar"><i style="width:{% widthratio member_count subscription.plan.max_users 100 %}%"></i></div>{% endif %}
+    <div class="usage-row mt"><span>{% translate "Projects" %}</span><b>{{ project_count }} / {{ subscription.plan.max_projects|default:"∞" }}</b></div>
+    {% if subscription.plan.max_projects %}<div class="bar"><i style="width:{% widthratio project_count subscription.plan.max_projects 100 %}%"></i></div>{% endif %}</div>
+</div>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Plans" %} — TeamFlow{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>{% translate "Plans & billing" %}</h1><p class="sub">{% translate "Choose the plan that fits your team. Billing is simulated — no real charge." %}</p></div><a class="btn secondary" href="{% url 'subscriptions:mine' %}">{% translate "My subscription" %}</a></div>
+<div class="grid grid-3">
+{% for plan in plans %}
+  <div class="card plan-card {% if plan.code == current_code %}current{% endif %}">
+    <h3>{{ plan.name }} {% if plan.code == current_code %}<span class="chip chip-blue">{% translate "Current" %}</span>{% endif %}</h3>
+    <div class="price">${{ plan.price_monthly|floatformat:"0" }}<small>/{% translate "month" %}</small></div>
+    <ul><li><svg class="i"><use href="#i-check"/></svg>{% if plan.max_users %}{% blocktranslate with n=plan.max_users %}Up to {{ n }} members{% endblocktranslate %}{% else %}{% translate "Unlimited members" %}{% endif %}</li>
+    <li><svg class="i"><use href="#i-check"/></svg>{% if plan.max_projects %}{% blocktranslate with n=plan.max_projects %}Up to {{ n }} projects{% endblocktranslate %}{% else %}{% translate "Unlimited projects" %}{% endif %}</li>
+    {% for f in plan.features|slice:"2:" %}<li><svg class="i"><use href="#i-check"/></svg>{{ f }}</li>{% endfor %}</ul>
+    {% if plan.code == current_code %}<button class="btn secondary block" disabled>{% translate "Current plan" %}</button>
+    {% elif user.is_manager %}<a class="btn block" href="{% url 'subscriptions:upgrade' plan.code %}">{% translate "Choose" %} {{ plan.name }}</a>
+    {% else %}<span class="muted small">{% translate "Only managers can change the plan." %}</span>{% endif %}
+  </div>
+{% endfor %}
+</div>
+{% endblock %}

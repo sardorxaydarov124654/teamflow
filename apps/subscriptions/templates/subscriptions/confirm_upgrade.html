@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Confirm plan" %} — TeamFlow{% endblock %}
+{% block content %}
+<div class="card narrow-sm"><h1 style="font-size:22px;margin-bottom:10px">{% blocktranslate with name=plan.name %}Switch to the {{ name }} plan?{% endblocktranslate %}</h1>
+<p class="muted">${{ plan.price_monthly|floatformat:"0" }}/{% translate "month" %} · {% translate "Billing is simulated — you will not be charged." %}</p>
+<form method="post" class="form-actions mt">{% csrf_token %}<button class="btn" type="submit">{% translate "Confirm" %}</button><a class="btn secondary" href="{% url 'subscriptions:plans' %}">{% translate "Cancel" %}</a></form></div>
+{% endblock %}
