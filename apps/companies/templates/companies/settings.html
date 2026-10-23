@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Settings" %} — TeamFlow{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>{% translate "Company settings" %}</h1><p class="sub">{% if not can_edit %}{% translate "Only the company owner can edit these settings." %}{% endif %}</p></div></div>
+<div class="grid grid-main">
+  <div class="card">
+    <form method="post" enctype="multipart/form-data" class="form" novalidate>{% csrf_token %}
+      {% include "partials/_form.html" %}
+      {% if can_edit %}<div class="form-actions"><button class="btn" type="submit">{% translate "Save changes" %}</button></div>{% endif %}
+    </form>
+  </div>
+  <div class="card">{% include "companies/_profile_card.html" %}
+    <dl class="kv mt"><dt>{% translate "Owner" %}</dt><dd>{{ company.owner.full_name }}</dd><dt>{% translate "Created" %}</dt><dd>{{ company.created_at|date:"M j, Y" }}</dd></dl>
+    {% if user.is_manager or user.is_platform_admin %}<a class="btn secondary block mt" href="{% url 'subscriptions:mine' %}"><svg class="i i-sm"><use href="#i-billing"/></svg>{% translate "Manage subscription" %}</a>{% endif %}
+  </div>
+</div>
+{% if not can_edit %}<script>document.addEventListener("DOMContentLoaded",function(){document.querySelectorAll(".form input,.form textarea").forEach(function(e){e.disabled=true;});});</script>{% endif %}
+{% endblock %}

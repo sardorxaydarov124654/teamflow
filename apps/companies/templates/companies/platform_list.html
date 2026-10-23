@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "All companies" %} — TeamFlow{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>{% translate "All companies" %}</h1><p class="sub">{{ companies|length }} {% translate "tenants on the platform" %}</p></div></div>
+<div class="table-wrap"><table class="table">
+  <thead><tr><th>{% translate "Company" %}</th><th>{% translate "Owner" %}</th><th>{% translate "Plan" %}</th><th>{% translate "Members" %}</th><th>{% translate "Projects" %}</th><th>{% translate "Tasks" %}</th><th>{% translate "Status" %}</th><th></th></tr></thead>
+  <tbody>
+  {% for c in companies %}
+    <tr>
+      <td><b>{{ c.name }}</b><div class="muted small">{{ c.created_at|date:"M j, Y" }}</div></td><td>{{ c.owner.email }}</td>
+      <td><span class="chip chip-blue">{{ c.get_plan_display }}</span></td><td>{{ c.member_total }}</td><td>{{ c.project_total }}</td><td>{{ c.task_total }}</td>
+      <td>{% if c.is_active %}<span class="badge st-done">{% translate "Active" %}</span>{% else %}<span class="badge pr-urgent">{% translate "Blocked" %}</span>{% endif %}</td>
+      <td class="right"><form method="post" action="{% url 'companies:platform-toggle-active' c.pk %}" class="inline" data-confirm="{% translate 'Change the status of this company?' %}">{% csrf_token %}<button class="btn small {% if c.is_active %}outline-danger{% else %}secondary{% endif %}" type="submit">{% if c.is_active %}{% translate "Block" %}{% else %}{% translate "Unblock" %}{% endif %}</button></form></td>
+    </tr>
+  {% empty %}<tr><td colspan="8" class="empty">{% translate "No companies yet." %}</td></tr>{% endfor %}
+  </tbody></table></div>
+{% endblock %}
