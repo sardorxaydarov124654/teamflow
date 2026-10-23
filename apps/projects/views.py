@@ -49,3 +49,82 @@ def project_list_view(request):
         },
     )
 
+
+@manager_required
+def project_create_view(request):
+    company = request.user.company
+    if company is None:
+        messages.error(request, "You are not attached to a company.")
+        return redirect("dashboard:dashboard")
+    if not company.can_add_project():
+        messages.error(request, "Your subscription plan's project limit has been reached.")
+        return redirect("projects:list")
+
+    if request.method == "POST":
+        form = ProjectForm(request.POST, company=company)
+        if form.is_valid():
+            project = form.save(commit=False)
+            project.company = company
+            if not project.owner_id:
+                project.owner = request.user
+            project.save()
+            messages.success(request, f'Project "{project.name}" created.')
+            return redirect("projects:detail", pk=project.pk)
+    else:
+        form = ProjectForm(company=company, initial={"owner": request.user})
+    return render(request, "projects/form.html", {"form": form, "mode": "create"})
+
+
+@company_member_required
+def project_detail_view(request, pk):
+    qs = company_scoped_queryset(request.user, Project.objects.select_related("owner", "company"))
+    project = get_object_or_404(qs, pk=pk)
+    if not same_company_object(request.user, project):
+        raise PermissionDenied
+    stats = project.task_stats
+    progress = round(stats["done"] * 100 / stats["total"]) if stats["total"] else 0
+    tasks = project.tasks.select_related("assigned_to").order_by("-created_at")
+    return render(
+        request,
+        "projects/detail.html",
+        {
+            "project": project,
+            "task_stats": stats,
+            "progress": progress,
+            "tasks": tasks,
+            "now": timezone.now(),
+            "today": timezone.localdate(),
+        },
+    )
+
+
+@manager_required
+def project_edit_view(request, pk):
+    qs = company_scoped_queryset(request.user, Project.objects.all())
+    project = get_object_or_404(qs, pk=pk)
+    if not same_company_object(request.user, project):
+        raise PermissionDenied
+
+    if request.method == "POST":
+        form = ProjectForm(request.POST, instance=project, company=project.company)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Project updated.")
+            return redirect("projects:detail", pk=project.pk)
+    else:
+        form = ProjectForm(instance=project, company=project.company)
+    return render(request, "projects/form.html", {"form": form, "mode": "edit", "project": project})
+
+
+@manager_required
+def project_delete_view(request, pk):
+    qs = company_scoped_queryset(request.user, Project.objects.all())
+    project = get_object_or_404(qs, pk=pk)
+    if not same_company_object(request.user, project):
+        raise PermissionDenied
+    if request.method == "POST":
+        name = project.name
+        project.delete()
+        messages.success(request, f'Project "{name}" deleted.')
+        return redirect("projects:list")
+    return render(request, "projects/confirm_delete.html", {"project": project})
