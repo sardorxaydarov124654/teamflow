@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% if mode == 'edit' %}{% translate "Edit task" %}{% else %}{% translate "New task" %}{% endif %} — TeamFlow{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>{% if mode == 'edit' %}{% translate "Edit task" %}{% else %}{% translate "New task" %}{% endif %}</h1></div></div>
+<div class="card narrow"><form method="post" class="form" novalidate>{% csrf_token %}
+  {% if form.non_field_errors %}<div class="alert alert-error">{{ form.non_field_errors }}</div>{% endif %}
+  {% include "partials/_field.html" with field=form.title %}{% include "partials/_field.html" with field=form.description %}
+  <div class="form-grid">{% include "partials/_field.html" with field=form.project %}{% include "partials/_field.html" with field=form.assigned_to %}{% include "partials/_field.html" with field=form.priority %}{% include "partials/_field.html" with field=form.status %}</div>
+  {% include "partials/_field.html" with field=form.deadline %}
+  <div class="form-actions"><button class="btn" type="submit">{% translate "Save" %}</button><a class="btn secondary" href="{% if task %}{% url 'tasks:detail' task.pk %}{% else %}{% url 'tasks:list' %}{% endif %}">{% translate "Cancel" %}</a></div></form></div>
+{% endblock %}

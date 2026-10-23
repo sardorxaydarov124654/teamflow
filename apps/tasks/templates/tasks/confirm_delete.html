@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Delete task" %} — TeamFlow{% endblock %}
+{% block content %}
+<div class="card narrow-sm"><h1 style="font-size:22px;margin-bottom:10px">{% translate "Delete task?" %}</h1>
+<p class="muted">{% blocktranslate with name=task.title %}“{{ name }}” and its comments will be permanently deleted.{% endblocktranslate %}</p>
+<form method="post" class="form-actions mt">{% csrf_token %}<button class="btn danger" type="submit">{% translate "Yes, delete" %}</button><a class="btn secondary" href="{% url 'tasks:detail' task.pk %}">{% translate "Cancel" %}</a></form></div>
+{% endblock %}

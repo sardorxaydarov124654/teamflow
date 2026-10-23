@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Calendar" %} — TeamFlow{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>{% translate "Calendar" %}</h1><p class="sub">{% translate "Task deadlines by day" %}</p></div>
+  <div class="actions">
+    <a class="btn secondary small" href="?month={{ month|date:'Y-m' }}{% if not mine %}&mine=1{% endif %}">{% if mine %}{% translate "Show all tasks" %}{% else %}{% translate "Only my tasks" %}{% endif %}</a>
+    <a class="icon-btn" href="?month={{ prev_month|date:'Y-m' }}{% if mine %}&mine=1{% endif %}" aria-label="{% translate 'Previous month' %}"><svg class="i"><use href="#i-left"/></svg></a>
+    <b style="min-width:140px;text-align:center">{{ month|date:"F Y" }}</b>
+    <a class="icon-btn" href="?month={{ next_month|date:'Y-m' }}{% if mine %}&mine=1{% endif %}" aria-label="{% translate 'Next month' %}"><svg class="i"><use href="#i-right"/></svg></a>
+    <a class="btn secondary small" href="{% url 'tasks:calendar' %}">{% translate "Today" %}</a></div></div>
+<div class="card" style="padding:12px;overflow-x:auto"><table class="big-cal"><thead><tr>{% for d in weekdays %}<th>{{ d }}</th>{% endfor %}</tr></thead><tbody>
+{% for week in weeks %}<tr>{% for cell in week %}<td class="{% if not cell.in_month %}out{% endif %} {% if cell.is_today %}today{% endif %}"><span class="num">{{ cell.date.day }}</span>
+  {% for t in cell.tasks|slice:":3" %}<a class="cal-task st-{{ t.status }}" href="{% url 'tasks:detail' t.pk %}" title="{{ t.title }} — {{ t.project.name }}">{{ t.title }}</a>{% endfor %}
+  {% if cell.tasks|length > 3 %}<span class="muted small">+{{ cell.tasks|length|add:"-3" }} {% translate "more" %}</span>{% endif %}</td>{% endfor %}</tr>{% endfor %}
+</tbody></table></div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{{ task.title }} — TeamFlow{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>{{ task.title }}</h1><p class="sub"><a href="{% url 'projects:detail' task.project_id %}">{{ task.project.name }}</a></p></div>
+  <div class="actions"><a class="btn secondary" href="{% url 'tasks:list' %}">← {% translate "Tasks" %}</a>
+  {% if user.is_manager or user.is_platform_admin %}<a class="btn secondary" href="{% url 'tasks:edit' task.pk %}"><svg class="i i-sm"><use href="#i-edit"/></svg>{% translate "Edit" %}</a><a class="btn outline-danger" href="{% url 'tasks:delete' task.pk %}"><svg class="i i-sm"><use href="#i-trash"/></svg>{% translate "Delete" %}</a>{% endif %}</div></div>
+<div class="grid grid-main">
+  <div class="stack">
+    <div class="card"><div class="card-head"><h2>{% translate "Description" %}</h2></div><p>{{ task.description|linebreaksbr|default:"—" }}</p></div>
+    <div class="card"><div class="card-head"><h2>{% translate "Comments" %} ({{ comments|length }})</h2></div>
+      {% for c in comments %}<div class="comment">{% include "partials/_avatar.html" with person=c.author size="md" %}<div><span class="who">{{ c.author.full_name }}</span><span class="when">{{ c.created_at|timesince }} {% translate "ago" %}</span><p>{{ c.body }}</p></div></div>
+      {% empty %}<p class="muted small">{% translate "No comments yet." %}</p>{% endfor %}
+      <form method="post" class="comment-form mt">{% csrf_token %}{{ comment_form.body }}{% for e in comment_form.body.errors %}<p class="error">{{ e }}</p>{% endfor %}<button class="btn" type="submit"><svg class="i i-sm"><use href="#i-message"/></svg>{% translate "Add comment" %}</button></form></div>
+  </div>
+  <div class="stack">
+    <div class="card"><h3 style="margin-bottom:16px">{% translate "Details" %}</h3>
+      <dl class="kv"><dt>{% translate "Status" %}</dt><dd>{% include "partials/_status.html" %}</dd><dt>{% translate "Priority" %}</dt><dd>{% include "partials/_priority.html" %}</dd>
+      <dt>{% translate "Assignee" %}</dt><dd>{{ task.assigned_to.full_name|default:"—" }}</dd><dt>{% translate "Created by" %}</dt><dd>{{ task.created_by.full_name|default:"—" }}</dd>
+      <dt>{% translate "Deadline" %}</dt><dd class="{% if is_overdue %}overdue{% endif %}">{{ task.deadline|date:"M j, Y H:i"|default:"—" }}{% if is_overdue %} ({% translate "overdue" %}){% endif %}</dd><dt>{% translate "Created" %}</dt><dd>{{ task.created_at|date:"M j, Y" }}</dd></dl></div>
+    {% if can_change_status %}<div class="card"><h3 style="margin-bottom:12px">{% translate "Update status" %}</h3>
+      <form method="post" action="{% url 'tasks:status' task.pk %}" class="form">{% csrf_token %}
+        <select name="status" class="inline-select">{% for v, l in status_choices %}<option value="{{ v }}" {% if v == task.status %}selected{% endif %}>{{ l }}</option>{% endfor %}</select>
+        <button class="btn" type="submit"><svg class="i i-sm"><use href="#i-check"/></svg>{% translate "Save status" %}</button></form></div>{% endif %}
+  </div>
+</div>
+{% endblock %}
