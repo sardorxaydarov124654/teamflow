@@ -1,0 +1,17 @@
+from .base import *  # noqa: F401,F403
+
+# In production the SECRET_KEY must come from the environment.
+if SECRET_KEY.startswith("django-insecure"):  # noqa: F405
+    raise RuntimeError("Set a real SECRET_KEY in the environment for production.")
+
+DEBUG = False
+
+SECURE_SSL_REDIRECT = env.bool("SECURE_SSL_REDIRECT", default=True)  # noqa: F405
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SECURE_HSTS_SECONDS = 60 * 60 * 24 * 30
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+LOGGING["root"]["level"] = "WARNING"  # noqa: F405
