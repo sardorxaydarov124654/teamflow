@@ -1,0 +1,21 @@
+{% extends "layouts/auth.html" %}
+{% load i18n %}
+{% block title %}{% translate "Create workspace" %} — TeamFlow{% endblock %}
+{% block auth_content %}
+<h1>{% translate "Create your workspace" %}</h1>
+<p class="lead">{% translate "You will become the manager of a brand-new company." %}</p>
+<form method="post" novalidate>
+  {% csrf_token %}
+  {% if form.non_field_errors %}<div class="alert alert-error">{{ form.non_field_errors }}</div>{% endif %}
+  <div class="form-grid">
+    {% for f in form %}{% if f.name == 'first_name' or f.name == 'last_name' %}
+      <div class="field {% if f.errors %}has-error{% endif %}"><label for="{{ f.id_for_label }}">{{ f.label }}</label>{{ f }}{% for e in f.errors %}<p class="error">{{ e }}</p>{% endfor %}</div>
+    {% endif %}{% endfor %}
+  </div>
+  {% for f in form %}{% if f.name != 'first_name' and f.name != 'last_name' %}
+    <div class="field {% if f.errors %}has-error{% endif %}"><label for="{{ f.id_for_label }}">{{ f.label }}</label>{{ f }}{% for e in f.errors %}<p class="error">{{ e }}</p>{% endfor %}</div>
+  {% endif %}{% endfor %}
+  <button class="btn block lg" type="submit">{% translate "Create workspace" %}</button>
+</form>
+<div class="auth-foot">{% translate "Already have an account?" %} <a href="{% url 'accounts:login' %}">{% translate "Sign in" %}</a></div>
+{% endblock %}

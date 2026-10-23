@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{{ member.full_name }} — TeamFlow{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>{{ member.full_name }}</h1><p class="sub">{{ member.email }}</p></div><a class="btn secondary" href="{% url 'accounts:members' %}">← {% translate "Back to team" %}</a></div>
+<div class="grid grid-2">
+  <div class="card">
+    <div class="company-banner" style="margin-bottom:20px">{% include "partials/_avatar.html" with person=member size="xl" %}
+      <div><span class="badge role-badge-{{ member.role }}">{{ member.get_role_display }}</span>
+      <p class="muted small" style="margin-top:8px">{% translate "Joined" %} {{ member.created_at|date:"M j, Y" }}</p></div></div>
+    <dl class="kv"><dt>{% translate "Company" %}</dt><dd>{{ member.company.name|default:"—" }}</dd><dt>{% translate "Status" %}</dt><dd>{% if member.is_active %}{% translate "Active" %}{% else %}{% translate "Deactivated" %}{% endif %}</dd><dt>{% translate "Assigned tasks" %}</dt><dd>{{ member.assigned_tasks.count }}</dd></dl>
+  </div>
+  {% if can_edit and form %}
+  <div class="card">
+    <h3 style="margin-bottom:16px">{% translate "Role & access" %}</h3>
+    <form method="post" class="form">{% csrf_token %}{% include "partials/_form.html" %}
+      {% if form.role.field.disabled %}<p class="help">{% translate "You cannot change your own role or the company owner." %}</p>{% endif %}
+      <div class="form-actions"><button class="btn" type="submit" {% if form.role.field.disabled %}disabled{% endif %}>{% translate "Save changes" %}</button></div>
+    </form>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

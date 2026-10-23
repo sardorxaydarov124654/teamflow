@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Invite member" %} — TeamFlow{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>{% translate "Invite a teammate" %}</h1><p class="sub">{% translate "They will receive a link to join your company." %}</p></div></div>
+<div class="card narrow-sm"><form method="post" class="form" novalidate>{% csrf_token %}{% include "partials/_form.html" %}
+  <div class="form-actions"><button class="btn" type="submit"><svg class="i i-sm"><use href="#i-mail"/></svg>{% translate "Send invitation" %}</button><a class="btn secondary" href="{% url 'accounts:members' %}">{% translate "Cancel" %}</a></div></form></div>
+{% endblock %}

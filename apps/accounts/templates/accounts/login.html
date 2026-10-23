@@ -1,0 +1,24 @@
+{% extends "layouts/auth.html" %}
+{% load i18n %}
+{% block title %}{% translate "Sign in" %} — TeamFlow{% endblock %}
+{% block auth_content %}
+<h1>{% translate "Welcome back" %}</h1>
+<p class="lead">{% translate "Sign in to your workspace" %}</p>
+{% if form.non_field_errors %}<div class="alert alert-error">{% for e in form.non_field_errors %}<div>{{ e }}</div>{% endfor %}</div>{% endif %}
+<form method="post" novalidate>
+  {% csrf_token %}
+  <input type="hidden" name="next" value="{{ next }}">
+  <div class="field {% if form.username.errors %}has-error{% endif %}">
+    <label for="{{ form.username.id_for_label }}">{% translate "Email" %}</label>
+    <input type="email" name="{{ form.username.html_name }}" id="{{ form.username.id_for_label }}" value="{{ form.username.value|default:'' }}" placeholder="you@company.com" autocomplete="email" required autofocus>
+    {% for e in form.username.errors %}<p class="error">{{ e }}</p>{% endfor %}
+  </div>
+  <div class="field {% if form.password.errors %}has-error{% endif %}">
+    <label for="{{ form.password.id_for_label }}">{% translate "Password" %}</label>
+    <input type="password" name="{{ form.password.html_name }}" id="{{ form.password.id_for_label }}" autocomplete="current-password" required>
+    {% for e in form.password.errors %}<p class="error">{{ e }}</p>{% endfor %}
+  </div>
+  <button class="btn block lg" type="submit">{% translate "Sign in" %}</button>
+</form>
+<div class="auth-foot">{% translate "No account yet?" %} <a href="{% url 'accounts:register' %}">{% translate "Create a workspace" %}</a></div>
+{% endblock %}

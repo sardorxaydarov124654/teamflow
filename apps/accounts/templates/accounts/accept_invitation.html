@@ -1,0 +1,16 @@
+{% extends "layouts/auth.html" %}
+{% load i18n %}
+{% block title %}{% translate "Join" %} {{ invitation.company.name }} — TeamFlow{% endblock %}
+{% block auth_content %}
+<h1>{% blocktranslate with name=invitation.company.name %}Join {{ name }}{% endblocktranslate %}</h1>
+<p class="lead">{% blocktranslate with email=invitation.email role=invitation.get_role_display %}{{ email }} was invited as {{ role }}. Set your password to continue.{% endblocktranslate %}</p>
+<form method="post">
+  {% csrf_token %}
+  <div class="form-grid">
+    <div class="field"><label for="first_name">{% translate "First name" %}</label><input id="first_name" name="first_name" value="{{ request.POST.first_name }}"></div>
+    <div class="field"><label for="last_name">{% translate "Last name" %}</label><input id="last_name" name="last_name" value="{{ request.POST.last_name }}"></div>
+  </div>
+  <div class="field"><label for="password">{% translate "Password" %}</label><input id="password" type="password" name="password" required minlength="8" autocomplete="new-password"></div>
+  <button class="btn block lg" type="submit">{% translate "Accept invitation" %}</button>
+</form>
+{% endblock %}

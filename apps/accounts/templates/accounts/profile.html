@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "My profile" %} — TeamFlow{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>{% translate "My profile" %}</h1><p class="sub">{{ user.email }}</p></div>
+  <a class="btn secondary" href="{% url 'accounts:password-change' %}"><svg class="i i-sm"><use href="#i-lock"/></svg>{% translate "Change password" %}</a></div>
+<div class="grid grid-main">
+  <div class="card">
+    <form method="post" enctype="multipart/form-data" class="form" novalidate>{% csrf_token %}
+      <div class="company-banner">{% include "partials/_avatar.html" with size="xl" %}<div style="flex:1">{% include "partials/_field.html" with field=form.avatar %}</div></div>
+      <div class="form-grid">{% include "partials/_field.html" with field=form.first_name %}{% include "partials/_field.html" with field=form.last_name %}</div>
+      <div class="form-actions"><button class="btn" type="submit">{% translate "Save changes" %}</button></div>
+    </form>
+  </div>
+  <div class="card">
+    <h3 style="margin-bottom:16px">{% translate "Account" %}</h3>
+    <dl class="kv">
+      <dt>{% translate "Role" %}</dt><dd><span class="badge role-badge-{{ user.role }}">{{ user.get_role_display }}</span></dd>
+      <dt>{% translate "Company" %}</dt><dd>{% if user.company %}<a href="{% url 'companies:profile' %}">{{ user.company.name }}</a>{% else %}—{% endif %}</dd>
+      <dt>{% translate "Joined" %}</dt><dd>{{ user.created_at|date:"M j, Y" }}</dd>
+    </dl>
+  </div>
+</div>
+{% endblock %}

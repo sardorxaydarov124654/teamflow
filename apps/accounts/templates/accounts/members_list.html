@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Team" %} — TeamFlow{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div><h1>{% translate "Team" %}</h1><p class="sub">{{ members|length }} {% translate "members" %}</p></div>
+  {% if user.is_manager %}<a class="btn" href="{% url 'accounts:invite-member' %}"><svg class="i i-sm"><use href="#i-plus"/></svg>{% translate "Invite member" %}</a>{% endif %}
+</div>
+<form method="get" class="filters">
+  <input type="search" name="q" value="{{ q }}" placeholder="{% translate 'Search people…' %}">
+  <select name="role" data-autosubmit>
+    <option value="">{% translate "All roles" %}</option>
+    {% for value, label in role_choices %}<option value="{{ value }}" {% if value == current_role %}selected{% endif %}>{{ label }}</option>{% endfor %}
+  </select>
+  <button class="btn secondary small" type="submit">{% translate "Filter" %}</button>
+</form>
+<div class="table-wrap">
+  <table class="table">
+    <thead><tr><th>{% translate "Member" %}</th><th>{% translate "Role" %}</th><th>{% translate "Status" %}</th>{% if user.is_platform_admin %}<th>{% translate "Company" %}</th>{% endif %}<th></th></tr></thead>
+    <tbody>
+    {% for m in members %}
+      <tr>
+        <td><div class="person">{% include "partials/_avatar.html" with person=m size="md" %}<div><a href="{% url 'accounts:member-detail' m.pk %}"><b>{{ m.full_name }}</b></a><div class="muted small">{{ m.email }}</div></div></div></td>
+        <td><span class="badge role-badge-{{ m.role }}">{{ m.get_role_display }}</span></td>
+        <td>{% if m.is_active %}<span class="badge st-done">{% translate "Active" %}</span>{% else %}<span class="badge pr-urgent">{% translate "Deactivated" %}</span>{% endif %}</td>
+        {% if user.is_platform_admin %}<td>{{ m.company.name|default:"—" }}</td>{% endif %}
+        <td><div class="row-actions">
+          <a class="btn secondary small" href="{% url 'accounts:member-detail' m.pk %}">{% if user.is_manager or user.is_platform_admin %}{% translate "Manage" %}{% else %}{% translate "View" %}{% endif %}</a>
+          {% if user.is_manager or user.is_platform_admin %}{% if m.is_active and m.pk != user.pk %}
+            <form method="post" action="{% url 'accounts:member-deactivate' m.pk %}" class="inline" data-confirm="{% translate 'Deactivate this member?' %}">{% csrf_token %}<button class="btn outline-danger small" type="submit">{% translate "Deactivate" %}</button></form>
+          {% endif %}{% endif %}
+        </div></td>
+      </tr>
+    {% empty %}<tr><td colspan="5" class="empty">{% translate "No members found." %}</td></tr>{% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% if invitations %}
+<div class="card mt">
+  <div class="card-head"><h2>{% translate "Pending invitations" %}</h2></div>
+  <div class="table-wrap" style="box-shadow:none">
+  <table class="table">
+    <thead><tr><th>{% translate "Email" %}</th><th>{% translate "Role" %}</th><th>{% translate "Invite link" %}</th><th></th></tr></thead>
+    <tbody>
+    {% for inv in invitations %}
+      <tr>
+        <td>{{ inv.email }}</td><td>{{ inv.get_role_display }}</td>
+        <td><div class="copybox"><code>{{ site_url }}{% url 'accounts:accept-invitation' inv.token %}</code>
+          <button type="button" class="btn secondary small" data-copy="{{ site_url }}{% url 'accounts:accept-invitation' inv.token %}" data-copied="{% translate 'Link copied' %}"><svg class="i i-sm"><use href="#i-copy"/></svg></button></div></td>
+        <td><form method="post" action="{% url 'accounts:invitation-cancel' inv.pk %}" class="inline" data-confirm="{% translate 'Cancel this invitation?' %}">{% csrf_token %}<button class="btn outline-danger small" type="submit">{% translate "Cancel" %}</button></form></td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table></div>
+</div>
+{% endif %}
+{% endblock %}
