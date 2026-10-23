@@ -1,0 +1,29 @@
+{% extends "root.html" %}
+{% load i18n %}
+{% block body %}
+<div class="auth-page">
+  <section class="auth-side">
+    <a class="brand" href="{% url 'dashboard:home' %}">{% include "partials/_logo.html" %}<span class="brand-word">Team<em>flow</em></span></a>
+    <div>
+      <h2>{% translate "One workspace for your projects, tasks and team." %}</h2>
+      <p>{% translate "Every company gets its own isolated space. Managers plan the work, employees deliver it, everyone stays in sync." %}</p>
+      <ul class="auth-points">
+        <li><svg class="i"><use href="#i-check"/></svg>{% translate "Projects, tasks and deadlines in one place" %}</li>
+        <li><svg class="i"><use href="#i-check"/></svg>{% translate "Real-time notifications" %}</li>
+        <li><svg class="i"><use href="#i-check"/></svg>{% translate "Roles: Platform Admin, Manager, Employee" %}</li>
+      </ul>
+    </div>
+    <small>© {% now "Y" %} TeamFlow</small>
+  </section>
+  <section class="auth-main">
+    <div class="auth-top">
+      <button type="button" class="icon-btn" data-theme-toggle aria-label="{% translate 'Toggle dark mode' %}"><svg class="i icon-moon"><use href="#i-moon"/></svg><svg class="i icon-sun"><use href="#i-sun"/></svg></button>
+      <a class="btn secondary small" href="{% url 'dashboard:home' %}">← {% translate "Home" %}</a>
+    </div>
+    <div class="auth-card">
+      <a class="brand auth-mobile-brand" href="{% url 'dashboard:home' %}">{% include "partials/_logo.html" %}<span class="brand-word">Team<em>flow</em></span></a>
+      {% block auth_content %}{% endblock %}
+    </div>
+  </section>
+</div>
+{% endblock %}

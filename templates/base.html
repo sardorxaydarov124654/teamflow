@@ -1,0 +1,165 @@
+{% extends "root.html" %}
+{% load i18n %}
+{% block body_class %}app-body{% endblock %}
+{% block body %}
+<div class="shell">
+
+  <!-- ===================== SIDEBAR ===================== -->
+  <aside class="sidebar" id="sidebar" aria-label="{% translate 'Main navigation' %}">
+    <a class="brand" href="{% url 'dashboard:dashboard' %}">
+      {% include "partials/_logo.html" %}
+      <span class="brand-word">Team<em>flow</em></span>
+    </a>
+
+    <nav class="nav">
+      <a class="nav-link {% if request.resolver_match.app_name == 'dashboard' and request.resolver_match.url_name == 'dashboard' %}active{% endif %}" href="{% url 'dashboard:dashboard' %}">
+        <svg class="i"><use href="#i-dashboard"/></svg><span>{% translate "Dashboard" %}</span>
+      </a>
+      <a class="nav-link {% if request.resolver_match.app_name == 'projects' %}active{% endif %}" href="{% url 'projects:list' %}">
+        <svg class="i"><use href="#i-projects"/></svg><span>{% translate "Projects" %}</span>
+      </a>
+      <a class="nav-link {% if request.resolver_match.app_name == 'tasks' and request.resolver_match.url_name != 'calendar' %}active{% endif %}" href="{% url 'tasks:list' %}">
+        <svg class="i"><use href="#i-tasks"/></svg><span>{% translate "Tasks" %}</span>
+        {% if my_open_task_count %}<span class="nav-badge">{{ my_open_task_count }}</span>{% endif %}
+      </a>
+      <a class="nav-link {% if request.resolver_match.url_name == 'calendar' %}active{% endif %}" href="{% url 'tasks:calendar' %}">
+        <svg class="i"><use href="#i-calendar"/></svg><span>{% translate "Calendar" %}</span>
+      </a>
+      <a class="nav-link {% if request.resolver_match.url_name == 'report' %}active{% endif %}" href="{% url 'dashboard:report' %}">
+        <svg class="i"><use href="#i-report"/></svg><span>{% translate "Reporting" %}</span>
+      </a>
+      <a class="nav-link {% if request.resolver_match.app_name == 'accounts' and 'members' in request.path %}active{% endif %}" href="{% url 'accounts:members' %}">
+        <svg class="i"><use href="#i-users"/></svg><span>{% translate "Team" %}</span>
+      </a>
+      <a class="nav-link {% if request.resolver_match.app_name == 'notifications' %}active{% endif %}" href="{% url 'notifications:list' %}">
+        <svg class="i"><use href="#i-bell"/></svg><span>{% translate "Notifications" %}</span>
+        <span class="nav-badge" data-notif-badge {% if not unread_notification_count %}hidden{% endif %}>{{ unread_notification_count|default:0 }}</span>
+      </a>
+      {% if user.is_manager or user.is_platform_admin %}
+      <a class="nav-link {% if request.resolver_match.app_name == 'subscriptions' %}active{% endif %}" href="{% url 'subscriptions:plans' %}">
+        <svg class="i"><use href="#i-billing"/></svg><span>{% translate "Billing" %}</span>
+      </a>
+      {% endif %}
+      {% if user.is_platform_admin %}
+      <a class="nav-link {% if request.resolver_match.url_name == 'platform-list' %}active{% endif %}" href="{% url 'companies:platform-list' %}">
+        <svg class="i"><use href="#i-building"/></svg><span>{% translate "All companies" %}</span>
+      </a>
+      {% endif %}
+      {% if user.company_id %}
+      <a class="nav-link {% if request.resolver_match.app_name == 'companies' and request.resolver_match.url_name != 'platform-list' %}active{% endif %}" href="{% url 'companies:settings' %}">
+        <svg class="i"><use href="#i-settings"/></svg><span>{% translate "Settings" %}</span>
+      </a>
+      {% endif %}
+    </nav>
+
+    {% if plan_usage %}
+    <div class="side-card">
+      <div class="side-card-title">
+        <span class="chip chip-blue">{{ plan_usage.plan }} {% translate "plan" %}</span>
+      </div>
+      <div class="usage">
+        <div class="usage-row"><span>{% translate "Projects" %}</span><b>{{ plan_usage.projects }}{% if plan_usage.project_limit %} / {{ plan_usage.project_limit }}{% else %} / ∞{% endif %}</b></div>
+        {% if plan_usage.project_limit %}<div class="bar"><i style="width:{% widthratio plan_usage.projects plan_usage.project_limit 100 %}%"></i></div>{% endif %}
+        <div class="usage-row"><span>{% translate "Members" %}</span><b>{{ plan_usage.users }}{% if plan_usage.user_limit %} / {{ plan_usage.user_limit }}{% else %} / ∞{% endif %}</b></div>
+        {% if plan_usage.user_limit %}<div class="bar"><i style="width:{% widthratio plan_usage.users plan_usage.user_limit 100 %}%"></i></div>{% endif %}
+      </div>
+      {% if user.is_manager and plan_usage.plan_code != 'business' %}
+        <a class="side-card-link" href="{% url 'subscriptions:plans' %}">{% translate "Upgrade plan" %} →</a>
+      {% endif %}
+    </div>
+    {% endif %}
+  </aside>
+  <div class="scrim" id="scrim" hidden></div>
+
+  <!-- ===================== MAIN ===================== -->
+  <div class="main">
+
+    <!-- HEADER -->
+    <header class="topbar">
+      <button type="button" class="icon-btn menu-btn" id="menu-btn" aria-label="{% translate 'Open menu' %}" aria-controls="sidebar">
+        <svg class="i"><use href="#i-menu"/></svg>
+      </button>
+
+      <div class="greeting">
+        <h1 class="greeting-title">{% block greeting %}{% blocktranslate with name=user.first_name|default:user.full_name %}Welcome back, {{ name }}!{% endblocktranslate %}{% endblock %}</h1>
+        <p class="greeting-sub">
+          {% now "F j, Y" %}
+          {% if user.company %}· {{ user.company.name }}{% endif %}
+          · <span class="role-tag role-{{ user.role }}">{{ user.get_role_display }}</span>
+        </p>
+      </div>
+
+      <form class="search" action="{% url 'dashboard:search' %}" method="get" role="search">
+        <svg class="i"><use href="#i-search"/></svg>
+        <input type="search" name="q" id="global-search" value="{{ request.GET.q|default:'' }}" placeholder="{% translate 'Search projects, tasks, people…' %}" autocomplete="off" aria-label="{% translate 'Search' %}">
+        <kbd>Ctrl&nbsp;K</kbd>
+      </form>
+
+      <div class="topbar-right">
+        <form class="lang-switcher" action="{% url 'set_language' %}" method="post">
+          {% csrf_token %}
+          <input type="hidden" name="next" value="{{ request.get_full_path }}">
+          {% get_current_language as CURRENT_LANGUAGE %}
+          {% get_available_languages as AVAILABLE_LANGUAGES %}
+          <select name="language" data-autosubmit title="{% translate 'Language' %}" aria-label="{% translate 'Language' %}">
+            {% for code, name in AVAILABLE_LANGUAGES %}
+              <option value="{{ code }}" {% if code == CURRENT_LANGUAGE %}selected{% endif %}>{{ code|upper }}</option>
+            {% endfor %}
+          </select>
+        </form>
+
+        <button type="button" class="icon-btn" data-theme-toggle title="{% translate 'Toggle dark mode' %}" aria-label="{% translate 'Toggle dark mode' %}">
+          <svg class="i icon-moon"><use href="#i-moon"/></svg>
+          <svg class="i icon-sun"><use href="#i-sun"/></svg>
+        </button>
+
+        <a class="icon-btn bell" href="{% url 'notifications:list' %}" title="{% translate 'Notifications' %}" aria-label="{% translate 'Notifications' %}">
+          <svg class="i"><use href="#i-bell"/></svg>
+          <span class="dot" data-notif-badge-dot {% if not unread_notification_count %}hidden{% endif %}></span>
+        </a>
+
+        <div class="user-menu" data-dropdown>
+          <button type="button" class="user-trigger" data-dropdown-trigger aria-haspopup="true" aria-expanded="false">
+            {% include "partials/_avatar.html" with size="md" %}
+            <svg class="i i-sm chev"><use href="#i-chevron-down"/></svg>
+          </button>
+          <div class="dropdown" data-dropdown-menu hidden>
+            <div class="dropdown-head">
+              <b>{{ user.full_name }}</b>
+              <span>{{ user.email }}</span>
+            </div>
+            <a href="{% url 'accounts:profile' %}"><svg class="i i-sm"><use href="#i-user"/></svg>{% translate "My profile" %}</a>
+            <a href="{% url 'accounts:password-change' %}"><svg class="i i-sm"><use href="#i-lock"/></svg>{% translate "Change password" %}</a>
+            {% if user.company_id %}<a href="{% url 'companies:profile' %}"><svg class="i i-sm"><use href="#i-building"/></svg>{% translate "Company profile" %}</a>{% endif %}
+            <form action="{% url 'accounts:logout' %}" method="post">
+              {% csrf_token %}
+              <button type="submit" class="danger-item"><svg class="i i-sm"><use href="#i-logout"/></svg>{% translate "Sign out" %}</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="content" id="content">
+      {% block content %}{% endblock %}
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="app-footer">
+      <div class="app-footer-inner">
+        <span>© {% now "Y" %} TeamFlow. {% translate "All rights reserved." %}</span>
+        <nav class="footer-links" aria-label="{% translate 'Footer' %}">
+          <a href="{% url 'projects:list' %}">{% translate "Projects" %}</a>
+          <a href="{% url 'tasks:list' %}">{% translate "Tasks" %}</a>
+          <a href="{% url 'subscriptions:plans' %}">{% translate "Plans" %}</a>
+          <a href="{% url 'accounts:profile' %}">{% translate "Profile" %}</a>
+        </nav>
+      </div>
+    </footer>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>window.TEAMFLOW_WS = {{ user.is_authenticated|yesno:"true,false" }};</script>
+{% endblock %}

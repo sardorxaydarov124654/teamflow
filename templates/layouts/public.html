@@ -1,0 +1,44 @@
+{% extends "root.html" %}
+{% load i18n %}
+{% block body_class %}landing{% endblock %}
+{% block body %}
+<header class="l-nav">
+  <div class="l-wrap l-nav-inner">
+    <a class="brand" href="{% url 'dashboard:home' %}">{% include "partials/_logo.html" %}<span class="brand-word">Team<em>flow</em></span></a>
+    <nav class="l-links" data-landing-nav aria-label="{% translate 'Main navigation' %}">
+      <a href="#features">{% translate "Features" %}</a>
+      <a href="#how">{% translate "How it works" %}</a>
+      <a href="#roles">{% translate "Roles" %}</a>
+      <a href="#pricing">{% translate "Pricing" %}</a>
+    </nav>
+    <div class="l-actions">
+      <form action="{% url 'set_language' %}" method="post" class="lang-switcher">
+        {% csrf_token %}<input type="hidden" name="next" value="{{ request.get_full_path }}">
+        {% get_current_language as CURRENT_LANGUAGE %}{% get_available_languages as AVAILABLE_LANGUAGES %}
+        <select name="language" data-autosubmit aria-label="{% translate 'Language' %}">
+          {% for code, name in AVAILABLE_LANGUAGES %}<option value="{{ code }}" {% if code == CURRENT_LANGUAGE %}selected{% endif %}>{{ code|upper }}</option>{% endfor %}
+        </select>
+      </form>
+      <button type="button" class="icon-btn" data-theme-toggle aria-label="{% translate 'Toggle dark mode' %}"><svg class="i icon-moon"><use href="#i-moon"/></svg><svg class="i icon-sun"><use href="#i-sun"/></svg></button>
+      <a class="btn btn-ghost" href="{% url 'accounts:login' %}">{% translate "Sign in" %}</a>
+      <a class="btn" href="{% url 'accounts:register' %}">{% translate "Get started" %}</a>
+      <button type="button" class="icon-btn l-toggle" data-landing-toggle aria-label="{% translate 'Open menu' %}"><svg class="i"><use href="#i-menu"/></svg></button>
+    </div>
+  </div>
+</header>
+<main>{% block public_content %}{% endblock %}</main>
+<footer class="l-footer">
+  <div class="l-wrap">
+    <div class="l-foot-grid">
+      <div>
+        <a class="brand" href="{% url 'dashboard:home' %}">{% include "partials/_logo.html" %}<span class="brand-word">Team<em>flow</em></span></a>
+        <p class="small">{% translate "Multi-tenant project and task management for teams that want clarity." %}</p>
+      </div>
+      <div><h4>{% translate "Product" %}</h4><ul><li><a href="#features">{% translate "Features" %}</a></li><li><a href="#pricing">{% translate "Pricing" %}</a></li><li><a href="#roles">{% translate "Roles" %}</a></li></ul></div>
+      <div><h4>{% translate "Account" %}</h4><ul><li><a href="{% url 'accounts:login' %}">{% translate "Sign in" %}</a></li><li><a href="{% url 'accounts:register' %}">{% translate "Create workspace" %}</a></li></ul></div>
+      <div><h4>{% translate "Language" %}</h4><ul><li>English</li><li>Русский</li><li>O'zbekcha</li></ul></div>
+    </div>
+    <div class="l-foot-bottom"><span>© {% now "Y" %} TeamFlow. {% translate "All rights reserved." %}</span><a href="#top">{% translate "Back to top" %} ↑</a></div>
+  </div>
+</footer>
+{% endblock %}

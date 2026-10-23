@@ -1,0 +1,2 @@
+{# Coloured status pill for a task. Usage: {% include "partials/_status.html" with task=task %} #}
+<span class="badge st-{{ task.status }}">{{ task.get_status_display }}</span>

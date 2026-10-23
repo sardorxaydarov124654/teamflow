@@ -1,0 +1,7 @@
+{% extends "root.html" %}
+{% load i18n %}
+{% block title %}404 — TeamFlow{% endblock %}
+{% block body %}
+<div class="error-page"><div class="error-code">404</div><h1>{% translate "Page not found" %}</h1><p class="muted">{% translate "The page you are looking for doesn't exist or was moved." %}{% if exception %} {{ exception }}{% endif %}</p>
+<div class="actions mt"><a class="btn" href="{% url 'dashboard:home' %}">{% translate "Back to home" %}</a><a class="btn secondary" href="javascript:history.back()">{% translate "Go back" %}</a></div></div>
+{% endblock %}

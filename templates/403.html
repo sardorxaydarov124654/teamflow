@@ -1,0 +1,7 @@
+{% extends "root.html" %}
+{% load i18n %}
+{% block title %}403 — TeamFlow{% endblock %}
+{% block body %}
+<div class="error-page"><div class="error-code">403</div><h1>{% translate "Access denied" %}</h1><p class="muted">{% translate "You don't have permission to open this page." %}{% if exception %} {{ exception }}{% endif %}</p>
+<div class="actions mt"><a class="btn" href="{% url 'dashboard:home' %}">{% translate "Back to home" %}</a><a class="btn secondary" href="javascript:history.back()">{% translate "Go back" %}</a></div></div>
+{% endblock %}
