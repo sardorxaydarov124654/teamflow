@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Search" %} — TeamFlow{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>{% translate "Search results" %}</h1><p class="sub">{% if q %}“{{ q }}”{% else %}{% translate "Type something in the search box." %}{% endif %}</p></div></div>
+{% if q %}
+<div class="grid grid-3">
+  <div class="card"><div class="card-head"><h3>{% translate "Projects" %}</h3></div>{% for p in projects %}<p style="padding:6px 0"><a href="{% url 'projects:detail' p.pk %}">{{ p.name }}</a></p>{% empty %}<p class="muted small">{% translate "No matches" %}</p>{% endfor %}</div>
+  <div class="card"><div class="card-head"><h3>{% translate "Tasks" %}</h3></div>{% for t in tasks %}<p style="padding:6px 0"><a href="{% url 'tasks:detail' t.pk %}">{{ t.title }}</a> <span class="muted small">· {{ t.project.name }}</span></p>{% empty %}<p class="muted small">{% translate "No matches" %}</p>{% endfor %}</div>
+  <div class="card"><div class="card-head"><h3>{% translate "People" %}</h3></div>{% for m in members %}<p style="padding:6px 0"><a href="{% url 'accounts:member-detail' m.pk %}">{{ m.full_name }}</a></p>{% empty %}<p class="muted small">{% translate "No matches" %}</p>{% endfor %}</div>
+</div>
+{% endif %}
+{% endblock %}

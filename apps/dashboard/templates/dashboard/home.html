@@ -1,0 +1,101 @@
+{% extends "layouts/public.html" %}
+{% load i18n %}
+{% block title %}TeamFlow — {% translate "Team & project management" %}{% endblock %}
+{% block public_content %}
+<span id="top"></span>
+<section class="l-hero">
+  <div class="l-wrap l-hero-grid">
+    <div>
+      <span class="eyebrow"><svg class="i i-sm"><use href="#i-zap"/></svg>{% translate "Multi-tenant SaaS for teams" %}</span>
+      <h1>{% translate "Plan projects." %} <span>{% translate "Ship work." %}</span> {% translate "Stay in sync." %}</h1>
+      <p class="lead">{% translate "TeamFlow brings projects, tasks, deadlines and your whole team into one clear workspace — with isolated data for every company." %}</p>
+      <div class="l-cta">
+        <a class="btn lg" href="{% url 'accounts:register' %}">{% translate "Create free workspace" %} <svg class="i"><use href="#i-arrow"/></svg></a>
+        <a class="btn btn-ghost lg" href="{% url 'accounts:login' %}">{% translate "Sign in" %}</a>
+      </div>
+      <div class="l-trust">
+        <span><svg class="i"><use href="#i-check"/></svg>{% translate "Free plan available" %}</span>
+        <span><svg class="i"><use href="#i-check"/></svg>{% translate "No credit card" %}</span>
+        <span><svg class="i"><use href="#i-check"/></svg>EN · RU · UZ</span>
+      </div>
+    </div>
+    <div class="mock" aria-hidden="true">
+      <div class="mock-bar"><i></i><i></i><i></i></div>
+      <div class="mock-body">
+        <div class="mock-side"><b></b><b></b><b></b><b></b><b></b></div>
+        <div class="mock-main">
+          <div class="mock-stats"><div><strong>120</strong>Total</div><div><strong style="color:#16a34a">85</strong>Done</div><div><strong style="color:#ef4444">10</strong>Overdue</div></div>
+          <div class="mock-chart"><i style="height:40%"></i><i style="height:62%"></i><i style="height:30%"></i><i style="height:80%"></i><i style="height:55%"></i><i style="height:92%"></i><i style="height:48%"></i><i style="height:70%"></i><i style="height:36%"></i><i style="height:84%"></i></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="l-section" id="features">
+  <div class="l-wrap">
+    <div class="l-head"><h2>{% translate "Everything your team needs" %}</h2><p>{% translate "A focused toolset that replaces scattered spreadsheets and chat threads." %}</p></div>
+    <div class="grid grid-3">
+      <div class="feature"><div class="ico"><svg class="i"><use href="#i-projects"/></svg></div><h3>{% translate "Projects" %}</h3><p>{% translate "Create projects with owners, dates and statuses and see progress at a glance." %}</p></div>
+      <div class="feature"><div class="ico"><svg class="i"><use href="#i-tasks"/></svg></div><h3>{% translate "Tasks & comments" %}</h3><p>{% translate "Assign tasks, set priority and deadline, discuss in comments and track status." %}</p></div>
+      <div class="feature"><div class="ico"><svg class="i"><use href="#i-bell"/></svg></div><h3>{% translate "Live notifications" %}</h3><p>{% translate "Get instant alerts about assignments, comments, status changes and deadlines." %}</p></div>
+      <div class="feature"><div class="ico"><svg class="i"><use href="#i-calendar"/></svg></div><h3>{% translate "Calendar" %}</h3><p>{% translate "See every deadline on a monthly calendar and never miss a due date." %}</p></div>
+      <div class="feature"><div class="ico"><svg class="i"><use href="#i-report"/></svg></div><h3>{% translate "Reports & dashboard" %}</h3><p>{% translate "Cached company statistics, workload per teammate and project progress." %}</p></div>
+      <div class="feature"><div class="ico"><svg class="i"><use href="#i-shield"/></svg></div><h3>{% translate "Tenant isolation" %}</h3><p>{% translate "Each company's data is strictly separated from every other company." %}</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="l-section alt" id="how">
+  <div class="l-wrap">
+    <div class="l-head"><h2>{% translate "Up and running in minutes" %}</h2></div>
+    <div class="steps">
+      <div class="step"><h3>{% translate "Create a workspace" %}</h3><p>{% translate "Register with your email and company name." %}</p></div>
+      <div class="step"><h3>{% translate "Invite your team" %}</h3><p>{% translate "Send invitation links to managers and employees." %}</p></div>
+      <div class="step"><h3>{% translate "Plan the work" %}</h3><p>{% translate "Add projects, create tasks and assign them." %}</p></div>
+      <div class="step"><h3>{% translate "Track progress" %}</h3><p>{% translate "Follow the dashboard, calendar and reports." %}</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="l-section" id="roles">
+  <div class="l-wrap">
+    <div class="l-head"><h2>{% translate "The right access for everyone" %}</h2></div>
+    <div class="grid grid-3">
+      <div class="feature role-card"><h3><span class="badge role-badge-platform_admin">Platform Admin</span></h3><ul><li>{% translate "Manages the whole platform" %}</li><li>{% translate "Sees all companies" %}</li><li>{% translate "Can block or unblock a company" %}</li></ul></div>
+      <div class="feature role-card"><h3><span class="badge role-badge-manager">Manager</span></h3><ul><li>{% translate "Creates projects and tasks" %}</li><li>{% translate "Invites and manages members" %}</li><li>{% translate "Manages the subscription" %}</li></ul></div>
+      <div class="feature role-card"><h3><span class="badge role-badge-employee">Employee</span></h3><ul><li>{% translate "Sees company projects and tasks" %}</li><li>{% translate "Updates status of own tasks" %}</li><li>{% translate "Comments and gets notifications" %}</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<section class="l-section alt" id="pricing">
+  <div class="l-wrap">
+    <div class="l-head"><h2>{% translate "Simple, transparent pricing" %}</h2><p>{% translate "Start free and upgrade when your team grows." %}</p></div>
+    <div class="grid grid-3">
+      {% for plan in plans %}
+      <div class="card plan-card {% if plan.code == 'pro' %}current{% endif %}">
+        <h3>{{ plan.name }}{% if plan.code == 'pro' %} <span class="chip chip-blue">{% translate "Popular" %}</span>{% endif %}</h3>
+        <div class="price">${{ plan.price_monthly|floatformat:"0" }}<small>/{% translate "month" %}</small></div>
+        <ul>
+          <li><svg class="i"><use href="#i-check"/></svg>{% if plan.max_users %}{% blocktranslate with n=plan.max_users %}Up to {{ n }} members{% endblocktranslate %}{% else %}{% translate "Unlimited members" %}{% endif %}</li>
+          <li><svg class="i"><use href="#i-check"/></svg>{% if plan.max_projects %}{% blocktranslate with n=plan.max_projects %}Up to {{ n }} projects{% endblocktranslate %}{% else %}{% translate "Unlimited projects" %}{% endif %}</li>
+          {% for f in plan.features|slice:"2:" %}<li><svg class="i"><use href="#i-check"/></svg>{{ f }}</li>{% endfor %}
+        </ul>
+        <a class="btn {% if plan.code != 'pro' %}secondary{% endif %} block" href="{% url 'accounts:register' %}">{% translate "Get started" %}</a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="l-section">
+  <div class="l-wrap">
+    <div class="l-cta-band">
+      <h2>{% translate "Ready to bring your team into one flow?" %}</h2>
+      <p>{% translate "Create your workspace for free — it takes less than a minute." %}</p>
+      <a class="btn btn-white lg" href="{% url 'accounts:register' %}">{% translate "Create free workspace" %}</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Notifications" %} — TeamFlow{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>{% translate "Notifications" %}</h1><p class="sub">{{ unread_notification_count }} {% translate "unread" %}</p></div>
+  <div class="actions">
+    <div class="segmented"><a href="?show=all" class="btn small {% if show != 'unread' %}secondary{% endif %}" style="border:0">{% translate "All" %}</a><a href="?show=unread" class="btn small {% if show == 'unread' %}secondary{% endif %}" style="border:0">{% translate "Unread" %}</a></div>
+    <form method="post" action="{% url 'notifications:mark-all-read' %}" class="inline">{% csrf_token %}<button class="btn secondary" type="submit"><svg class="i i-sm"><use href="#i-check"/></svg>{% translate "Mark all as read" %}</button></form>
+  </div></div>
+<div class="card" style="padding:0;overflow:hidden">
+  {% for n in notifications %}
+  <div class="notif {% if not n.is_read %}unread{% endif %}">
+    <div class="notif-ico"><svg class="i"><use href="#i-{% if n.type == 'comment_added' %}message{% elif n.type == 'deadline_reminder' %}clock{% elif n.type == 'task_assigned' %}tasks{% else %}bell{% endif %}"/></svg></div>
+    <div class="notif-body"><b>{{ n.title }}</b><p>{{ n.message }}</p><span>{{ n.created_at|timesince }} {% translate "ago" %}</span></div>
+    <div class="row-actions">
+      {% if n.data.task_id %}<a class="btn secondary small" href="{% url 'notifications:open' n.pk %}">{% translate "Open" %}</a>{% endif %}
+      {% if not n.is_read %}<form method="post" action="{% url 'notifications:mark-read' n.pk %}" class="inline">{% csrf_token %}<button class="btn secondary small" type="submit">{% translate "Mark read" %}</button></form>{% endif %}
+    </div>
+  </div>
+  {% empty %}<div class="empty-state"><svg class="i"><use href="#i-bell"/></svg><h3>{% translate "You're all caught up" %}</h3><p>{% translate "New notifications will appear here in real time." %}</p></div>{% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Reporting" %} — TeamFlow{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>{% translate "Project report" %}</h1><p class="sub">{% translate "Generated" %} {{ generated_at|date:"M j, Y H:i" }}</p></div>
+  <button class="btn secondary" type="button" onclick="window.print()"><svg class="i i-sm"><use href="#i-report"/></svg>{% translate "Print" %}</button></div>
+<div class="stat-cards">
+  <div class="card stat-card"><div class="num">{{ rows|length }}</div><div class="lbl">{% translate "Projects" %}</div></div>
+  <div class="card stat-card"><div class="num">{{ total_tasks }}</div><div class="lbl">{% translate "Tasks" %}</div></div>
+  <div class="card stat-card"><div class="num" style="color:var(--green)">{{ done_tasks }}</div><div class="lbl">{% translate "Completed" %}</div></div>
+  <div class="card stat-card"><div class="num" style="color:var(--red)">{{ overdue_tasks }}</div><div class="lbl">{% translate "Overdue" %}</div></div>
+</div>
+<div class="card mt"><div class="card-head"><h2>{% translate "Progress by project" %}</h2></div>
+<div class="table-wrap" style="box-shadow:none"><table class="table">
+  <thead><tr><th>{% translate "Project" %}</th><th>{% translate "Status" %}</th><th>{% translate "Progress" %}</th><th>{% translate "Done" %}</th><th>{% translate "In progress" %}</th><th>{% translate "To do" %}</th><th>{% translate "Overdue" %}</th></tr></thead>
+  <tbody>{% for r in rows %}<tr>
+    <td class="title-cell"><a href="{% url 'projects:detail' r.project.pk %}">{{ r.project.name }}</a></td>
+    <td><span class="badge ps-{{ r.project.status }}">{{ r.project.get_status_display }}</span></td>
+    <td style="min-width:160px"><div class="progress {% if r.progress == 100 %}done{% endif %}"><i style="width:{{ r.progress }}%"></i></div><span class="small muted">{{ r.progress }}%</span></td>
+    <td>{{ r.done }}</td><td>{{ r.in_progress }}</td><td>{{ r.todo }}</td><td class="{% if r.overdue %}overdue{% endif %}">{{ r.overdue }}</td>
+  </tr>{% empty %}<tr><td colspan="7" class="empty">{% translate "No projects yet." %}</td></tr>{% endfor %}</tbody></table></div></div>
+<div class="grid grid-2 mt">
+  <div class="card"><div class="card-head"><h2>{% translate "Open tasks by priority" %}</h2></div>
+    {% for p in priority_rows %}<div class="hbar"><span>{{ p.label }}</span><div class="progress"><i style="width:{{ p.pct }}%"></i></div><b>{{ p.count }}</b></div>{% endfor %}</div>
+  <div class="card"><div class="card-head"><h2>{% translate "Team workload" %}</h2></div>
+    <table class="table"><thead><tr><th>{% translate "Member" %}</th><th>{% translate "Assigned" %}</th><th>{% translate "Completed" %}</th></tr></thead><tbody>
+    {% for p in people %}<tr><td>{{ p.full_name }}</td><td>{{ p.assigned }}</td><td>{{ p.completed }}</td></tr>{% empty %}<tr><td colspan="3" class="empty">—</td></tr>{% endfor %}</tbody></table></div>
+</div>
+{% endblock %}

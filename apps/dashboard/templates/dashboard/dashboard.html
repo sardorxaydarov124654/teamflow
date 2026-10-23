@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Dashboard" %} — TeamFlow{% endblock %}
+{% block content %}
+<section class="top-row">
+  <div class="card stat-strip">
+    <div><div class="s-label" style="color:var(--text);font-size:16px;font-weight:500">{% translate "Total task" %}</div><div class="s-num">{{ stats.total_tasks }} <small>{% translate "tasks" %}</small></div></div>
+    <a href="{% url 'tasks:list' %}?status=done" style="color:inherit"><div class="s-label"><i class="sq sq-green"></i>{% translate "Completed" %}</div><div class="s-num">{{ stats.completed_tasks }} <small>{% translate "tasks" %}</small></div></a>
+    <a href="{% url 'tasks:list' %}?status=in_progress" style="color:inherit"><div class="s-label"><i class="sq sq-amber"></i>{% translate "In Progress" %}</div><div class="s-num">{{ stats.in_progress_tasks }} <small>{% translate "tasks" %}</small></div></a>
+    <a href="{% url 'tasks:list' %}?overdue=1" style="color:inherit"><div class="s-label"><i class="sq sq-red"></i>{% translate "Overdue" %}</div><div class="s-num">{{ stats.overdue_tasks }} <small>{% translate "tasks" %}</small></div></a>
+  </div>
+  <div class="cta-pair">
+    {% if user.is_employee %}
+      <a class="cta" href="{% url 'tasks:list' %}?mine=1"><span class="cta-ico"><svg class="i"><use href="#i-tasks"/></svg></span>{% translate "My tasks" %}</a>
+    {% else %}
+      <a class="cta" href="{% url 'tasks:create' %}"><span class="cta-ico"><svg class="i"><use href="#i-plus"/></svg></span>{% translate "Add new task" %}</a>
+    {% endif %}
+    <a class="cta" href="{% url 'dashboard:report' %}"><span class="cta-ico"><svg class="i"><use href="#i-report"/></svg></span>{% translate "Project report" %}</a>
+  </div>
+</section>
+
+<section class="mid-row">
+  <div class="card">
+    <div class="card-head">
+      <h2>{% translate "Project progress overview" %}</h2>
+      <div class="segmented" role="tablist">
+        <button type="button" class="active" data-range="year">{% translate "Year" %}</button>
+        <button type="button" data-range="month">{% translate "Month" %}</button>
+        <button type="button" data-range="week">{% translate "Week" %}</button>
+        <button type="button" data-range="day">{% translate "Day" %}</button>
+      </div>
+    </div>
+    <div class="legend"><span><i class="sq" style="background:#66a6ff"></i>{% translate "Created" %}</span><span><i class="sq" style="background:var(--blue-600)"></i>{% translate "Completed" %}</span></div>
+    <div class="bars-wrap"><div class="bars" id="progress-chart" aria-label="{% translate 'Project progress overview' %}"></div></div>
+    {{ stats.chart|json_script:"chart-data" }}
+  </div>
+
+  <div class="card">
+    <div class="cal-head">
+      <a class="cal-nav" href="?month={{ prev_month|date:'Y-m' }}" aria-label="{% translate 'Previous month' %}"><svg class="i"><use href="#i-left"/></svg></a>
+      <h3><a href="{% url 'tasks:calendar' %}?month={{ month|date:'Y-m' }}" style="color:inherit">{{ month|date:"F Y" }}</a></h3>
+      <a class="cal-nav" href="?month={{ next_month|date:'Y-m' }}" aria-label="{% translate 'Next month' %}"><svg class="i"><use href="#i-right"/></svg></a>
+    </div>
+    <table class="mini-cal">
+      <thead><tr>{% for d in weekdays %}<th>{{ d }}</th>{% endfor %}</tr></thead>
+      <tbody>
+      {% for week in weeks %}<tr>
+        {% for cell in week %}
+          <td class="{% if not cell.in_month %}out{% endif %} {% if cell.is_today %}today{% endif %}">
+            <a class="d" href="{% url 'tasks:calendar' %}?month={{ cell.date|date:'Y-m' }}">{{ cell.date.day }}</a>
+            <div class="dots">{% for t in cell.tasks|slice:":3" %}<i class="{% if t.status == 'done' %}g{% elif t.deadline < now %}r{% elif t.status == 'todo' %}s{% else %}a{% endif %}"></i>{% endfor %}</div>
+          </td>
+        {% endfor %}
+      </tr>{% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="mid-row">
+  <div class="card">
+    <div class="card-head"><h2>{% translate "Recent activity" %}</h2><a class="small" href="{% url 'tasks:list' %}">{% translate "View all" %}</a></div>
+    <ul class="activity">
+      {% for item in activity %}
+      <li>
+        {% include "partials/_avatar.html" with person=item.who size="md" %}
+        <div class="act-body">
+          <div><span class="who">{{ item.who.full_name|default:"—" }}</span><span class="when">{{ item.when|timesince }} {% translate "ago" %}</span></div>
+          <div>{{ item.verb }} <a href="{% url 'tasks:detail' item.task.pk %}"><b>{{ item.task.title }}</b></a></div>
+          {% if item.body %}<div class="quote">{{ item.body|truncatechars:90 }}</div>{% endif %}
+        </div>
+        <div class="tags"><span class="tag">{{ item.tag }}</span></div>
+      </li>
+      {% empty %}
+      <li><div class="empty-state" style="width:100%;padding:24px"><svg class="i"><use href="#i-clock"/></svg><h3>{% translate "No activity yet" %}</h3><p>{% translate "Create a project and your first task to get started." %}</p></div></li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <div class="stack">
+    <div class="card">
+      <div class="card-head"><h2>{% translate "Resource allocation" %}</h2><a class="small" href="{% url 'accounts:members' %}">{% translate "Team" %}</a></div>
+      <ul class="alloc">
+        {% for p in stats.employee_productivity|slice:":6" %}
+        <li>
+          <span class="avatar avatar-md avatar-initials" style="background:#1a6fe8">{{ p.initials }}</span>
+          <div class="who"><b>{{ p.full_name }}</b><span>{{ p.role_label }}</span></div>
+          <span class="count">{{ p.assigned }} {% translate "task" %}</span>
+        </li>
+        {% empty %}<li class="muted">{% translate "No active employees yet." %}</li>{% endfor %}
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-head"><h2>{% translate "My open tasks" %}</h2></div>
+      {% for t in my_tasks %}
+        <a href="{% url 'tasks:detail' t.pk %}" style="display:flex;justify-content:space-between;gap:8px;padding:8px 0;color:var(--text)"><span>{{ t.title|truncatechars:28 }}</span>{% include "partials/_status.html" with task=t %}</a>
+      {% empty %}<p class="muted small">{% translate "Nothing assigned to you. Enjoy!" %}</p>{% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}
