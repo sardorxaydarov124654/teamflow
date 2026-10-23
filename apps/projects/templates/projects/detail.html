@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{{ project.name }} — TeamFlow{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>{{ project.name }}</h1><p class="sub"><span class="badge ps-{{ project.status }}">{{ project.get_status_display }}</span></p></div>
+  <div class="actions">
+    <a class="btn secondary" href="{% url 'projects:list' %}">← {% translate "Projects" %}</a>
+    {% if user.is_manager or user.is_platform_admin %}
+      <a class="btn" href="{% url 'tasks:create' %}?project={{ project.pk }}"><svg class="i i-sm"><use href="#i-plus"/></svg>{% translate "Add task" %}</a>
+      <a class="btn secondary" href="{% url 'projects:edit' project.pk %}"><svg class="i i-sm"><use href="#i-edit"/></svg>{% translate "Edit" %}</a>
+      <a class="btn outline-danger" href="{% url 'projects:delete' project.pk %}"><svg class="i i-sm"><use href="#i-trash"/></svg>{% translate "Delete" %}</a>
+    {% endif %}
+  </div></div>
+<div class="grid grid-main">
+  <div class="stack">
+    <div class="card"><div class="card-head"><h2>{% translate "Progress" %}</h2><b>{{ progress }}%</b></div>
+      <div class="progress {% if progress == 100 %}done{% endif %}"><i style="width:{{ progress }}%"></i></div>
+      <div class="mini-stats mt"><div><b>{{ task_stats.todo }}</b><span>{% translate "To do" %}</span></div><div><b>{{ task_stats.in_progress }}</b><span>{% translate "In progress" %}</span></div><div><b>{{ task_stats.review }}</b><span>{% translate "Review" %}</span></div><div><b style="color:var(--green)">{{ task_stats.done }}</b><span>{% translate "Done" %}</span></div></div></div>
+    <div class="card"><div class="card-head"><h2>{% translate "Tasks" %}</h2></div>
+      <div class="table-wrap" style="box-shadow:none"><table class="table"><thead><tr><th>{% translate "Title" %}</th><th>{% translate "Assignee" %}</th><th>{% translate "Priority" %}</th><th>{% translate "Status" %}</th></tr></thead><tbody>
+      {% for t in tasks %}<tr><td class="title-cell"><a href="{% url 'tasks:detail' t.pk %}">{{ t.title }}</a></td><td>{{ t.assigned_to.full_name|default:"—" }}</td><td>{% include "partials/_priority.html" with task=t %}</td><td>{% include "partials/_status.html" with task=t %}</td></tr>
+      {% empty %}<tr><td colspan="4" class="empty">{% translate "No tasks in this project yet." %}</td></tr>{% endfor %}</tbody></table></div></div>
+  </div>
+  <div class="card"><h3 style="margin-bottom:16px">{% translate "Details" %}</h3>
+    <dl class="kv"><dt>{% translate "Owner" %}</dt><dd>{{ project.owner.full_name|default:"—" }}</dd><dt>{% translate "Start" %}</dt><dd>{{ project.start_date|date:"M j, Y"|default:"—" }}</dd>
+    <dt>{% translate "Deadline" %}</dt><dd class="{% if project.deadline and project.deadline < today and project.status != 'completed' %}overdue{% endif %}">{{ project.deadline|date:"M j, Y"|default:"—" }}</dd><dt>{% translate "Created" %}</dt><dd>{{ project.created_at|date:"M j, Y" }}</dd></dl>
+    {% if project.description %}<p class="mt muted">{{ project.description|linebreaksbr }}</p>{% endif %}</div>
+</div>
+{% endblock %}
