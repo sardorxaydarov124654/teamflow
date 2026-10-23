@@ -1,0 +1,18 @@
+# Core
+Django>=6.0,<6.1
+django-environ==0.14.0
+pillow>=11.0
+psycopg[binary]>=3.2
+
+# Async / real-time
+celery>=5.5
+django-celery-beat>=2.8
+django-celery-results>=2.6
+redis>=5.2
+django-redis>=5.4
+channels>=4.2
+channels-redis>=4.2
+
+# ASGI / WSGI servers
+uvicorn[standard]>=0.34
+gunicorn>=23.0
