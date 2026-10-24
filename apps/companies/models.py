@@ -63,7 +63,7 @@ class Company(models.Model):
         """Short, dashboard-friendly excerpt of the description."""
         if not self.description:
             return ""
-        return Truncator(self.description).words(word_limit, truncate=" вЂ¦")
+        return Truncator(self.description).words(word_limit, truncate=" тАж")
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -75,3 +75,28 @@ class Company(models.Model):
                 slug = f"{base_slug}-{i}"
             self.slug = slug
         super().save(*args, **kwargs)
+
+    # --- Subscription limit helpers -------------------------------------
+    @property
+    def subscription(self):
+        return getattr(self, "subscription_record", None)
+
+    def get_user_limit(self):
+        limits = {self.Plan.FREE: 3, self.Plan.PRO: 50, self.Plan.BUSINESS: None}
+        return limits.get(self.plan)
+
+    def get_project_limit(self):
+        limits = {self.Plan.FREE: 5, self.Plan.PRO: None, self.Plan.BUSINESS: None}
+        return limits.get(self.plan)
+
+    def can_add_user(self):
+        limit = self.get_user_limit()
+        if limit is None:
+            return True
+        return self.members.filter(is_active=True).count() < limit
+
+    def can_add_project(self):
+        limit = self.get_project_limit()
+        if limit is None:
+            return True
+        return self.projects.count() < limit
