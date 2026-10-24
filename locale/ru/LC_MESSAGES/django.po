@@ -905,3 +905,85 @@ msgstr "«%(name)s» и все его задачи будут удалены н�
 
 msgid "“%(name)s” and its comments will be permanently deleted."
 msgstr "«%(name)s» и его комментарии будут удалены навсегда."
+
+msgid ""
+"A paid plan requires a card. Billing is simulated — your card is not "
+"charged, and the full number and CVV are never stored."
+msgstr ""
+"Для платного тарифа нужна карта. Оплата имитируется — деньги не списываются,"
+" полный номер и CVV никогда не сохраняются."
+
+msgid "Add a card to subscribe to a paid plan."
+msgstr "Добавьте карту, чтобы оформить платный тариф."
+
+msgid "Add card"
+msgstr "Добавить карту"
+
+msgid "Card"
+msgstr "Карта"
+
+msgid "Change card"
+msgstr "Сменить карту"
+
+msgid "Choose your plan"
+msgstr "Выберите тариф"
+
+msgid "Confirm switch"
+msgstr "Подтвердить переключение"
+
+msgid "Current card"
+msgstr "Текущая карта"
+
+msgid "Free"
+msgstr "Бесплатно"
+
+msgid "Get %(name)s"
+msgstr "Выбрать %(name)s"
+
+msgid "No payment card on file"
+msgstr "Платёжная карта не добавлена"
+
+msgid "Pay & upgrade"
+msgstr "Оплатить и повысить"
+
+msgid "Payment card"
+msgstr "Платёжная карта"
+
+msgid "Payment details"
+msgstr "Платёжные данные"
+
+msgid "Renews on"
+msgstr "Продление"
+
+msgid "Save card"
+msgstr "Сохранить карту"
+
+msgid "Start free"
+msgstr "Начать бесплатно"
+
+msgid "Switch from %(a)s to %(b)s"
+msgstr "Переход с %(a)s на %(b)s"
+
+msgid "Switch plan"
+msgstr "Смена тарифа"
+
+msgid "Switch to %(name)s"
+msgstr "Перейти на %(name)s"
+
+msgid "The full card number and CVV are never stored."
+msgstr "Полный номер карты и CVV никогда не сохраняются."
+
+msgid "Upgrade to %(name)s"
+msgstr "Повысить до %(name)s"
+
+msgid "Use another card"
+msgstr "Использовать другую карту"
+
+msgid "Use saved card"
+msgstr "Использовать сохранённую карту"
+
+msgid "Your current plan"
+msgstr "Ваш текущий тариф"
+
+msgid "expires"
+msgstr "действует до"

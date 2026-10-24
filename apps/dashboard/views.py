@@ -10,32 +10,16 @@ from django.utils import timezone
 from apps.common.calendar_utils import month_grid, parse_month
 from apps.common.decorators import company_member_required, company_scoped_queryset
 from apps.projects.models import Project
-from apps.subscriptions.models import SubscriptionPlan
+from apps.subscriptions.services import ensure_plans
 from apps.tasks.models import Comment, Task
 
 CACHE_TTL_SECONDS = 60  # short TTL: stats stay fresh, DB still gets protected from bursts
-
-DEFAULT_PLANS = [
-    {
-        "code": "free", "name": "Free", "price_monthly": 0, "max_users": 3, "max_projects": 5,
-        "features": ["Up to 3 team members", "Up to 5 projects", "Task comments", "Email invitations"],
-    },
-    {
-        "code": "pro", "name": "Pro", "price_monthly": 29, "max_users": 50, "max_projects": None,
-        "features": ["Up to 50 team members", "Unlimited projects", "Real-time notifications", "Deadline reminders"],
-    },
-    {
-        "code": "business", "name": "Business", "price_monthly": 99, "max_users": None, "max_projects": None,
-        "features": ["Unlimited team members", "Unlimited projects", "Priority support", "Advanced reporting"],
-    },
-]
-
 
 def home_view(request):
     """Public landing page for visitors; signed-in users go straight to the dashboard."""
     if request.user.is_authenticated:
         return redirect("dashboard:dashboard")
-    plans = list(SubscriptionPlan.objects.all()) or DEFAULT_PLANS
+    plans = list(ensure_plans())
     return render(request, "dashboard/home.html", {"plans": plans})
 
 

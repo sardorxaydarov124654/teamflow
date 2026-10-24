@@ -1,0 +1,8 @@
+{% load i18n %}
+{% if form.non_field_errors %}<div class="alert alert-error">{{ form.non_field_errors }}</div>{% endif %}
+<div class="field {% if form.card_number.errors %}has-error{% endif %}"><label for="{{ form.card_number.id_for_label }}">{{ form.card_number.label }}</label>{{ form.card_number }}{% for e in form.card_number.errors %}<p class="error">{{ e }}</p>{% endfor %}</div>
+<div class="field {% if form.holder_name.errors %}has-error{% endif %}"><label for="{{ form.holder_name.id_for_label }}">{{ form.holder_name.label }}</label>{{ form.holder_name }}{% for e in form.holder_name.errors %}<p class="error">{{ e }}</p>{% endfor %}</div>
+<div class="form-grid">
+  <div class="field {% if form.expiry.errors %}has-error{% endif %}"><label for="{{ form.expiry.id_for_label }}">{{ form.expiry.label }}</label>{{ form.expiry }}{% for e in form.expiry.errors %}<p class="error">{{ e }}</p>{% endfor %}</div>
+  <div class="field {% if form.cvv.errors %}has-error{% endif %}"><label for="{{ form.cvv.id_for_label }}">{{ form.cvv.label }}</label>{{ form.cvv }}{% for e in form.cvv.errors %}<p class="error">{{ e }}</p>{% endfor %}</div>
+</div>

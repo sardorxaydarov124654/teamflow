@@ -17,7 +17,7 @@ class EmailAuthenticationForm(AuthenticationForm):
 class RegisterForm(forms.Form):
     """
     Self-service registration. The registering user becomes the OWNER of a
-    brand new Company (role=manager) вЂ” this is how tenants get created.
+    brand new Company (role=manager) — this is how tenants get created.
     """
 
     email = forms.EmailField()
@@ -26,6 +26,12 @@ class RegisterForm(forms.Form):
     first_name = forms.CharField(required=False)
     last_name = forms.CharField(required=False)
     company_name = forms.CharField(max_length=255, label="Company name")
+    plan = forms.ChoiceField(
+        choices=[("free", "Free"), ("pro", "Pro"), ("max", "Max")],
+        initial="free",
+        required=False,
+        widget=forms.RadioSelect,
+    )
 
     def clean_email(self):
         email = self.cleaned_data["email"].lower()

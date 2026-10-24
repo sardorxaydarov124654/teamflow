@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from django.db import models
 from django.utils import timezone
 
@@ -5,7 +7,7 @@ from apps.companies.models import Company
 
 
 class SubscriptionPlan(models.Model):
-    """Static catalogue of plans вЂ” seeded via migration/fixture, edited in admin."""
+    """Static catalogue of plans — seeded via migration/fixture, edited in admin."""
 
     code = models.CharField(max_length=20, choices=Company.Plan.choices, unique=True)
     name = models.CharField(max_length=100)
@@ -19,6 +21,10 @@ class SubscriptionPlan(models.Model):
 
     def __str__(self):
         return self.name
+
+    @property
+    def is_paid(self):
+        return self.price_monthly > 0
 
 
 class Subscription(models.Model):
@@ -41,9 +47,39 @@ class Subscription(models.Model):
     is_mock = models.BooleanField(default=True)
 
     def __str__(self):
-        return f"{self.company.name} вЂ” {self.plan.name}"
+        return f"{self.company.name} — {self.plan.name}"
 
     def sync_company_plan(self):
         """Keep the denormalized Company.plan field in sync for fast limit checks."""
         self.company.plan = self.plan.code
         self.company.save(update_fields=["plan"])
+
+    def start_new_period(self):
+        self.current_period_end = timezone.now() + timedelta(days=30)
+
+
+class PaymentMethod(models.Model):
+    """
+    The company's payment card.
+
+    SECURITY: only non-sensitive data is stored — brand, last four digits, holder
+    name and expiry. The full card number and the CVV are validated in memory and
+    are NEVER written to the database or to logs.
+    """
+
+    company = models.OneToOneField(
+        Company, on_delete=models.CASCADE, related_name="payment_method"
+    )
+    holder_name = models.CharField(max_length=120)
+    brand = models.CharField(max_length=20)
+    last4 = models.CharField(max_length=4)
+    exp_month = models.PositiveSmallIntegerField()
+    exp_year = models.PositiveSmallIntegerField()
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.brand} •••• {self.last4} ({self.company.name})"
+
+    @property
+    def expiry_display(self):
+        return f"{self.exp_month:02d}/{str(self.exp_year)[-2:]}"

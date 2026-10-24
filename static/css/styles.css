@@ -220,6 +220,15 @@ table.table { width: 100%; border-collapse: collapse; font-size: 14px; }
 .stack-bar { display: flex; height: 10px; border-radius: 99px; overflow: hidden; background: var(--line); min-width: 120px; } .stack-bar i { display: block; height: 100%; } .stack-bar .done { background: var(--green); } .stack-bar .prog { background: var(--amber); } .stack-bar .todo { background: #c4cada; }
 .stat-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; } .stat-card .num { font-size: 32px; font-weight: 700; letter-spacing: -.02em; } .stat-card .lbl { color: var(--muted); font-size: 14px; }
 
+/* ---------- Billing / payment ---------- */
+.current-plan-banner { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; justify-content: space-between; } .current-plan-banner h2 { font-size: 24px; margin-top: 4px; display: flex; align-items: center; gap: 10px; }
+.pay-card { display: flex; gap: 16px; align-items: center; justify-content: space-between; padding: 14px 18px; border-radius: 14px; background: var(--bg); min-width: 280px; }
+.plan-picker { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.plan-option { cursor: pointer; display: block; margin: 0 !important; } .plan-option input { position: absolute; opacity: 0; pointer-events: none; }
+.plan-option-body { display: flex; flex-direction: column; gap: 2px; padding: 12px 14px; border: 1.5px solid var(--line); border-radius: 14px; transition: all .15s; } .plan-option-body span { color: var(--muted); font-size: 13px; font-weight: 500; }
+.plan-option input:checked + .plan-option-body { border-color: var(--blue); background: var(--blue-50); box-shadow: 0 0 0 3px var(--blue-100); } .plan-option input:focus-visible + .plan-option-body { box-shadow: 0 0 0 3px var(--blue-100); }
+.card-section { margin: 4px 0 18px; padding: 18px; border-radius: 16px; background: var(--surface-2); border: 1px solid var(--line); } .card-section h3 { display: flex; align-items: center; gap: 8px; font-size: 16px; } .card-section .field:last-child { margin-bottom: 0; }
+
 /* ---------- Toasts ---------- */
 #toast-container { position: fixed; top: 20px; right: 20px; z-index: 100; display: grid; gap: 10px; width: min(380px, calc(100vw - 40px)); }
 .toast { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-radius: 14px; background: var(--surface); color: var(--text); box-shadow: 0 12px 36px rgba(16,24,40,.22); border-left: 4px solid var(--blue); animation: toast-in .3s ease; }
@@ -287,6 +296,6 @@ table.table { width: 100%; border-collapse: collapse; font-size: 14px; }
 @media (max-width: 720px) {
   .grid-2, .grid-3, .form-grid, .stat-cards { grid-template-columns: 1fr; } .stat-strip { grid-template-columns: 1fr 1fr; } .cta-pair { grid-template-columns: 1fr 1fr; }
   .lang-switcher, .greeting-sub { display: none; } .kv { grid-template-columns: 110px 1fr; } .big-cal td { height: 76px; } .cal-task { font-size: 10px; padding: 2px 4px; } .steps { grid-template-columns: 1fr; }
-  .mini-stats { grid-template-columns: repeat(2, 1fr); } .l-actions .btn-ghost { display: none; } .l-section { padding: 60px 0; } .mock-body { grid-template-columns: 1fr; } .mock-side { display: none; }
+  .mini-stats { grid-template-columns: repeat(2, 1fr); } .plan-picker { grid-template-columns: 1fr; } .pay-card { min-width: 0; width: 100%; } .l-actions .btn-ghost { display: none; } .l-section { padding: 60px 0; } .mock-body { grid-template-columns: 1fr; } .mock-side { display: none; }
   .hbar { grid-template-columns: 70px 1fr 30px; }
 }

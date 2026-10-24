@@ -7,7 +7,7 @@ class NotificationConsumer(AsyncJsonWebsocketConsumer):
     """
     ws://host/ws/notifications/
     Auth: the browser's Django session cookie, resolved by Channels'
-    AuthMiddlewareStack (see config/asgi.py) onto scope["user"] вЂ” the same
+    AuthMiddlewareStack (see config/asgi.py) onto scope["user"] — the same
     session used for every other page on the site.
     Each connected user joins a private group `user_<id>_notifications`,
     so pushes from notifications.services.notify_user() land here in real time.
@@ -31,7 +31,7 @@ class NotificationConsumer(AsyncJsonWebsocketConsumer):
 
     async def receive_json(self, content, **kwargs):
         # Client can ping to keep the connection alive; no other inbound
-        # commands are expected вЂ” this channel is push-only from the server.
+        # commands are expected — this channel is push-only from the server.
         if content.get("action") == "ping":
             await self.send_json({"type": "pong"})
 

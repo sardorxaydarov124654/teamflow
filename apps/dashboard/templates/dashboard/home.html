@@ -82,7 +82,7 @@
           <li><svg class="i"><use href="#i-check"/></svg>{% if plan.max_projects %}{% blocktranslate with n=plan.max_projects %}Up to {{ n }} projects{% endblocktranslate %}{% else %}{% translate "Unlimited projects" %}{% endif %}</li>
           {% for f in plan.features|slice:"2:" %}<li><svg class="i"><use href="#i-check"/></svg>{{ f }}</li>{% endfor %}
         </ul>
-        <a class="btn {% if plan.code != 'pro' %}secondary{% endif %} block" href="{% url 'accounts:register' %}">{% translate "Get started" %}</a>
+        <a class="btn {% if plan.code != 'pro' %}secondary{% endif %} block" href="{% url 'accounts:register' %}?plan={{ plan.code }}">{% if plan.code == 'free' %}{% translate "Start free" %}{% else %}{% blocktranslate with name=plan.name %}Get {{ name }}{% endblocktranslate %}{% endif %}</a>
       </div>
       {% endfor %}
     </div>

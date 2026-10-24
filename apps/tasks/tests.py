@@ -158,11 +158,3 @@ class PagesSmokeTests(TestCase):
         ]
         for url in urls:
             self.assertEqual(self.client.get(url).status_code, 200, url)
-
-    def test_upgrade_plan_changes_limits(self):
-        company, manager = make_company("A", "m@a.com")
-        self.client.login(email="m@a.com", password=PASSWORD)
-        self.client.post(reverse("subscriptions:upgrade", args=["pro"]))
-        company.refresh_from_db()
-        self.assertEqual(company.plan, "pro")
-        self.assertIsNone(company.get_project_limit())

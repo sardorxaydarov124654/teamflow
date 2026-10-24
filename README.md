@@ -26,7 +26,15 @@ Har bir kompaniya o'zining alohida, boshqalardan to'liq ajratilgan ish muhitida 
 | **Manager** | O'z kompaniyasida loyiha va vazifalarni yaratadi/tahrirlaydi/o'chiradi, a'zolarni taklif qiladi, rollarni boshqaradi, tarifni o'zgartiradi. |
 | **Employee** | Kompaniya loyiha va vazifalarini ko'radi, o'ziga biriktirilgan vazifalar holatini yangilaydi, izoh qoldiradi, bildirishnoma oladi. |
 
-Obuna rejalari: **Free** (3 a'zo / 5 loyiha), **Pro** (50 a'zo / cheksiz loyiha), **Business** (cheksiz).
+Obuna rejalari: **Free** ($0: 3 a'zo / 5 loyiha), **Pro** ($29: 50 a'zo / cheksiz loyiha), **Max** ($99: cheksiz).
+
+### To'lov oqimi (mock)
+
+- Landing'dagi narxlar kartasidagi tugma tanlangan tarifni ro'yxatdan o'tish sahifasiga olib boradi (`/accounts/register/?plan=pro`).
+- **Free** tanlansa karta so'ralmaydi. **Pro / Max** tanlansa karta raqami, karta egasi, amal qilish muddati (MM/YY) va CVV majburiy (Luhn va muddat tekshiriladi), shundan keyingina akkaunt yaratiladi.
+- Xavfsizlik: bazaga faqat brend, oxirgi 4 raqam, ism va muddat yoziladi. To'liq raqam va CVV hech qayerda saqlanmaydi. To'lov haqiqiy emas (pul yechilmaydi).
+- **Billing** bo'limi (sidebar'dagi Billing va "Upgrade plan") faqat **Pro** va **Max** ni ko'rsatadi: joriy tarif belgilanadi, boshqasi "Upgrade to…" (Free'dan) yoki "Switch to…" (Pro ↔ Max) tugmasi bilan taklif qilinadi. Saqlangan karta bilan almashtirish bir bosishda bajariladi; karta bo'lmasa so'raladi.
+- Joriy foydalanish yangi tarif limitidan oshsa (masalan, Max → Pro, a'zolar 50 dan ko'p) almashtirish bloklanadi.
 
 ## Sayt sahifalari
 
@@ -66,7 +74,7 @@ teamflow/
 │   ├── projects/        # Project CRUD (tenant-scoped)
 │   ├── tasks/           # Task + Comment, status, kalendar, deadline reminder
 │   ├── notifications/   # Notification modeli, notify_user(), WebSocket consumer
-│   ├── subscriptions/   # Free / Pro / Business (mock billing) + seed migratsiya
+│   ├── subscriptions/   # Free / Pro / Max, to'lov kartasi (mock billing) + seed migratsiya
 │   ├── dashboard/       # Landing, dashboard, hisobot, qidiruv, Redis cache
 │   └── common/          # Dekoratorlar (rol/tenant), kontekst, kalendar yordamchilari
 ├── templates/           # base.html, layouts/, partials/, 403/404/500
@@ -115,7 +123,7 @@ worker'siz shu zahoti bajariladi. To'liq rejim uchun Redis + `celery -A config w
 | Izoh qoldirish | ✅ | ✅ | ✅ |
 | A'zo taklif qilish, rol o'zgartirish, faolsizlantirish | ❌ | ✅ | ✅ |
 | Platform Admin rolini berish | ❌ | ❌ | ✅ |
-| Tarifni o'zgartirish | ❌ | ✅ | ❌ |
+| Tarifni o'zgartirish / kartani qo'shish | ❌ | ✅ | ❌ |
 | Kompaniyani bloklash | ❌ | ❌ | ✅ |
 
 ## Multi-tenancy

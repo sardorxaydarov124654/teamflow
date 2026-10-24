@@ -1,8 +1,22 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% block title %}{% translate "Confirm plan" %} — TeamFlow{% endblock %}
+{% block title %}{% if is_switch %}{% translate "Switch plan" %}{% else %}{% translate "Upgrade plan" %}{% endif %} — TeamFlow{% endblock %}
 {% block content %}
-<div class="card narrow-sm"><h1 style="font-size:22px;margin-bottom:10px">{% blocktranslate with name=plan.name %}Switch to the {{ name }} plan?{% endblocktranslate %}</h1>
-<p class="muted">${{ plan.price_monthly|floatformat:"0" }}/{% translate "month" %} · {% translate "Billing is simulated — you will not be charged." %}</p>
-<form method="post" class="form-actions mt">{% csrf_token %}<button class="btn" type="submit">{% translate "Confirm" %}</button><a class="btn secondary" href="{% url 'subscriptions:plans' %}">{% translate "Cancel" %}</a></form></div>
+<div class="page-head"><div><h1>{% if is_switch %}{% blocktranslate with a=current_plan.name b=plan.name %}Switch from {{ a }} to {{ b }}{% endblocktranslate %}{% else %}{% blocktranslate with name=plan.name %}Upgrade to {{ name }}{% endblocktranslate %}{% endif %}</h1>
+  <p class="sub">${{ plan.price_monthly|floatformat:"0" }}/{% translate "month" %} · {% translate "Billing is simulated — you will not be charged." %}</p></div></div>
+<div class="card narrow-sm">
+  {% if problem %}<div class="alert alert-error">{{ problem }}</div>{% endif %}
+  <form method="post" class="form" novalidate>{% csrf_token %}
+    {% if use_new_card %}
+      <input type="hidden" name="new_card" value="1">
+      <h3><svg class="i i-sm"><use href="#i-billing"/></svg> {% translate "Payment details" %}</h3>
+      {% include "subscriptions/_card_fields.html" with form=card_form %}
+      {% if saved_card %}<a class="small" href="{% url 'subscriptions:upgrade' plan.code %}">← {% translate "Use saved card" %} {{ saved_card.brand }} •••• {{ saved_card.last4 }}</a>{% endif %}
+    {% else %}
+      <div class="pay-card"><div><b>{{ saved_card.brand }} •••• {{ saved_card.last4 }}</b><div class="muted small">{{ saved_card.holder_name }} · {% translate "expires" %} {{ saved_card.expiry_display }}</div></div>
+        <a class="small" href="{% url 'subscriptions:upgrade' plan.code %}?new_card=1">{% translate "Use another card" %}</a></div>
+    {% endif %}
+    <div class="form-actions"><button class="btn" type="submit" {% if problem %}disabled{% endif %}>{% if is_switch %}{% translate "Confirm switch" %}{% else %}{% translate "Pay & upgrade" %}{% endif %}</button><a class="btn secondary" href="{% url 'subscriptions:plans' %}">{% translate "Cancel" %}</a></div>
+  </form>
+</div>
 {% endblock %}

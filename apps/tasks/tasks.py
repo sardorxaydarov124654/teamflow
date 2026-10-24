@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 @shared_task
 def send_deadline_reminders():
     """
-    Celery Beat job (runs every N minutes вЂ” see config/settings/base.py
+    Celery Beat job (runs every N minutes — see config/settings/base.py
     CELERY_BEAT_SCHEDULE). Notifies the assignee of any task whose deadline
     is within the next 24h and hasn't been reminded about yet.
     """

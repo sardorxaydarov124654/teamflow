@@ -44,12 +44,12 @@ class CompanyAdmin(admin.ModelAdmin):
 
     @admin.display(description="Description")
     def description_preview(self, obj):
-        return obj.get_description_preview(12) or "вЂ”"
+        return obj.get_description_preview(12) or "—"
 
     @admin.display(description="Logo")
     def logo_thumbnail(self, obj):
         if not obj.logo:
-            return "вЂ”"
+            return "—"
         return format_html(
             '<img src="{}" style="width:28px;height:28px;object-fit:cover;'
             'border-radius:6px;border:1px solid #DDE3DD;">',

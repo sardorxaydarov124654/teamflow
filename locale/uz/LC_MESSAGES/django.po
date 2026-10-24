@@ -914,3 +914,85 @@ msgstr "“%(name)s” va uning barcha vazifalari butunlay o'chiriladi."
 
 msgid "“%(name)s” and its comments will be permanently deleted."
 msgstr "“%(name)s” va uning izohlari butunlay o'chiriladi."
+
+msgid ""
+"A paid plan requires a card. Billing is simulated — your card is not "
+"charged, and the full number and CVV are never stored."
+msgstr ""
+"Pullik tarif uchun karta kerak. To'lov simulyatsiya qilinadi — kartangizdan "
+"pul yechilmaydi, to'liq raqam va CVV hech qachon saqlanmaydi."
+
+msgid "Add a card to subscribe to a paid plan."
+msgstr "Pullik tarifga obuna bo'lish uchun karta qo'shing."
+
+msgid "Add card"
+msgstr "Karta qo'shish"
+
+msgid "Card"
+msgstr "Karta"
+
+msgid "Change card"
+msgstr "Kartani almashtirish"
+
+msgid "Choose your plan"
+msgstr "Tarifingizni tanlang"
+
+msgid "Confirm switch"
+msgstr "Almashtirishni tasdiqlash"
+
+msgid "Current card"
+msgstr "Joriy karta"
+
+msgid "Free"
+msgstr "Bepul"
+
+msgid "Get %(name)s"
+msgstr "%(name)s ni olish"
+
+msgid "No payment card on file"
+msgstr "To'lov kartasi qo'shilmagan"
+
+msgid "Pay & upgrade"
+msgstr "To'lash va oshirish"
+
+msgid "Payment card"
+msgstr "To'lov kartasi"
+
+msgid "Payment details"
+msgstr "To'lov ma'lumotlari"
+
+msgid "Renews on"
+msgstr "Yangilanish sanasi"
+
+msgid "Save card"
+msgstr "Kartani saqlash"
+
+msgid "Start free"
+msgstr "Bepul boshlash"
+
+msgid "Switch from %(a)s to %(b)s"
+msgstr "%(a)s dan %(b)s ga o'tish"
+
+msgid "Switch plan"
+msgstr "Tarifni almashtirish"
+
+msgid "Switch to %(name)s"
+msgstr "%(name)s ga o'tish"
+
+msgid "The full card number and CVV are never stored."
+msgstr "To'liq karta raqami va CVV hech qachon saqlanmaydi."
+
+msgid "Upgrade to %(name)s"
+msgstr "%(name)s ga oshirish"
+
+msgid "Use another card"
+msgstr "Boshqa kartadan foydalanish"
+
+msgid "Use saved card"
+msgstr "Saqlangan kartadan foydalanish"
+
+msgid "Your current plan"
+msgstr "Joriy tarifingiz"
+
+msgid "expires"
+msgstr "amal qilish muddati"

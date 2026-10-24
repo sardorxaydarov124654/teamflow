@@ -63,7 +63,7 @@ def platform_admin_required(view_func):
 def same_company_object(user, obj):
     """
     Object-level tenant isolation check.
-    Never trust the URL/PK alone вЂ” always re-check company ownership on the object.
+    Never trust the URL/PK alone — always re-check company ownership on the object.
     """
     if user.is_platform_admin:
         return True

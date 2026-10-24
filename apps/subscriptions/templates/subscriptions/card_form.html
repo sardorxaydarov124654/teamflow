@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Payment card" %} — TeamFlow{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>{% translate "Payment card" %}</h1><p class="sub">{% if saved_card %}{% translate "Current card" %}: {{ saved_card.brand }} •••• {{ saved_card.last4 }}{% else %}{% translate "Add a card to subscribe to a paid plan." %}{% endif %}</p></div></div>
+<div class="card narrow-sm"><form method="post" class="form" novalidate>{% csrf_token %}
+  {% include "subscriptions/_card_fields.html" %}
+  <p class="help">{% translate "The full card number and CVV are never stored." %}</p>
+  <div class="form-actions"><button class="btn" type="submit">{% translate "Save card" %}</button><a class="btn secondary" href="{% url 'subscriptions:plans' %}">{% translate "Cancel" %}</a></div></form></div>
+{% endblock %}

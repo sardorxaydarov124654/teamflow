@@ -4,18 +4,37 @@
 {% block auth_content %}
 <h1>{% translate "Create your workspace" %}</h1>
 <p class="lead">{% translate "You will become the manager of a brand-new company." %}</p>
-<form method="post" novalidate>
+<form method="post" novalidate id="register-form">
   {% csrf_token %}
   {% if form.non_field_errors %}<div class="alert alert-error">{{ form.non_field_errors }}</div>{% endif %}
+
+  <div class="field"><label>{% translate "Choose your plan" %}</label>
+    <div class="plan-picker">
+      {% for p in plans %}
+      <label class="plan-option">
+        <input type="radio" name="plan" value="{{ p.code }}" data-paid="{% if p.price_monthly > 0 %}1{% else %}0{% endif %}" {% if p.code == selected %}checked{% endif %}>
+        <span class="plan-option-body"><b>{{ p.name }}</b><span>${{ p.price_monthly|floatformat:"0" }}/{% translate "month" %}</span></span>
+      </label>
+      {% endfor %}
+    </div>
+  </div>
+
   <div class="form-grid">
     {% for f in form %}{% if f.name == 'first_name' or f.name == 'last_name' %}
       <div class="field {% if f.errors %}has-error{% endif %}"><label for="{{ f.id_for_label }}">{{ f.label }}</label>{{ f }}{% for e in f.errors %}<p class="error">{{ e }}</p>{% endfor %}</div>
     {% endif %}{% endfor %}
   </div>
-  {% for f in form %}{% if f.name != 'first_name' and f.name != 'last_name' %}
+  {% for f in form %}{% if f.name != 'first_name' and f.name != 'last_name' and f.name != 'plan' %}
     <div class="field {% if f.errors %}has-error{% endif %}"><label for="{{ f.id_for_label }}">{{ f.label }}</label>{{ f }}{% for e in f.errors %}<p class="error">{{ e }}</p>{% endfor %}</div>
   {% endif %}{% endfor %}
-  <button class="btn block lg" type="submit">{% translate "Create workspace" %}</button>
+
+  <div class="card-section" data-card-section {% if selected not in paid_codes %}hidden{% endif %}>
+    <h3><svg class="i i-sm"><use href="#i-billing"/></svg> {% translate "Payment details" %}</h3>
+    <p class="help" style="margin:4px 0 14px">{% translate "A paid plan requires a card. Billing is simulated — your card is not charged, and the full number and CVV are never stored." %}</p>
+    {% include "subscriptions/_card_fields.html" with form=card_form %}
+  </div>
+
+  <button class="btn block lg" type="submit" id="register-submit">{% translate "Create workspace" %}</button>
 </form>
 <div class="auth-foot">{% translate "Already have an account?" %} <a href="{% url 'accounts:login' %}">{% translate "Sign in" %}</a></div>
 {% endblock %}

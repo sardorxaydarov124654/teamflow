@@ -7,5 +7,6 @@ app_name = "subscriptions"
 urlpatterns = [
     path("subscriptions/plans/", views.plans_list_view, name="plans"),
     path("subscriptions/", views.my_subscription_view, name="mine"),
+    path("subscriptions/card/", views.card_update_view, name="card"),
     path("subscriptions/upgrade/<str:plan_code>/", views.upgrade_view, name="upgrade"),
 ]

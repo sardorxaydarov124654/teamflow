@@ -63,7 +63,7 @@
         <div class="usage-row"><span>{% translate "Members" %}</span><b>{{ plan_usage.users }}{% if plan_usage.user_limit %} / {{ plan_usage.user_limit }}{% else %} / ∞{% endif %}</b></div>
         {% if plan_usage.user_limit %}<div class="bar"><i style="width:{% widthratio plan_usage.users plan_usage.user_limit 100 %}%"></i></div>{% endif %}
       </div>
-      {% if user.is_manager and plan_usage.plan_code != 'business' %}
+      {% if user.is_manager and plan_usage.plan_code != 'max' %}
         <a class="side-card-link" href="{% url 'subscriptions:plans' %}">{% translate "Upgrade plan" %} →</a>
       {% endif %}
     </div>

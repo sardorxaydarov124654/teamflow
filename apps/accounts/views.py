@@ -28,12 +28,28 @@ from .tasks import send_invitation_email
 
 
 def register_view(request):
+    """
+    Self-service registration with plan selection.
+    Free → no payment details. Pro / Max → a payment card is required (validated
+    in memory; only brand / last4 / expiry are stored) before the account is created.
+    """
     if request.user.is_authenticated:
         return redirect("dashboard:dashboard")
 
+    from apps.subscriptions.forms import CardForm
+    from apps.subscriptions.services import PAID_CODES, apply_plan, ensure_plans, get_plan
+
+    plans = {p.code: p for p in ensure_plans()}
+    selected = request.POST.get("plan") or request.GET.get("plan") or "free"
+    if selected not in plans:
+        selected = "free"
+
     if request.method == "POST":
         form = RegisterForm(request.POST)
-        if form.is_valid():
+        needs_card = selected in PAID_CODES
+        card_form = CardForm(request.POST) if needs_card else None
+        card_ok = card_form.is_valid() if needs_card else True
+        if form.is_valid() and card_ok:
             with transaction.atomic():
                 user = User(
                     email=form.cleaned_data["email"],
@@ -48,12 +64,30 @@ def register_view(request):
                 )
                 user.company = company
                 user.save(update_fields=["company"])
+                if needs_card:
+                    card_form.save_for(company)
+                apply_plan(company, get_plan(selected))
             auth_login(request, user)
-            messages.success(request, f"Welcome to TeamFlow, {user.first_name or user.email}!")
+            messages.success(
+                request,
+                f"Welcome to TeamFlow, {user.first_name or user.email}! "
+                f"Your {plans[selected].name} plan is active.",
+            )
             return redirect("dashboard:dashboard")
     else:
-        form = RegisterForm()
-    return render(request, "accounts/register.html", {"form": form})
+        form = RegisterForm(initial={"plan": selected})
+        card_form = CardForm()
+    return render(
+        request,
+        "accounts/register.html",
+        {
+            "form": form,
+            "card_form": card_form or CardForm(),
+            "plans": [plans[c] for c in ("free", "pro", "max") if c in plans],
+            "selected": selected,
+            "paid_codes": PAID_CODES,
+        },
+    )
 
 
 class EmailLoginView(LoginView):

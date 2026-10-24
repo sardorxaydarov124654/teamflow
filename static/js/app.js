@@ -98,6 +98,28 @@
     });
   });
 
+  /* ---- Card inputs: format number & expiry ---- */
+  $$("[data-card-number]").forEach(function (el) {
+    el.addEventListener("input", function () {
+      var d = el.value.replace(/\D/g, "").slice(0, 19);
+      el.value = d.replace(/(.{4})/g, "$1 ").trim();
+    });
+  });
+  $$("[data-card-expiry]").forEach(function (el) {
+    el.addEventListener("input", function () {
+      var d = el.value.replace(/\D/g, "").slice(0, 4);
+      el.value = d.length > 2 ? d.slice(0, 2) + "/" + d.slice(2) : d;
+    });
+  });
+
+  /* ---- Registration: show the card section only for paid plans ---- */
+  var cardSection = $("[data-card-section]");
+  if (cardSection) {
+    $$("input[name=plan]").forEach(function (r) {
+      r.addEventListener("change", function () { cardSection.hidden = r.getAttribute("data-paid") !== "1"; });
+    });
+  }
+
   /* ---- Progress overview chart (dashboard) ---- */
   var chartEl = $("#progress-chart"), dataEl = $("#chart-data");
   if (chartEl && dataEl) {

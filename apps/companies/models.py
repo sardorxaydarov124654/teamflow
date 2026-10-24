@@ -23,7 +23,7 @@ class Company(models.Model):
     class Plan(models.TextChoices):
         FREE = "free", "Free"
         PRO = "pro", "Pro"
-        BUSINESS = "business", "Business"
+        MAX = "max", "Max"
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255)
@@ -63,7 +63,7 @@ class Company(models.Model):
         """Short, dashboard-friendly excerpt of the description."""
         if not self.description:
             return ""
-        return Truncator(self.description).words(word_limit, truncate=" тАж")
+        return Truncator(self.description).words(word_limit, truncate=" …")
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -82,11 +82,11 @@ class Company(models.Model):
         return getattr(self, "subscription_record", None)
 
     def get_user_limit(self):
-        limits = {self.Plan.FREE: 3, self.Plan.PRO: 50, self.Plan.BUSINESS: None}
+        limits = {self.Plan.FREE: 3, self.Plan.PRO: 50, self.Plan.MAX: None}
         return limits.get(self.plan)
 
     def get_project_limit(self):
-        limits = {self.Plan.FREE: 5, self.Plan.PRO: None, self.Plan.BUSINESS: None}
+        limits = {self.Plan.FREE: 5, self.Plan.PRO: None, self.Plan.MAX: None}
         return limits.get(self.plan)
 
     def can_add_user(self):
