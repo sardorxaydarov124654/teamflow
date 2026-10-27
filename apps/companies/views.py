@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 
 from apps.common.decorators import platform_admin_required
 
-from .forms import CompanyCreateForm, CompanyForm
+from .forms import CompanyForm
 from .models import Company
 
 
@@ -42,7 +42,7 @@ def company_settings_view(request):
 def company_profile_view(request):
     company = request.user.company
     if company is None:
-        return redirect("companies:create")
+        return redirect("dashboard:dashboard")
     can_edit = company.owner_id == request.user.id or request.user.is_platform_admin
     return render(
         request,
@@ -55,30 +55,6 @@ def company_profile_view(request):
             "task_count": company.tasks.count(),
         },
     )
-
-
-@login_required
-def company_create_view(request):
-    """A signed-in user without a workspace creates one and becomes its manager."""
-    if request.user.company_id:
-        return redirect("companies:settings")
-    if request.method == "POST":
-        form = CompanyCreateForm(request.POST, request.FILES)
-        if form.is_valid():
-            with transaction.atomic():
-                company = form.save(commit=False)
-                company.owner = request.user
-                company.save()
-                user = request.user
-                user.company = company
-                if not user.is_platform_admin:
-                    user.role = user.Role.MANAGER
-                user.save(update_fields=["company", "role"])
-            messages.success(request, f"{company.name} created.")
-            return redirect("dashboard:dashboard")
-    else:
-        form = CompanyCreateForm()
-    return render(request, "companies/create.html", {"form": form})
 
 
 @platform_admin_required

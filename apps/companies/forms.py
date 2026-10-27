@@ -23,18 +23,3 @@ class CompanyForm(forms.ModelForm):
         help_texts = {
             "logo": "PNG, JPG, WEBP or SVG, up to 5MB.",
         }
-
-
-class CompanyCreateForm(forms.ModelForm):
-    """Used at signup, when a manager registers and creates their company."""
-
-    class Meta:
-        model = Company
-        fields = ["name", "description", "logo"]
-        widgets = {
-            "name": forms.TextInput(attrs={"placeholder": "e.g. Acme Inc."}),
-            "description": forms.Textarea(
-                attrs={"rows": 4, "placeholder": "A short summary of what the company does."}
-            ),
-            "logo": forms.ClearableFileInput(attrs={"accept": "image/png,image/jpeg,image/webp,image/svg+xml"}),
-        }

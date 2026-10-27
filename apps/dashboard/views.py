@@ -2,13 +2,19 @@ import calendar
 from collections import defaultdict
 from datetime import timedelta
 
+from django.contrib.auth.decorators import login_required
 from django.core.cache import cache
 from django.db.models import Count, Q
 from django.shortcuts import redirect, render
 from django.utils import timezone
 
 from apps.common.calendar_utils import month_grid, parse_month
-from apps.common.decorators import company_member_required, company_scoped_queryset
+from apps.accounts.models import CompanyInvitation
+from apps.common.decorators import (
+    _check_company_active,
+    company_member_required,
+    company_scoped_queryset,
+)
 from apps.projects.models import Project
 from apps.subscriptions.services import ensure_plans
 from apps.tasks.models import Comment, Task
@@ -23,13 +29,20 @@ def home_view(request):
     return render(request, "dashboard/home.html", {"plans": plans})
 
 
-@company_member_required
+@login_required
 def dashboard_view(request):
     user = request.user
     company = user.company
     if company is None:
-        # Platform admins with no tenant land on the cross-company view instead.
-        return redirect("companies:platform-list")
+        if user.is_platform_admin:
+            # Platform admins with no tenant land on the cross-company view instead.
+            return redirect("companies:platform-list")
+        # Employee who registered without a company: friendly "waiting" page.
+        invitations = CompanyInvitation.objects.filter(
+            email__iexact=user.email, status=CompanyInvitation.Status.PENDING
+        ).select_related("company")
+        return render(request, "dashboard/no_company.html", {"invitations": invitations})
+    _check_company_active(user)
 
     cache_key = f"dashboard:v2:company:{company.id}"
     data = cache.get(cache_key)
@@ -94,6 +107,7 @@ def _compute_stats(company):
 def _employee_productivity(company):
     rows = (
         company.members.filter(is_active=True)
+        .exclude(role="platform_admin")
         .annotate(
             assigned=Count("assigned_tasks", distinct=True),
             completed=Count(
@@ -299,7 +313,7 @@ def search_view(request):
             Q(title__icontains=q) | Q(description__icontains=q)
         )[:15]
         if user.company_id:
-            members = user.company.members.filter(
+            members = user.company.members.exclude(role="platform_admin").filter(
                 Q(first_name__icontains=q) | Q(last_name__icontains=q) | Q(email__icontains=q)
             )[:10]
     return render(

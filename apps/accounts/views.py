@@ -7,10 +7,11 @@ from django.contrib.auth import password_validation, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.views import LoginView
-from django.core.exceptions import ValidationError
+from django.core.exceptions import PermissionDenied, ValidationError
 from django.conf import settings
 from django.db import transaction
 from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
 from django.views.decorators.http import require_POST
 
 from apps.common.decorators import company_member_required, manager_required
@@ -46,33 +47,49 @@ def register_view(request):
 
     if request.method == "POST":
         form = RegisterForm(request.POST)
-        needs_card = selected in PAID_CODES
+        form_ok = form.is_valid()
+        company_name = (form.cleaned_data.get("company_name") or "").strip() if form_ok else ""
+
+        # Company name given  -> the user becomes the Manager of a new company.
+        # Company name empty  -> the user joins as an ordinary Employee (no company).
+        if form_ok and not company_name and selected in PAID_CODES:
+            form.add_error("company_name", "A company name is required for a paid plan.")
+            form_ok = False
+
+        needs_card = bool(company_name) and selected in PAID_CODES
         card_form = CardForm(request.POST) if needs_card else None
         card_ok = card_form.is_valid() if needs_card else True
-        if form.is_valid() and card_ok:
+
+        if form_ok and card_ok:
             with transaction.atomic():
                 user = User(
                     email=form.cleaned_data["email"],
                     first_name=form.cleaned_data.get("first_name", ""),
                     last_name=form.cleaned_data.get("last_name", ""),
-                    role=User.Role.MANAGER,
+                    role=User.Role.MANAGER if company_name else User.Role.EMPLOYEE,
                 )
                 user.set_password(form.cleaned_data["password"])
                 user.save()
-                company = Company.objects.create(
-                    name=form.cleaned_data["company_name"], owner=user
-                )
-                user.company = company
-                user.save(update_fields=["company"])
-                if needs_card:
-                    card_form.save_for(company)
-                apply_plan(company, get_plan(selected))
+                if company_name:
+                    company = Company.objects.create(name=company_name, owner=user)
+                    user.company = company
+                    user.save(update_fields=["company"])
+                    if needs_card:
+                        card_form.save_for(company)
+                    apply_plan(company, get_plan(selected))
             auth_login(request, user)
-            messages.success(
-                request,
-                f"Welcome to TeamFlow, {user.first_name or user.email}! "
-                f"Your {plans[selected].name} plan is active.",
-            )
+            if company_name:
+                messages.success(
+                    request,
+                    f"Welcome to TeamFlow, {user.first_name or user.email}! "
+                    f"Your {plans[selected].name} plan is active.",
+                )
+            else:
+                messages.success(
+                    request,
+                    f"Welcome to TeamFlow, {user.first_name or user.email}! "
+                    "You joined as an Employee — a company manager can invite you to a team.",
+                )
             return redirect("dashboard:dashboard")
     else:
         form = RegisterForm(initial={"plan": selected})
@@ -132,25 +149,38 @@ def password_change_view(request):
 
 @company_member_required
 def members_list_view(request):
+    """
+    Team screen: the company's manager(s) and all of their employees.
+    Platform Admin accounts never appear here.
+    """
+    from django.db.models import Case, IntegerField, Q, Value, When
+
     user = request.user
+    members = User.objects.select_related("company").exclude(role=User.Role.PLATFORM_ADMIN)
     if user.is_platform_admin and user.company_id is None:
-        members = User.objects.select_related("company")
+        members = members.filter(company__isnull=False)
     else:
-        members = User.objects.select_related("company").filter(company_id=user.company_id)
+        members = members.filter(company_id=user.company_id)
+    members = members.annotate(
+        role_rank=Case(
+            When(role=User.Role.MANAGER, then=Value(0)),
+            default=Value(1),
+            output_field=IntegerField(),
+        )
+    ).order_by("role_rank", "first_name", "email")
 
     q = request.GET.get("q", "").strip()
     role = request.GET.get("role", "")
+    team_roles = [(User.Role.MANAGER, "Manager"), (User.Role.EMPLOYEE, "Employee")]
     if q:
-        from django.db.models import Q
-
         members = members.filter(
             Q(first_name__icontains=q) | Q(last_name__icontains=q) | Q(email__icontains=q)
         )
-    if role in {r for r, _ in User.Role.choices}:
+    if role in {r for r, _ in team_roles}:
         members = members.filter(role=role)
 
     invitations = []
-    if (user.is_manager or user.is_platform_admin) and user.company_id:
+    if user.is_manager and user.company_id:
         invitations = CompanyInvitation.objects.filter(
             company_id=user.company_id, status=CompanyInvitation.Status.PENDING
         )
@@ -162,7 +192,7 @@ def members_list_view(request):
             "invitations": invitations,
             "q": q,
             "current_role": role,
-            "role_choices": User.Role.choices,
+            "role_choices": team_roles,
             "site_url": settings.SITE_URL.rstrip("/"),
         },
     )
@@ -215,6 +245,9 @@ def member_deactivate_view(request, pk):
 
 @manager_required
 def invite_member_view(request):
+    """Only a company MANAGER can invite - and only EMPLOYEES into their own company."""
+    if not request.user.is_manager:
+        raise PermissionDenied("Only a company manager can invite employees.")
     if not request.user.company_id:
         messages.error(request, "You are not attached to a company.")
         return redirect("dashboard:dashboard")
@@ -228,10 +261,11 @@ def invite_member_view(request):
         form = InviteMemberForm(request.POST)
         if form.is_valid():
             email = form.cleaned_data["email"].lower()
-            role = form.cleaned_data["role"]
+            role = User.Role.EMPLOYEE
+            existing = User.objects.filter(email__iexact=email).first()
 
-            if User.objects.filter(email__iexact=email).exists():
-                form.add_error("email", "A user with this email already exists.")
+            if existing and (existing.company_id or existing.role != User.Role.EMPLOYEE):
+                form.add_error("email", "This user already belongs to a company.")
             else:
                 invitation, _ = CompanyInvitation.objects.update_or_create(
                     company=company,
@@ -270,9 +304,32 @@ def accept_invitation_view(request, token):
     invitation = get_object_or_404(
         CompanyInvitation, token=token, status=CompanyInvitation.Status.PENDING
     )
-    if User.objects.filter(email__iexact=invitation.email).exists():
-        messages.error(request, "An account with this email already exists. Please sign in.")
-        return redirect("accounts:login")
+    existing = User.objects.filter(email__iexact=invitation.email).first()
+    if existing:
+        if existing.company_id:
+            messages.error(request, "This account already belongs to a company.")
+            return redirect("accounts:login")
+        # An Employee who registered without a company accepts while signed in.
+        if not request.user.is_authenticated or request.user.pk != existing.pk:
+            messages.info(request, "Sign in to accept the invitation.")
+            return redirect(f"{reverse('accounts:login')}?next={request.path}")
+        if request.method == "POST":
+            if not invitation.company.can_add_user():
+                messages.error(request, "This company has reached its plan's user limit.")
+            else:
+                with transaction.atomic():
+                    existing.company = invitation.company
+                    existing.role = User.Role.EMPLOYEE
+                    existing.save(update_fields=["company", "role"])
+                    invitation.status = CompanyInvitation.Status.ACCEPTED
+                    invitation.save(update_fields=["status"])
+                messages.success(request, f"Welcome to {invitation.company.name}!")
+                return redirect("dashboard:dashboard")
+        return render(
+            request,
+            "accounts/accept_invitation.html",
+            {"invitation": invitation, "existing_user": True},
+        )
 
     if request.method == "POST":
         password = request.POST.get("password", "")
@@ -293,7 +350,7 @@ def accept_invitation_view(request, token):
                     email=invitation.email,
                     first_name=first_name,
                     last_name=last_name,
-                    role=invitation.role,
+                    role=User.Role.EMPLOYEE,
                     company=invitation.company,
                 )
                 user.set_password(password)

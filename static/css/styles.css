@@ -59,6 +59,11 @@ body.app-body { background: var(--page); background-image: radial-gradient(circl
 .greeting-title { font-size: 24px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .greeting-sub { color: var(--muted); font-size: 14px; margin-top: 2px; }
 .role-tag { font-weight: 600; color: var(--blue); }
+.company-head { display: flex; align-items: center; gap: 16px; color: var(--text); min-width: 0; } .company-head:hover { text-decoration: none; }
+.company-head-logo { width: 60px; height: 60px; border-radius: 18px; object-fit: cover; flex: none; background: var(--blue-50); box-shadow: 0 4px 14px rgba(26,111,232,.25); }
+.company-head-text { display: flex; flex-direction: column; min-width: 0; }
+.company-title { font-size: 30px; font-weight: 800; letter-spacing: -.02em; line-height: 1.1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-transform: none; }
+.company-head .greeting-sub { margin-top: 4px; }
 .search { position: relative; display: flex; align-items: center; width: 320px; max-width: 100%; background: var(--bg); border-radius: 999px; padding: 0 16px; gap: 10px; color: var(--muted); }
 .search input { flex: 1; min-width: 0; border: 0; background: transparent; padding: 14px 0; font: inherit; color: var(--text); outline: none; }
 .search kbd { font: 600 11px var(--font); padding: 3px 7px; border-radius: 6px; background: var(--surface); border: 1px solid var(--line); color: var(--muted); }
@@ -287,7 +292,7 @@ table.table { width: 100%; border-collapse: collapse; font-size: 14px; }
   .shell { display: block; margin: 0; border-radius: 0; min-height: 100vh; }
   .sidebar { position: fixed; z-index: 50; left: 0; top: 0; bottom: 0; height: 100vh; width: 280px; transform: translateX(-100%); transition: transform .25s; box-shadow: 0 0 60px rgba(0,0,0,.3); }
   .sidebar.open { transform: none; } .menu-btn { display: inline-flex; } .content { border-top-left-radius: 0; padding: 20px; } .topbar { padding: 16px 20px; } .app-footer { padding: 0 20px 20px; }
-  .search { display: none; } .greeting-title { font-size: 19px; }
+  .search { display: none; } .greeting-title { font-size: 19px; } .company-title { font-size: 22px; } .company-head-logo { width: 46px; height: 46px; border-radius: 14px; }
   .grid-3, .stat-cards { grid-template-columns: repeat(2, 1fr); }
   .auth-page { grid-template-columns: 1fr; } .auth-side { display: none; } .auth-mobile-brand { display: flex; margin-bottom: 24px; }
   .l-hero-grid { grid-template-columns: 1fr; } .steps { grid-template-columns: repeat(2, 1fr); } .l-foot-grid { grid-template-columns: 1fr 1fr; }

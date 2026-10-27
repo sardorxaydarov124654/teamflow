@@ -24,8 +24,8 @@ def company_member_required(view_func):
     @login_required
     def wrapper(request, *args, **kwargs):
         if request.user.company_id is None and not request.user.is_platform_admin:
-            messages.info(request, "Create your company workspace to continue.")
-            return redirect("companies:create")
+            messages.info(request, "You are not part of a company yet.")
+            return redirect("dashboard:dashboard")
         _check_company_active(request.user)
         return view_func(request, *args, **kwargs)
 

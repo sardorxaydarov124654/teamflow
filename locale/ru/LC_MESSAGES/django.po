@@ -987,3 +987,35 @@ msgstr "Ваш текущий тариф"
 
 msgid "expires"
 msgstr "действует до"
+
+msgid ""
+"Enter a company name to become its manager — or leave it empty to join as an"
+" Employee."
+msgstr ""
+"Укажите название компании, чтобы стать её менеджером, или оставьте пустым — "
+"вы войдёте как обычный сотрудник."
+
+msgid "optional"
+msgstr "необязательно"
+
+msgid "Invite an employee"
+msgstr "Пригласить сотрудника"
+
+msgid "They will join your company as an Employee."
+msgstr "Он присоединится к вашей компании как сотрудник."
+
+msgid "Welcome, %(name)s!"
+msgstr "Добро пожаловать, %(name)s!"
+
+msgid ""
+"You are signed in as an Employee and you are not part of a company yet. Ask "
+"your company manager to invite you using this email address:"
+msgstr ""
+"Вы вошли как сотрудник и пока не состоите в компании. Попросите менеджера "
+"компании пригласить вас по этому email:"
+
+msgid "Invited as"
+msgstr "Приглашён как"
+
+msgid "Create my own company"
+msgstr "Создать свою компанию"

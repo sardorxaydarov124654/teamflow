@@ -3,7 +3,7 @@
 {% block title %}{% translate "Create workspace" %} — TeamFlow{% endblock %}
 {% block auth_content %}
 <h1>{% translate "Create your workspace" %}</h1>
-<p class="lead">{% translate "You will become the manager of a brand-new company." %}</p>
+<p class="lead">{% translate "Enter a company name to become its manager — or leave it empty to join as an Employee." %}</p>
 <form method="post" novalidate id="register-form">
   {% csrf_token %}
   {% if form.non_field_errors %}<div class="alert alert-error">{{ form.non_field_errors }}</div>{% endif %}
@@ -25,7 +25,7 @@
     {% endif %}{% endfor %}
   </div>
   {% for f in form %}{% if f.name != 'first_name' and f.name != 'last_name' and f.name != 'plan' %}
-    <div class="field {% if f.errors %}has-error{% endif %}"><label for="{{ f.id_for_label }}">{{ f.label }}</label>{{ f }}{% for e in f.errors %}<p class="error">{{ e }}</p>{% endfor %}</div>
+    <div class="field {% if f.errors %}has-error{% endif %}"><label for="{{ f.id_for_label }}">{{ f.label }}{% if not f.field.required %} <span class="muted small">({% translate "optional" %})</span>{% endif %}</label>{{ f }}{% if f.help_text %}<p class="help">{{ f.help_text }}</p>{% endif %}{% for e in f.errors %}<p class="error">{{ e }}</p>{% endfor %}</div>
   {% endif %}{% endfor %}
 
   <div class="card-section" data-card-section {% if selected not in paid_codes %}hidden{% endif %}>

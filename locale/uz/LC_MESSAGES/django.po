@@ -996,3 +996,36 @@ msgstr "Joriy tarifingiz"
 
 msgid "expires"
 msgstr "amal qilish muddati"
+
+msgid ""
+"Enter a company name to become its manager — or leave it empty to join as an"
+" Employee."
+msgstr ""
+"Kompaniya nomini kiriting — siz uning menejeri bo'lasiz, yoki bo'sh "
+"qoldiring — oddiy xodim sifatida kirasiz."
+
+msgid "optional"
+msgstr "ixtiyoriy"
+
+msgid "Invite an employee"
+msgstr "Xodimni taklif qiling"
+
+msgid "They will join your company as an Employee."
+msgstr "U kompaniyangizga xodim sifatida qo'shiladi."
+
+msgid "Welcome, %(name)s!"
+msgstr "Xush kelibsiz, %(name)s!"
+
+msgid ""
+"You are signed in as an Employee and you are not part of a company yet. Ask "
+"your company manager to invite you using this email address:"
+msgstr ""
+"Siz Xodim sifatida kirdingiz va hozircha biror kompaniyaga a'zo emassiz. "
+"Kompaniya menejeridan sizni shu email manzil orqali taklif qilishini "
+"so'rang:"
+
+msgid "Invited as"
+msgstr "Taklif qilingan rol"
+
+msgid "Create my own company"
+msgstr "O'z kompaniyamni yaratish"

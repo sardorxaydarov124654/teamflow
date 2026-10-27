@@ -23,10 +23,18 @@ Har bir kompaniya o'zining alohida, boshqalardan to'liq ajratilgan ish muhitida 
 | Rol | Imkoniyatlari |
 | --- | --- |
 | **Platform Admin** | Butun platformani boshqaradi, barcha kompaniyalarni ko'radi, kompaniyani bloklaydi/blokdan chiqaradi. |
-| **Manager** | O'z kompaniyasida loyiha va vazifalarni yaratadi/tahrirlaydi/o'chiradi, a'zolarni taklif qiladi, rollarni boshqaradi, tarifni o'zgartiradi. |
+| **Manager** | O'z kompaniyasida loyiha va vazifalarni yaratadi/tahrirlaydi/o'chiradi, faqat **Employee** larni taklif qiladi, rollarni boshqaradi, tarifni o'zgartiradi. |
 | **Employee** | Kompaniya loyiha va vazifalarini ko'radi, o'ziga biriktirilgan vazifalar holatini yangilaydi, izoh qoldiradi, bildirishnoma oladi. |
 
 Obuna rejalari: **Free** ($0: 3 a'zo / 5 loyiha), **Pro** ($29: 50 a'zo / cheksiz loyiha), **Max** ($99: cheksiz).
+
+### Ro'yxatdan o'tish
+
+- **Company name kiritilsa** — foydalanuvchi yangi kompaniyaning **Manager**i bo'ladi (Pro/Max uchun karta kerak).
+- **Company name bo'sh qoldirilsa** — foydalanuvchi kompaniyasiz oddiy **Employee** sifatida kiradi va "siz hali kompaniyada emassiz" sahifasini ko'radi. Keyin menejer uni email orqali taklif qilishi mumkin (taklifni tizimga kirib qabul qiladi). Employee o'zi Manager bo'la olmaydi: kompaniya faqat Company name bilan ro'yxatdan o'tishda yaratiladi. Pullik tarif uchun kompaniya nomi majburiy.
+- **Team** bo'limida faqat kompaniya menejeri va uning xodimlari ko'rinadi, Platform Admin hech qachon ko'rinmaydi.
+- **Invite member** faqat o'z kompaniyasining Manageri uchun; faqat Employee taklif qilinadi.
+- Sarlavhada kompaniya logotipi (yo'q bo'lsa standart rasm) va katta harflarda nomi barcha a'zolarga ko'rinadi.
 
 ### To'lov oqimi (mock)
 
@@ -121,8 +129,9 @@ worker'siz shu zahoti bajariladi. To'liq rejim uchun Redis + `celery -A config w
 | Loyiha va vazifa yaratish/tahrirlash/o'chirish | ❌ | ✅ | ✅ |
 | O'ziga biriktirilgan vazifa statusini o'zgartirish | ✅ | ✅ | ✅ |
 | Izoh qoldirish | ✅ | ✅ | ✅ |
-| A'zo taklif qilish, rol o'zgartirish, faolsizlantirish | ❌ | ✅ | ✅ |
-| Platform Admin rolini berish | ❌ | ❌ | ✅ |
+| Employee taklif qilish (faqat o'z kompaniyasiga) | ❌ | ✅ | ❌ |
+| Rol o'zgartirish, faolsizlantirish | ❌ | ✅ | ✅ |
+| Platform Admin yaratish (faqat `createsuperuser` orqali) | ❌ | ❌ | — |
 | Tarifni o'zgartirish / kartani qo'shish | ❌ | ✅ | ❌ |
 | Kompaniyani bloklash | ❌ | ❌ | ✅ |
 

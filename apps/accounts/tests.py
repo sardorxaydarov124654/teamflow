@@ -73,16 +73,51 @@ class AuthFlowTests(TestCase):
         self.assertRedirects(self.client.post(reverse("accounts:logout")), "/")
         self.assertEqual(self.client.get(reverse("dashboard:dashboard")).status_code, 302)
 
-    def test_user_without_company_is_sent_to_create_company_without_loop(self):
+    def test_register_without_company_name_creates_plain_employee(self):
+        resp = self.client.post(
+            reverse("accounts:register"),
+            {"email": "solo@x.com", "password": PASSWORD, "password_confirm": PASSWORD,
+             "company_name": "", "plan": "free"},
+        )
+        self.assertRedirects(resp, reverse("dashboard:dashboard"))
+        user = User.objects.get(email="solo@x.com")
+        self.assertEqual(user.role, User.Role.EMPLOYEE)
+        self.assertIsNone(user.company)
+        self.assertFalse(Company.objects.exists())
+        page = self.client.get(reverse("dashboard:dashboard"))
+        self.assertEqual(page.status_code, 200)
+        self.assertContains(page, "not part of a company yet")
+
+    def test_paid_plan_requires_company_name(self):
+        resp = self.client.post(
+            reverse("accounts:register"),
+            {"email": "solo@x.com", "password": PASSWORD, "password_confirm": PASSWORD,
+             "company_name": "", "plan": "pro"},
+        )
+        self.assertEqual(resp.status_code, 200)
+        self.assertContains(resp, "required for a paid plan")
+        self.assertFalse(User.objects.filter(email="solo@x.com").exists())
+
+    def test_companyless_employee_no_loop_and_cannot_become_manager(self):
         User.objects.create_user(email="lone@x.com", password=PASSWORD, role=User.Role.EMPLOYEE)
         self.client.login(email="lone@x.com", password=PASSWORD)
-        resp = self.client.get(reverse("dashboard:dashboard"))
-        self.assertRedirects(resp, reverse("companies:create"))
-        resp = self.client.post(reverse("companies:create"), {"name": "Solo", "description": ""})
-        self.assertRedirects(resp, reverse("dashboard:dashboard"))
+        page = self.client.get(reverse("dashboard:dashboard"))
+        self.assertEqual(page.status_code, 200)
+        self.assertNotContains(page, "Create my own company")
+        for name in ("projects:list", "tasks:list", "accounts:members"):
+            self.assertRedirects(self.client.get(reverse(name)), reverse("dashboard:dashboard"))
+        # the old self-service company creation endpoint is gone
+        for url in ("/companies/create/", "/company/create/"):
+            self.assertEqual(self.client.post(url, {"name": "Solo"}).status_code, 404)
         user = User.objects.get(email="lone@x.com")
-        self.assertEqual(user.role, User.Role.MANAGER)
-        self.assertEqual(user.company.name, "Solo")
+        self.assertEqual(user.role, User.Role.EMPLOYEE)
+        self.assertIsNone(user.company)
+        self.assertFalse(Company.objects.exists())
+
+    def test_company_profile_redirects_companyless_user(self):
+        User.objects.create_user(email="lone@x.com", password=PASSWORD, role=User.Role.EMPLOYEE)
+        self.client.login(email="lone@x.com", password=PASSWORD)
+        self.assertRedirects(self.client.get(reverse("companies:profile")), reverse("dashboard:dashboard"))
 
 
 class RolePermissionTests(TestCase):
@@ -93,7 +128,7 @@ class RolePermissionTests(TestCase):
     def test_manager_can_invite_and_invitation_can_be_accepted(self):
         self.client.login(email="manager@a.com", password=PASSWORD)
         resp = self.client.post(
-            reverse("accounts:invite-member"), {"email": "New@A.com", "role": "employee"}
+            reverse("accounts:invite-member"), {"email": "New@A.com"}
         )
         self.assertRedirects(resp, reverse("accounts:members"))
         inv = CompanyInvitation.objects.get(email="new@a.com")
@@ -108,6 +143,72 @@ class RolePermissionTests(TestCase):
         new = User.objects.get(email="new@a.com")
         self.assertEqual(new.company, self.company)
         self.assertEqual(new.role, User.Role.EMPLOYEE)
+
+    def test_invite_always_creates_employee_even_if_role_is_forged(self):
+        self.client.login(email="manager@a.com", password=PASSWORD)
+        self.client.post(reverse("accounts:invite-member"), {"email": "x@a.com", "role": "manager"})
+        self.assertEqual(CompanyInvitation.objects.get(email="x@a.com").role, User.Role.EMPLOYEE)
+        self.assertNotContains(self.client.get(reverse("accounts:invite-member")), 'name="role"')
+
+    def test_platform_admin_cannot_invite(self):
+        User.objects.create_superuser(email="root@x.com", password=PASSWORD)
+        self.client.login(email="root@x.com", password=PASSWORD)
+        self.assertEqual(self.client.get(reverse("accounts:invite-member")).status_code, 403)
+
+    def test_companyless_employee_can_be_invited_and_joins(self):
+        lone = User.objects.create_user(email="lone@x.com", password=PASSWORD, role=User.Role.EMPLOYEE)
+        self.client.login(email="manager@a.com", password=PASSWORD)
+        self.client.post(reverse("accounts:invite-member"), {"email": "lone@x.com"})
+        inv = CompanyInvitation.objects.get(email="lone@x.com")
+        self.client.logout()
+        url = reverse("accounts:accept-invitation", args=[inv.token])
+        self.assertEqual(self.client.get(url).status_code, 302)  # must sign in first
+        self.client.login(email="lone@x.com", password=PASSWORD)
+        self.assertEqual(self.client.get(url).status_code, 200)
+        self.client.post(url)
+        lone.refresh_from_db()
+        self.assertEqual(lone.company, self.company)
+        self.assertEqual(lone.role, User.Role.EMPLOYEE)
+
+    def test_employee_of_other_company_cannot_be_invited(self):
+        make_company("B", "b@b.com")
+        self.client.login(email="manager@a.com", password=PASSWORD)
+        resp = self.client.post(reverse("accounts:invite-member"), {"email": "b@b.com"})
+        self.assertEqual(resp.status_code, 200)
+        self.assertFalse(CompanyInvitation.objects.filter(email="b@b.com").exists())
+
+    def test_team_list_has_no_platform_admins_and_managers_first(self):
+        admin = User.objects.create_superuser(email="root@x.com", password=PASSWORD)
+        admin.company = self.company
+        admin.save()
+        self.client.login(email="manager@a.com", password=PASSWORD)
+        resp = self.client.get(reverse("accounts:members"))
+        self.assertNotContains(resp, "root@x.com")
+        self.assertNotContains(resp, "Platform Admin")
+        emails = [m.email for m in resp.context["members"]]
+        self.assertEqual(emails, ["manager@a.com", "employee@a.com"])
+        self.assertEqual([r for r, _ in resp.context["role_choices"]], ["manager", "employee"])
+        # filtering by the removed role finds nothing extra
+        resp = self.client.get(reverse("accounts:members"), {"role": "platform_admin"})
+        self.assertEqual(len(resp.context["members"]), 2)
+
+    def test_platform_admin_team_screen_lists_company_users_only(self):
+        User.objects.create_superuser(email="root@x.com", password=PASSWORD)
+        User.objects.create_user(email="nocomp@x.com", password=PASSWORD, role=User.Role.EMPLOYEE)
+        self.client.login(email="root@x.com", password=PASSWORD)
+        resp = self.client.get(reverse("accounts:members"))
+        emails = {m.email for m in resp.context["members"]}
+        self.assertNotIn("root@x.com", emails)
+        self.assertNotIn("nocomp@x.com", emails)
+        self.assertIn("manager@a.com", emails)
+
+    def test_header_shows_company_name_and_default_logo_for_everyone(self):
+        for email in ("manager@a.com", "employee@a.com"):
+            self.client.login(email=email, password=PASSWORD)
+            page = self.client.get(reverse("projects:list"))
+            self.assertContains(page, 'class="company-title">Company A<')
+            self.assertContains(page, "img/default-company.svg")
+            self.client.logout()
 
     def test_employee_cannot_invite(self):
         self.client.login(email="employee@a.com", password=PASSWORD)

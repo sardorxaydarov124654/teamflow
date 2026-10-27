@@ -25,7 +25,15 @@ class RegisterForm(forms.Form):
     password_confirm = forms.CharField(widget=forms.PasswordInput, label="Confirm password")
     first_name = forms.CharField(required=False)
     last_name = forms.CharField(required=False)
-    company_name = forms.CharField(max_length=255, label="Company name")
+    company_name = forms.CharField(
+        max_length=255,
+        required=False,
+        label="Company name",
+        help_text=(
+            "Optional. Leave it empty to join as an Employee without a company — "
+            "a company manager can invite you later."
+        ),
+    )
     plan = forms.ChoiceField(
         choices=[("free", "Free"), ("pro", "Pro"), ("max", "Max")],
         initial="free",
@@ -60,13 +68,7 @@ class ProfileForm(forms.ModelForm):
 
 class InviteMemberForm(forms.Form):
     email = forms.EmailField()
-    role = forms.ChoiceField(
-        choices=[
-            (User.Role.MANAGER, "Manager"),
-            (User.Role.EMPLOYEE, "Employee"),
-        ],
-        initial=User.Role.EMPLOYEE,
-    )
+    # Managers can only invite EMPLOYEES into their own company, so there is no role field.
 
 
 class MemberRoleForm(forms.ModelForm):
@@ -87,10 +89,11 @@ class MemberRoleForm(forms.ModelForm):
         member = self.instance
         actor_is_admin = bool(actor and actor.is_platform_admin)
 
-        allowed = [(User.Role.MANAGER, "Manager"), (User.Role.EMPLOYEE, "Employee")]
-        if actor_is_admin:
-            allowed.insert(0, (User.Role.PLATFORM_ADMIN, "Platform Admin"))
-        self.fields["role"].choices = allowed
+        # Platform Admin is never assignable from the team screen.
+        self.fields["role"].choices = [
+            (User.Role.MANAGER, "Manager"),
+            (User.Role.EMPLOYEE, "Employee"),
+        ]
 
         protected = bool(
             actor

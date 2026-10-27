@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Dashboard" %} — TeamFlow{% endblock %}
+{% block content %}
+<div class="card empty-state" style="max-width:720px;margin:0 auto">
+  <svg class="i"><use href="#i-building"/></svg>
+  <h3>{% blocktranslate with name=user.first_name|default:user.email %}Welcome, {{ name }}!{% endblocktranslate %}</h3>
+  <p>{% translate "You are signed in as an Employee and you are not part of a company yet. Ask your company manager to invite you using this email address:" %}</p>
+  <p style="margin-top:8px"><b>{{ user.email }}</b></p>
+
+  {% if invitations %}
+  <div style="margin-top:28px;text-align:left">
+    <h3 style="color:var(--text);margin-bottom:10px">{% translate "Pending invitations" %}</h3>
+    {% for inv in invitations %}
+    <div class="pay-card" style="margin-bottom:10px"><div><b>{{ inv.company.name }}</b><div class="muted small">{% translate "Invited as" %} {{ inv.get_role_display }}</div></div>
+      <a class="btn small" href="{% url 'accounts:accept-invitation' inv.token %}">{% translate "Accept invitation" %}</a></div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <div class="actions mt" style="justify-content:center">
+    <a class="btn secondary" href="{% url 'accounts:profile' %}">{% translate "My profile" %}</a>
+  </div>
+</div>
+{% endblock %}

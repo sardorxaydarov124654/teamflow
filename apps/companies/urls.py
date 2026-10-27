@@ -7,7 +7,6 @@ app_name = "companies"
 urlpatterns = [
     path("company/", views.company_profile_view, name="profile"),
     path("company/settings/", views.company_settings_view, name="settings"),
-    path("companies/create/", views.company_create_view, name="create"),
     path("platform/companies/", views.platform_companies_view, name="platform-list"),
     path(
         "platform/companies/<uuid:pk>/toggle-active/",

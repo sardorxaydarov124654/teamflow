@@ -4,6 +4,11 @@
 {% block auth_content %}
 <h1>{% blocktranslate with name=invitation.company.name %}Join {{ name }}{% endblocktranslate %}</h1>
 <p class="lead">{% blocktranslate with email=invitation.email role=invitation.get_role_display %}{{ email }} was invited as {{ role }}. Set your password to continue.{% endblocktranslate %}</p>
+{% if existing_user %}
+<form method="post">{% csrf_token %}
+  <button class="btn block lg" type="submit">{% translate "Accept invitation" %}</button>
+</form>
+{% else %}
 <form method="post">
   {% csrf_token %}
   <div class="form-grid">
@@ -13,4 +18,5 @@
   <div class="field"><label for="password">{% translate "Password" %}</label><input id="password" type="password" name="password" required minlength="8" autocomplete="new-password"></div>
   <button class="btn block lg" type="submit">{% translate "Accept invitation" %}</button>
 </form>
+{% endif %}
 {% endblock %}
