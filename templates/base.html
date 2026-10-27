@@ -1,5 +1,5 @@
 {% extends "root.html" %}
-{% load i18n %}
+{% load i18n static %}
 {% block body_class %}app-body{% endblock %}
 {% block body %}
 <div class="shell">
@@ -15,6 +15,7 @@
       <a class="nav-link {% if request.resolver_match.app_name == 'dashboard' and request.resolver_match.url_name == 'dashboard' %}active{% endif %}" href="{% url 'dashboard:dashboard' %}">
         <svg class="i"><use href="#i-dashboard"/></svg><span>{% translate "Dashboard" %}</span>
       </a>
+      {% if user.company_id or user.is_platform_admin %}
       <a class="nav-link {% if request.resolver_match.app_name == 'projects' %}active{% endif %}" href="{% url 'projects:list' %}">
         <svg class="i"><use href="#i-projects"/></svg><span>{% translate "Projects" %}</span>
       </a>
@@ -31,11 +32,12 @@
       <a class="nav-link {% if request.resolver_match.app_name == 'accounts' and 'members' in request.path %}active{% endif %}" href="{% url 'accounts:members' %}">
         <svg class="i"><use href="#i-users"/></svg><span>{% translate "Team" %}</span>
       </a>
+      {% endif %}
       <a class="nav-link {% if request.resolver_match.app_name == 'notifications' %}active{% endif %}" href="{% url 'notifications:list' %}">
         <svg class="i"><use href="#i-bell"/></svg><span>{% translate "Notifications" %}</span>
         <span class="nav-badge" data-notif-badge {% if not unread_notification_count %}hidden{% endif %}>{{ unread_notification_count|default:0 }}</span>
       </a>
-      {% if user.is_manager or user.is_platform_admin %}
+      {% if user.is_manager %}
       <a class="nav-link {% if request.resolver_match.app_name == 'subscriptions' %}active{% endif %}" href="{% url 'subscriptions:plans' %}">
         <svg class="i"><use href="#i-billing"/></svg><span>{% translate "Billing" %}</span>
       </a>
@@ -81,19 +83,25 @@
       </button>
 
       <div class="greeting">
+        {% if user.company %}
+        <a class="company-head" href="{% url 'companies:profile' %}" title="{% translate 'Company profile' %}">
+          <img class="company-head-logo" src="{% if user.company.logo %}{{ user.company.logo.url }}{% else %}{% static 'img/default-company.svg' %}{% endif %}" alt="{{ user.company.name }}">
+          <span class="company-head-text">
+            <span class="company-title">{{ user.company.name }}</span>
+            <span class="greeting-sub">{% blocktranslate with name=user.first_name|default:user.full_name %}Welcome back, {{ name }}!{% endblocktranslate %} · {% now "F j, Y" %} · <span class="role-tag role-{{ user.role }}">{{ user.get_role_display }}</span></span>
+          </span>
+        </a>
+        {% else %}
         <h1 class="greeting-title">{% block greeting %}{% blocktranslate with name=user.first_name|default:user.full_name %}Welcome back, {{ name }}!{% endblocktranslate %}{% endblock %}</h1>
-        <p class="greeting-sub">
-          {% now "F j, Y" %}
-          {% if user.company %}· {{ user.company.name }}{% endif %}
-          · <span class="role-tag role-{{ user.role }}">{{ user.get_role_display }}</span>
-        </p>
+        <p class="greeting-sub">{% now "F j, Y" %} · <span class="role-tag role-{{ user.role }}">{{ user.get_role_display }}</span></p>
+        {% endif %}
       </div>
 
-      <form class="search" action="{% url 'dashboard:search' %}" method="get" role="search">
+      {% if user.company_id or user.is_platform_admin %}<form class="search" action="{% url 'dashboard:search' %}" method="get" role="search">
         <svg class="i"><use href="#i-search"/></svg>
         <input type="search" name="q" id="global-search" value="{{ request.GET.q|default:'' }}" placeholder="{% translate 'Search projects, tasks, people…' %}" autocomplete="off" aria-label="{% translate 'Search' %}">
         <kbd>Ctrl&nbsp;K</kbd>
-      </form>
+      </form>{% endif %}
 
       <div class="topbar-right">
         <form class="lang-switcher" action="{% url 'set_language' %}" method="post">
