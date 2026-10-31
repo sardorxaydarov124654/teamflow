@@ -1,3 +1,27 @@
+import os
+
+from django.conf import settings
+
+
+def _asset_version():
+    """Changes whenever the CSS/JS files change, so browsers never keep stale styles."""
+    stamp = 0
+    for rel in ("css/styles.css", "js/app.js"):
+        path = os.path.join(settings.BASE_DIR, "static", rel)
+        try:
+            stamp = max(stamp, int(os.path.getmtime(path)))
+        except OSError:
+            pass
+    return stamp
+
+
+ASSET_VERSION = _asset_version()
+
+
+def assets(request):
+    return {"ASSET_VERSION": ASSET_VERSION}
+
+
 def unread_notifications(request):
     """
     Adds sidebar/header counters to every template:

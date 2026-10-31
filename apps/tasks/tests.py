@@ -153,7 +153,7 @@ class PagesSmokeTests(TestCase):
             reverse("tasks:calendar"), reverse("accounts:members"), reverse("accounts:invite-member"),
             reverse("accounts:member-detail", args=[manager.pk]), reverse("accounts:profile"),
             reverse("accounts:password-change"), reverse("notifications:list"),
-            reverse("companies:settings"), reverse("companies:profile"),
+            reverse("companies:settings"),
             reverse("subscriptions:plans"), reverse("subscriptions:mine"), reverse("subscriptions:upgrade", args=["pro"]),
         ]
         for url in urls:

@@ -81,6 +81,14 @@ class Company(models.Model):
     def subscription(self):
         return getattr(self, "subscription_record", None)
 
+    @property
+    def active_member_count(self):
+        return self.members.filter(is_active=True).count()
+
+    @property
+    def project_count(self):
+        return self.projects.count()
+
     def get_user_limit(self):
         limits = {self.Plan.FREE: 3, self.Plan.PRO: 50, self.Plan.MAX: None}
         return limits.get(self.plan)

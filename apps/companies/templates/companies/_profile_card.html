@@ -1,8 +1,0 @@
-{% load i18n %}
-<div class="company-banner">
-  {% if company.logo %}<img class="company-logo" src="{{ company.logo.url }}" alt="{{ company.name }}">{% else %}<div class="company-logo">{{ company.name|slice:":1"|upper }}</div>{% endif %}
-  <div>
-    <h2>{{ company.name }} <span class="chip chip-blue">{{ company.get_plan_display }}</span></h2>
-    <p class="muted" style="margin-top:6px">{% if company.description %}{{ company.description|linebreaksbr }}{% else %}{% translate "No company description yet." %}{% if can_edit %} <a href="{% url 'companies:settings' %}">{% translate "Add one" %}</a>{% endif %}{% endif %}</p>
-  </div>
-</div>

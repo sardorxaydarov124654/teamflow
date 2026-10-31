@@ -83,18 +83,7 @@
       </button>
 
       <div class="greeting">
-        {% if user.company %}
-        <a class="company-head" href="{% url 'companies:profile' %}" title="{% translate 'Company profile' %}">
-          <img class="company-head-logo" src="{% if user.company.logo %}{{ user.company.logo.url }}{% else %}{% static 'img/default-company.svg' %}{% endif %}" alt="{{ user.company.name }}">
-          <span class="company-head-text">
-            <span class="company-title">{{ user.company.name }}</span>
-            <span class="greeting-sub">{% blocktranslate with name=user.first_name|default:user.full_name %}Welcome back, {{ name }}!{% endblocktranslate %} · {% now "F j, Y" %} · <span class="role-tag role-{{ user.role }}">{{ user.get_role_display }}</span></span>
-          </span>
-        </a>
-        {% else %}
-        <h1 class="greeting-title">{% block greeting %}{% blocktranslate with name=user.first_name|default:user.full_name %}Welcome back, {{ name }}!{% endblocktranslate %}{% endblock %}</h1>
-        <p class="greeting-sub">{% now "F j, Y" %} · <span class="role-tag role-{{ user.role }}">{{ user.get_role_display }}</span></p>
-        {% endif %}
+        {% block topbar_left %}{% include "partials/_greeting.html" %}{% endblock %}
       </div>
 
       {% if user.company_id or user.is_platform_admin %}<form class="search" action="{% url 'dashboard:search' %}" method="get" role="search">
@@ -138,7 +127,6 @@
             </div>
             <a href="{% url 'accounts:profile' %}"><svg class="i i-sm"><use href="#i-user"/></svg>{% translate "My profile" %}</a>
             <a href="{% url 'accounts:password-change' %}"><svg class="i i-sm"><use href="#i-lock"/></svg>{% translate "Change password" %}</a>
-            {% if user.company_id %}<a href="{% url 'companies:profile' %}"><svg class="i i-sm"><use href="#i-building"/></svg>{% translate "Company profile" %}</a>{% endif %}
             <form action="{% url 'accounts:logout' %}" method="post">
               {% csrf_token %}
               <button type="submit" class="danger-item"><svg class="i i-sm"><use href="#i-logout"/></svg>{% translate "Sign out" %}</button>

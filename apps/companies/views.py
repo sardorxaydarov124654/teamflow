@@ -40,21 +40,10 @@ def company_settings_view(request):
 
 @login_required
 def company_profile_view(request):
-    company = request.user.company
-    if company is None:
+    """Kept for old links: the company is shown on Company settings."""
+    if request.user.company is None:
         return redirect("dashboard:dashboard")
-    can_edit = company.owner_id == request.user.id or request.user.is_platform_admin
-    return render(
-        request,
-        "companies/profile.html",
-        {
-            "company": company,
-            "can_edit": can_edit,
-            "member_count": company.members.filter(is_active=True).count(),
-            "project_count": company.projects.count(),
-            "task_count": company.tasks.count(),
-        },
-    )
+    return redirect("companies:settings")
 
 
 @platform_admin_required

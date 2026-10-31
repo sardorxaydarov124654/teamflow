@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block title %}{% translate "Settings" %} — TeamFlow{% endblock %}
+{% block topbar_left %}{% include "partials/_greeting.html" %}{% endblock %}
 {% block content %}
+{% include "companies/_banner.html" %}
 <div class="page-head"><div><h1>{% translate "Company settings" %}</h1><p class="sub">{% if not can_edit %}{% translate "Only the company owner can edit these settings." %}{% endif %}</p></div></div>
 <div class="grid grid-main">
   <div class="card">
@@ -10,8 +12,9 @@
       {% if can_edit %}<div class="form-actions"><button class="btn" type="submit">{% translate "Save changes" %}</button></div>{% endif %}
     </form>
   </div>
-  <div class="card">{% include "companies/_profile_card.html" %}
-    <dl class="kv mt"><dt>{% translate "Owner" %}</dt><dd>{{ company.owner.full_name }}</dd><dt>{% translate "Created" %}</dt><dd>{{ company.created_at|date:"M j, Y" }}</dd></dl>
+  <div class="card">
+    <h3 style="margin-bottom:16px">{% translate "Details" %}</h3>
+    <dl class="kv"><dt>{% translate "Owner" %}</dt><dd>{{ company.owner.full_name }}</dd><dt>{% translate "Created" %}</dt><dd>{{ company.created_at|date:"M j, Y" }}</dd></dl>
     {% if user.is_manager or user.is_platform_admin %}<a class="btn secondary block mt" href="{% url 'subscriptions:mine' %}"><svg class="i i-sm"><use href="#i-billing"/></svg>{% translate "Manage subscription" %}</a>{% endif %}
   </div>
 </div>

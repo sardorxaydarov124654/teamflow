@@ -59,11 +59,7 @@ body.app-body { background: var(--page); background-image: radial-gradient(circl
 .greeting-title { font-size: 24px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .greeting-sub { color: var(--muted); font-size: 14px; margin-top: 2px; }
 .role-tag { font-weight: 600; color: var(--blue); }
-.company-head { display: flex; align-items: center; gap: 16px; color: var(--text); min-width: 0; } .company-head:hover { text-decoration: none; }
-.company-head-logo { width: 60px; height: 60px; border-radius: 18px; object-fit: cover; flex: none; background: var(--blue-50); box-shadow: 0 4px 14px rgba(26,111,232,.25); }
-.company-head-text { display: flex; flex-direction: column; min-width: 0; }
-.company-title { font-size: 30px; font-weight: 800; letter-spacing: -.02em; line-height: 1.1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-transform: none; }
-.company-head .greeting-sub { margin-top: 4px; }
+.greeting .greeting-sub { margin-top: 4px; }
 .search { position: relative; display: flex; align-items: center; width: 320px; max-width: 100%; background: var(--bg); border-radius: 999px; padding: 0 16px; gap: 10px; color: var(--muted); }
 .search input { flex: 1; min-width: 0; border: 0; background: transparent; padding: 14px 0; font: inherit; color: var(--text); outline: none; }
 .search kbd { font: 600 11px var(--font); padding: 3px 7px; border-radius: 6px; background: var(--surface); border: 1px solid var(--line); color: var(--muted); }
@@ -113,6 +109,15 @@ body.app-body { background: var(--page); background-image: radial-gradient(circl
 .card-head h2, .card-head h3 { font-size: 18px; font-weight: 600; }
 .grid { display: grid; gap: 24px; } .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); } .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); } .grid-main { grid-template-columns: minmax(0, 1fr) 360px; }
 .stack { display: flex; flex-direction: column; gap: 24px; } .mt { margin-top: 24px; }
+
+/* Company banner (Dashboard & Company settings only) */
+.company-banner-card { --company-logo-size: 240px; display: flex; align-items: center; gap: 36px; background: var(--surface); border-radius: var(--radius); padding: 28px; margin-bottom: 24px; box-shadow: var(--shadow); }
+.company-banner-logo { width: var(--company-logo-size); height: var(--company-logo-size); max-width: 100%; border-radius: 32px; object-fit: cover; flex: none; box-shadow: 0 10px 30px rgba(26,111,232,.28); background: var(--blue-50); }
+.company-banner-info { min-width: 0; display: flex; flex-direction: column; gap: 12px; }
+.company-banner-name { margin: 0; font-size: clamp(32px, 4.4vw, 56px); font-weight: 800; letter-spacing: -.03em; line-height: 1.05; word-break: break-word; }
+.company-banner-sub { color: var(--muted); font-size: 16px; }
+.company-banner-facts { display: flex; flex-wrap: wrap; gap: 8px; } .company-banner-desc { max-width: 560px; }
+@media (max-width: 720px) { .company-banner-card { --company-logo-size: 160px; flex-direction: column; align-items: flex-start; gap: 20px; padding: 20px; } }
 
 /* Dashboard top row */
 .top-row { display: grid; grid-template-columns: minmax(0, 1fr) 336px; gap: 24px; margin-bottom: 24px; }
@@ -216,7 +221,7 @@ table.table { width: 100%; border-collapse: collapse; font-size: 14px; }
 .copybox { display: flex; gap: 8px; align-items: center; } .copybox code { background: var(--bg); border-radius: 8px; padding: 6px 10px; font-size: 12px; max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .plan-card { display: flex; flex-direction: column; gap: 14px; position: relative; } .plan-card.current { outline: 2px solid var(--blue); } .plan-card .price { font-size: 38px; font-weight: 700; } .plan-card .price small { font-size: 15px; font-weight: 500; color: var(--muted); }
 .plan-card ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; } .plan-card li { display: flex; gap: 10px; font-size: 14px; } .plan-card li .i { color: var(--green); width: 18px; height: 18px; margin-top: 2px; }
-.company-banner { display: flex; gap: 20px; align-items: center; } .company-logo { width: 84px; height: 84px; border-radius: 20px; object-fit: cover; background: var(--blue-50); color: var(--blue); display: flex; align-items: center; justify-content: center; font-size: 34px; font-weight: 700; flex: none; }
+
 .big-cal { width: 100%; border-collapse: collapse; table-layout: fixed; } .big-cal th { padding: 10px; text-align: left; font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
 .big-cal td { height: 118px; vertical-align: top; padding: 6px; border: 1px solid var(--line); } .big-cal td.out { background: var(--surface-2); } .big-cal td.out .num { color: #b6bccb; }
 .big-cal .num { font-size: 13px; font-weight: 600; display: inline-flex; width: 26px; height: 26px; align-items: center; justify-content: center; border-radius: 50%; } .big-cal td.today .num { background: var(--blue); color: #fff; }
@@ -292,7 +297,7 @@ table.table { width: 100%; border-collapse: collapse; font-size: 14px; }
   .shell { display: block; margin: 0; border-radius: 0; min-height: 100vh; }
   .sidebar { position: fixed; z-index: 50; left: 0; top: 0; bottom: 0; height: 100vh; width: 280px; transform: translateX(-100%); transition: transform .25s; box-shadow: 0 0 60px rgba(0,0,0,.3); }
   .sidebar.open { transform: none; } .menu-btn { display: inline-flex; } .content { border-top-left-radius: 0; padding: 20px; } .topbar { padding: 16px 20px; } .app-footer { padding: 0 20px 20px; }
-  .search { display: none; } .greeting-title { font-size: 19px; } .company-title { font-size: 22px; } .company-head-logo { width: 46px; height: 46px; border-radius: 14px; }
+  .search { display: none; } .greeting-title { font-size: 19px; }
   .grid-3, .stat-cards { grid-template-columns: repeat(2, 1fr); }
   .auth-page { grid-template-columns: 1fr; } .auth-side { display: none; } .auth-mobile-brand { display: flex; margin-bottom: 24px; }
   .l-hero-grid { grid-template-columns: 1fr; } .steps { grid-template-columns: repeat(2, 1fr); } .l-foot-grid { grid-template-columns: 1fr 1fr; }

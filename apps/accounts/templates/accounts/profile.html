@@ -16,7 +16,6 @@
     <h3 style="margin-bottom:16px">{% translate "Account" %}</h3>
     <dl class="kv">
       <dt>{% translate "Role" %}</dt><dd><span class="badge role-badge-{{ user.role }}">{{ user.get_role_display }}</span></dd>
-      <dt>{% translate "Company" %}</dt><dd>{% if user.company %}<a href="{% url 'companies:profile' %}">{{ user.company.name }}</a>{% else %}—{% endif %}</dd>
       <dt>{% translate "Joined" %}</dt><dd>{{ user.created_at|date:"M j, Y" }}</dd>
     </dl>
   </div>

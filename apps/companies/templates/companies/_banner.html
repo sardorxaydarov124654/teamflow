@@ -1,0 +1,15 @@
+{% load i18n static %}
+{# Company banner: default image + big bold name. Shown ONLY on Dashboard and Company settings. #}
+<section class="company-banner-card">
+  <img class="company-banner-logo" width="240" height="240" src="{% if company.logo %}{{ company.logo.url }}{% else %}{% static 'img/default-company.svg' %}{% endif %}" alt="{{ company.name }}">
+  <div class="company-banner-info">
+    <h2 class="company-banner-name">{{ company.name }}</h2>
+    <p class="company-banner-sub">{% blocktranslate with name=user.first_name|default:user.full_name %}Welcome back, {{ name }}!{% endblocktranslate %} · <span class="role-tag role-{{ user.role }}">{{ user.get_role_display }}</span></p>
+    <div class="company-banner-facts">
+      <span class="chip chip-blue">{{ company.get_plan_display }} {% translate "plan" %}</span>
+      <span class="chip">{{ company.active_member_count }} {% translate "members" %}</span>
+      <span class="chip">{{ company.project_count }} {% translate "projects" %}</span>
+    </div>
+    {% if company.description %}<p class="muted company-banner-desc">{{ company.description|truncatechars:160 }}</p>{% endif %}
+  </div>
+</section>

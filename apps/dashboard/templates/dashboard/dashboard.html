@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block title %}{% translate "Dashboard" %} — TeamFlow{% endblock %}
+{% block topbar_left %}{% include "partials/_greeting.html" %}{% endblock %}
 {% block content %}
+{% include "companies/_banner.html" %}
 <section class="top-row">
   <div class="card stat-strip">
     <div><div class="s-label" style="color:var(--text);font-size:16px;font-weight:500">{% translate "Total task" %}</div><div class="s-num">{{ stats.total_tasks }} <small>{% translate "tasks" %}</small></div></div>

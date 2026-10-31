@@ -202,13 +202,35 @@ class RolePermissionTests(TestCase):
         self.assertNotIn("nocomp@x.com", emails)
         self.assertIn("manager@a.com", emails)
 
-    def test_header_shows_company_name_and_default_logo_for_everyone(self):
+    def test_company_name_and_logo_only_on_dashboard_and_settings(self):
         for email in ("manager@a.com", "employee@a.com"):
             self.client.login(email=email, password=PASSWORD)
-            page = self.client.get(reverse("projects:list"))
-            self.assertContains(page, 'class="company-title">Company A<')
-            self.assertContains(page, "img/default-company.svg")
+            # other pages: plain greeting in the header, no company name/logo
+            for name in ("projects:list", "tasks:list", "accounts:members", "notifications:list"):
+                page = self.client.get(reverse(name))
+                self.assertNotContains(page, "company-title")
+                self.assertNotContains(page, "company-banner")
+                self.assertNotContains(page, "default-company.svg")
+                self.assertContains(page, "Welcome back")
+            self.assertNotContains(self.client.get(reverse("accounts:profile")), "Company A")
+            # dashboard: banner with logo + company name
+            dash = self.client.get(reverse("dashboard:dashboard"))
+            self.assertContains(dash, "default-company.svg")
+            self.assertContains(dash, 'class="company-banner-name">Company A<')
+            # settings: the same banner
+            sett = self.client.get(reverse("companies:settings"))
+            self.assertContains(sett, 'class="company-banner-name">Company A<')
+            self.assertContains(sett, "default-company.svg")
             self.client.logout()
+
+    def test_old_company_profile_url_redirects_to_settings(self):
+        self.client.login(email="manager@a.com", password=PASSWORD)
+        self.assertRedirects(self.client.get(reverse("companies:profile")), reverse("companies:settings"))
+
+    def test_static_assets_are_versioned_against_stale_cache(self):
+        self.client.login(email="manager@a.com", password=PASSWORD)
+        page = self.client.get(reverse("dashboard:dashboard"))
+        self.assertRegex(page.content.decode(), r"styles\.css\?v=\d+")
 
     def test_employee_cannot_invite(self):
         self.client.login(email="employee@a.com", password=PASSWORD)
