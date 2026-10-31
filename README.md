@@ -34,7 +34,7 @@ Obuna rejalari: **Free** ($0: 3 a'zo / 5 loyiha), **Pro** ($29: 50 a'zo / cheksi
 - **Company name bo'sh qoldirilsa** — foydalanuvchi kompaniyasiz oddiy **Employee** sifatida kiradi va "siz hali kompaniyada emassiz" sahifasini ko'radi. Keyin menejer uni email orqali taklif qilishi mumkin (taklifni tizimga kirib qabul qiladi). Employee o'zi Manager bo'la olmaydi: kompaniya faqat Company name bilan ro'yxatdan o'tishda yaratiladi. Pullik tarif uchun kompaniya nomi majburiy.
 - **Team** bo'limida faqat kompaniya menejeri va uning xodimlari ko'rinadi, Platform Admin hech qachon ko'rinmaydi.
 - **Invite member** faqat o'z kompaniyasining Manageri uchun; faqat Employee taklif qilinadi.
-- Sarlavhada kompaniya logotipi (yo'q bo'lsa standart rasm) va katta harflarda nomi barcha a'zolarga ko'rinadi.
+- Kompaniya nomi va logotipi (yo'q bo'lsa standart rasm) faqat **Dashboard** va **Company settings** da katta banner ko'rinishida chiqadi (logotip o'lchami: `static/css/styles.css` dagi `--company-logo-size`). Boshqa sahifalarda tepada oddiy salomlashuv turadi.
 
 ### To'lov oqimi (mock)
 
