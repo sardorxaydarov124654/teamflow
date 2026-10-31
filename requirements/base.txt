@@ -16,3 +16,4 @@ channels-redis>=4.2
 # ASGI / WSGI servers
 uvicorn[standard]>=0.34
 gunicorn>=23.0
+whitenoise>=6.8
